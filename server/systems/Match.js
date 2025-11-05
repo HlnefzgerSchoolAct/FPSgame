@@ -369,6 +369,3 @@ export class MatchSystem {
     this.objectives = [];
   }
 }
-
-// Export for use in Room
-export { MatchSystem };

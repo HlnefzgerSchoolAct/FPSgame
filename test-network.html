@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Network Test - Arena Blitz FPS</title>
+  <style>
+    body {
+      font-family: monospace;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #00ff00;
+    }
+    h1 {
+      color: #00ff00;
+      border-bottom: 2px solid #00ff00;
+      padding-bottom: 10px;
+    }
+    .section {
+      margin: 20px 0;
+      padding: 15px;
+      background: #2a2a2a;
+      border: 1px solid #00ff00;
+      border-radius: 5px;
+    }
+    .status {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 3px;
+    }
+    .connected { background: #004400; border: 1px solid #00ff00; }
+    .disconnected { background: #440000; border: 1px solid #ff0000; color: #ff0000; }
+    .warning { background: #444400; border: 1px solid #ffff00; color: #ffff00; }
+    button {
+      background: #00ff00;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      font-family: monospace;
+      font-weight: bold;
+      border-radius: 3px;
+    }
+    button:hover {
+      background: #00dd00;
+    }
+    button:disabled {
+      background: #666;
+      color: #333;
+      cursor: not-allowed;
+    }
+    #log {
+      height: 300px;
+      overflow-y: auto;
+      background: #000;
+      padding: 10px;
+      border: 1px solid #00ff00;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+    .log-entry {
+      margin: 2px 0;
+      padding: 2px;
+    }
+    .log-info { color: #00ff00; }
+    .log-error { color: #ff0000; }
+    .log-warn { color: #ffff00; }
+    .stat {
+      display: inline-block;
+      margin: 5px 10px;
+      padding: 5px 10px;
+      background: #333;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎮 Arena Blitz FPS - Network Test</h1>
+  
+  <div class="section">
+    <h2>Connection Status</h2>
+    <div id="status" class="status disconnected">Disconnected</div>
+    <div id="stats">
+      <span class="stat">Latency: <span id="latency">--</span>ms</span>
+      <span class="stat">Quality: <span id="quality">--</span></span>
+      <span class="stat">Players: <span id="players">--</span></span>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>Controls</h2>
+    <button id="connectBtn">Connect to Server</button>
+    <button id="disconnectBtn" disabled>Disconnect</button>
+    <button id="testInputBtn" disabled>Send Test Input</button>
+    <button id="testFireBtn" disabled>Send Test Fire</button>
+    <button id="clearLogBtn">Clear Log</button>
+  </div>
+  
+  <div class="section">
+    <h2>Network Log</h2>
+    <div id="log"></div>
+  </div>
+  
+  <script type="module">
+    import NetworkManager from './src/networking/NetworkManager.js';
+    import { NetEvent } from './src/networking/NetEvents.js';
+    
+    const SERVER_URL = 'ws://localhost:3001';
+    const TEST_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF5ZXJJZCI6InRlc3RfcGxheWVyXzAwMSIsImlhdCI6MTc2MjM4NTk1MjUyNywidGVzdCI6dHJ1ZSwiZXhwIjoxNzYyMzg2NTU3MzI3fQ.J5F5MEuVgcier-WOHoH_E0di7pfrG47578gCNcCtX70';
+    
+    let networkManager = null;
+    let statsInterval = null;
+    
+    // DOM elements
+    const statusDiv = document.getElementById('status');
+    const logDiv = document.getElementById('log');
+    const connectBtn = document.getElementById('connectBtn');
+    const disconnectBtn = document.getElementById('disconnectBtn');
+    const testInputBtn = document.getElementById('testInputBtn');
+    const testFireBtn = document.getElementById('testFireBtn');
+    const clearLogBtn = document.getElementById('clearLogBtn');
+    const latencySpan = document.getElementById('latency');
+    const qualitySpan = document.getElementById('quality');
+    const playersSpan = document.getElementById('players');
+    
+    // Logging
+    function log(message, type = 'info') {
+      const entry = document.createElement('div');
+      entry.className = `log-entry log-${type}`;
+      const time = new Date().toLocaleTimeString();
+      entry.textContent = `[${time}] ${message}`;
+      logDiv.appendChild(entry);
+      logDiv.scrollTop = logDiv.scrollHeight;
+    }
+    
+    // Update status
+    function updateStatus(connected) {
+      if (connected) {
+        statusDiv.textContent = 'Connected';
+        statusDiv.className = 'status connected';
+        connectBtn.disabled = true;
+        disconnectBtn.disabled = false;
+        testInputBtn.disabled = false;
+        testFireBtn.disabled = false;
+      } else {
+        statusDiv.textContent = 'Disconnected';
+        statusDiv.className = 'status disconnected';
+        connectBtn.disabled = false;
+        disconnectBtn.disabled = true;
+        testInputBtn.disabled = true;
+        testFireBtn.disabled = true;
+        latencySpan.textContent = '--';
+        qualitySpan.textContent = '--';
+        playersSpan.textContent = '--';
+      }
+    }
+    
+    // Update stats
+    function updateStats() {
+      if (!networkManager) return;
+      
+      const stats = networkManager.getStatistics();
+      latencySpan.textContent = stats.connection.latency;
+      qualitySpan.textContent = stats.connection.quality;
+    }
+    
+    // Connect
+    connectBtn.addEventListener('click', () => {
+      log('Connecting to server...', 'info');
+      
+      networkManager = new NetworkManager(SERVER_URL);
+      
+      // Setup event handlers
+      networkManager.client.onConnect = () => {
+        log('Connected to server!', 'info');
+        updateStatus(false); // Will update to true on JOINED
+        
+        // Send JOIN message
+        import('./src/networking/ProtocolClient.js').then(({ createJoinMessage }) => {
+          const joinMsg = createJoinMessage(TEST_TOKEN, 'auto');
+          networkManager.client.send(joinMsg);
+          log('Sent JOIN message', 'info');
+        });
+      };
+      
+      networkManager.client.onDisconnect = (code, reason) => {
+        log(`Disconnected: ${reason} (${code})`, 'warn');
+        updateStatus(false);
+        if (statsInterval) {
+          clearInterval(statsInterval);
+          statsInterval = null;
+        }
+      };
+      
+      networkManager.client.onError = (error) => {
+        log(`Connection error: ${error}`, 'error');
+      };
+      
+      // Network events
+      import('./src/networking/NetEvents.js').then(({ netEvents, NetEvent }) => {
+        netEvents.on(NetEvent.JOINED_ROOM, (data) => {
+          log(`Joined room ${data.roomId} as player ${data.playerId}`, 'info');
+          updateStatus(true);
+          statsInterval = setInterval(updateStats, 1000);
+        });
+        
+        netEvents.on(NetEvent.SNAPSHOT_RECEIVED, (data) => {
+          playersSpan.textContent = (data.players?.length || 0);
+        });
+        
+        netEvents.on(NetEvent.DAMAGE_DEALT, (data) => {
+          log(`HIT! Dealt ${data.damage} damage to player`, 'info');
+        });
+        
+        netEvents.on(NetEvent.KILL, (data) => {
+          log(`Player ${data.killer} killed ${data.victim}`, 'info');
+        });
+      });
+      
+      networkManager.connect(TEST_TOKEN);
+    });
+    
+    // Disconnect
+    disconnectBtn.addEventListener('click', () => {
+      log('Disconnecting...', 'info');
+      if (networkManager) {
+        networkManager.disconnect();
+        networkManager = null;
+      }
+      updateStatus(false);
+    });
+    
+    // Test input
+    testInputBtn.addEventListener('click', () => {
+      if (!networkManager) return;
+      
+      const moveInput = { x: Math.random() - 0.5, y: 0, z: Math.random() - 0.5 };
+      const lookInput = { x: 0, y: Math.random() * Math.PI * 2 };
+      const actions = { jump: false, crouch: false, sprint: true, ads: false };
+      
+      const sent = networkManager.sendInput(moveInput, lookInput, actions, 'ar_mk4', 0.016);
+      
+      if (sent) {
+        log('Sent test input', 'info');
+      } else {
+        log('Failed to send input', 'warn');
+      }
+    });
+    
+    // Test fire
+    testFireBtn.addEventListener('click', () => {
+      if (!networkManager) return;
+      
+      const weaponState = {
+        weaponId: 'ar_mk4',
+        rpm: 650,
+        spread: 0.5,
+      };
+      
+      const sent = networkManager.sendFire(weaponState);
+      
+      if (sent) {
+        log('Sent test fire', 'info');
+      } else {
+        log('Failed to send fire (rate limited)', 'warn');
+      }
+    });
+    
+    // Clear log
+    clearLogBtn.addEventListener('click', () => {
+      logDiv.innerHTML = '';
+    });
+    
+    // Initial state
+    updateStatus(false);
+    log('Network test ready. Click "Connect to Server" to begin.', 'info');
+  </script>
+</body>
+</html>
