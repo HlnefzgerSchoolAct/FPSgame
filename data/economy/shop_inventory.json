@@ -1,0 +1,454 @@
+{
+  "$schema": "shop-inventory-schema",
+  "version": "1.0.0",
+  "description": "Shop inventory with cosmetics, bundles, and limited-time offers. All items are cosmetic-only.",
+  "shop_sections": [
+    "featured",
+    "weapon_skins",
+    "operator_skins",
+    "accessories",
+    "bundles",
+    "battle_pass"
+  ],
+  "featured_rotation": {
+    "slots": 6,
+    "refresh_interval_hours": 24,
+    "highlights_premium": true
+  },
+  "weapon_skins": {
+    "categories": [
+      {
+        "weapon_class": "assault_rifle",
+        "items": [
+          {
+            "id": "skin_ar_mk4_urban_camo",
+            "name": "MK-4 Urban Camo",
+            "rarity": "common",
+            "price_credits": 2500,
+            "description": "Urban camouflage pattern"
+          },
+          {
+            "id": "skin_ar_mk4_digital",
+            "name": "MK-4 Digital",
+            "rarity": "rare",
+            "price_credits": 5000,
+            "description": "Digital camouflage with animated pattern"
+          },
+          {
+            "id": "skin_ar_mk4_chrome",
+            "name": "MK-4 Chrome",
+            "rarity": "epic",
+            "price_gems": 750,
+            "description": "Reflective chrome finish with custom animations"
+          },
+          {
+            "id": "skin_ar_mk4_reactive_phoenix",
+            "name": "MK-4 Phoenix Protocol",
+            "rarity": "legendary",
+            "price_gems": 1750,
+            "description": "Reactive skin that evolves with kills. Fire effects and custom sounds.",
+            "reactive": true
+          },
+          {
+            "id": "skin_ar_vanguard_tactical",
+            "name": "Vanguard Tactical Black",
+            "rarity": "common",
+            "price_credits": 2500
+          },
+          {
+            "id": "skin_ar_vanguard_gold",
+            "name": "Vanguard Gold",
+            "rarity": "epic",
+            "price_credits": 15000,
+            "unlock_requirement": "weapon_level_15"
+          }
+        ]
+      },
+      {
+        "weapon_class": "smg",
+        "items": [
+          {
+            "id": "skin_smg_phantom_neon_blue",
+            "name": "Phantom Neon Blue",
+            "rarity": "rare",
+            "price_credits": 4500
+          },
+          {
+            "id": "skin_smg_phantom_carbon",
+            "name": "Phantom Carbon Fiber",
+            "rarity": "epic",
+            "price_gems": 850
+          },
+          {
+            "id": "skin_smg_scorpion_electric",
+            "name": "Scorpion Electric",
+            "rarity": "legendary",
+            "price_gems": 1750,
+            "reactive": true
+          }
+        ]
+      },
+      {
+        "weapon_class": "shotgun",
+        "items": [
+          {
+            "id": "skin_shotgun_enforcer_orange",
+            "name": "Enforcer Warning Orange",
+            "rarity": "common",
+            "price_credits": 2000
+          },
+          {
+            "id": "skin_shotgun_enforcer_beast",
+            "name": "Enforcer Beast Mode",
+            "rarity": "epic",
+            "price_gems": 900
+          }
+        ]
+      },
+      {
+        "weapon_class": "sniper",
+        "items": [
+          {
+            "id": "skin_sniper_longshot_arctic",
+            "name": "Longshot Arctic Ops",
+            "rarity": "rare",
+            "price_credits": 6000
+          },
+          {
+            "id": "skin_sniper_longshot_dragon",
+            "name": "Longshot Dragon Scale",
+            "rarity": "legendary",
+            "price_gems": 2000
+          }
+        ]
+      },
+      {
+        "weapon_class": "sidearm",
+        "items": [
+          {
+            "id": "skin_sidearm_p9_silver",
+            "name": "P-9 Silver",
+            "rarity": "common",
+            "price_credits": 1500
+          },
+          {
+            "id": "skin_sidearm_revolver_ivory",
+            "name": "Revolver Ivory Grip",
+            "rarity": "epic",
+            "price_credits": 12000
+          }
+        ]
+      }
+    ]
+  },
+  "operator_skins": {
+    "items": [
+      {
+        "id": "operator_tactical_black",
+        "name": "Tactical Black Ops",
+        "rarity": "rare",
+        "price_credits": 8000,
+        "description": "All-black tactical outfit"
+      },
+      {
+        "id": "operator_desert_specialist",
+        "name": "Desert Specialist",
+        "rarity": "epic",
+        "price_gems": 1200,
+        "description": "Desert camouflage operator outfit with unique voice lines"
+      },
+      {
+        "id": "operator_cyber_commando",
+        "name": "Cyber Commando",
+        "rarity": "legendary",
+        "price_gems": 2000,
+        "description": "Futuristic operator skin with holographic effects"
+      },
+      {
+        "id": "operator_elite_ops",
+        "name": "Elite Ops",
+        "rarity": "legendary",
+        "price_gems": 1800,
+        "description": "Premium operator skin with custom animations"
+      }
+    ]
+  },
+  "accessories": {
+    "charms": [
+      {
+        "id": "charm_bullet",
+        "name": "Lucky Bullet",
+        "rarity": "common",
+        "price_credits": 1000
+      },
+      {
+        "id": "charm_medal",
+        "name": "Medal of Honor",
+        "rarity": "rare",
+        "price_credits": 2500
+      },
+      {
+        "id": "charm_golden_skull",
+        "name": "Golden Skull",
+        "rarity": "epic",
+        "price_gems": 500
+      }
+    ],
+    "sprays": [
+      {
+        "id": "spray_thumbs_up",
+        "name": "Thumbs Up",
+        "rarity": "common",
+        "price_credits": 800
+      },
+      {
+        "id": "spray_gg",
+        "name": "GG",
+        "rarity": "common",
+        "price_credits": 800
+      },
+      {
+        "id": "spray_legendary_mark",
+        "name": "Legendary Mark",
+        "rarity": "rare",
+        "price_credits": 2000
+      },
+      {
+        "id": "spray_animated_victory",
+        "name": "Animated Victory",
+        "rarity": "epic",
+        "price_gems": 600,
+        "animated": true
+      }
+    ],
+    "player_cards": [
+      {
+        "id": "card_rookie",
+        "name": "Rookie Card",
+        "rarity": "common",
+        "price_credits": 1500
+      },
+      {
+        "id": "card_veteran",
+        "name": "Veteran Card",
+        "rarity": "rare",
+        "price_credits": 3500
+      },
+      {
+        "id": "card_elite",
+        "name": "Elite Card",
+        "rarity": "epic",
+        "price_credits": 8000
+      }
+    ],
+    "emblems": [
+      {
+        "id": "emblem_bronze_star",
+        "name": "Bronze Star",
+        "rarity": "common",
+        "price_credits": 1200
+      },
+      {
+        "id": "emblem_silver_star",
+        "name": "Silver Star",
+        "rarity": "rare",
+        "price_credits": 3000
+      },
+      {
+        "id": "emblem_gold_star",
+        "name": "Gold Star",
+        "rarity": "epic",
+        "price_credits": 10000
+      },
+      {
+        "id": "emblem_animated_flame",
+        "name": "Animated Flame",
+        "rarity": "legendary",
+        "price_gems": 1200,
+        "animated": true
+      }
+    ],
+    "emotes": [
+      {
+        "id": "emote_salute",
+        "name": "Salute",
+        "rarity": "rare",
+        "price_credits": 4000
+      },
+      {
+        "id": "emote_victory_dance",
+        "name": "Victory Dance",
+        "rarity": "epic",
+        "price_gems": 800
+      },
+      {
+        "id": "emote_taunt",
+        "name": "Taunt",
+        "rarity": "legendary",
+        "price_gems": 1200
+      }
+    ],
+    "finishers": [
+      {
+        "id": "finisher_lightning",
+        "name": "Lightning Strike",
+        "rarity": "epic",
+        "price_gems": 1000,
+        "description": "Lightning effect on final kill"
+      },
+      {
+        "id": "finisher_orbital_strike",
+        "name": "Orbital Strike",
+        "rarity": "legendary",
+        "price_gems": 1500,
+        "description": "Orbital laser on final kill"
+      }
+    ]
+  },
+  "bundles": {
+    "items": [
+      {
+        "id": "bundle_starter_pack",
+        "name": "Starter Pack",
+        "price_gems": 1000,
+        "discount_percent": 30,
+        "contents": [
+          "skin_ar_mk4_digital",
+          "skin_sidearm_p9_silver",
+          "charm_bullet",
+          "spray_gg",
+          "credits_2000"
+        ],
+        "value_gems": 1430,
+        "featured": true,
+        "new_player_only": true
+      },
+      {
+        "id": "bundle_ar_complete_set",
+        "name": "AR Master Bundle",
+        "price_gems": 2500,
+        "discount_percent": 25,
+        "contents": [
+          "skin_ar_mk4_chrome",
+          "skin_ar_vanguard_gold",
+          "charm_medal",
+          "operator_tactical_black"
+        ],
+        "value_gems": 3350
+      },
+      {
+        "id": "bundle_legendary_collection",
+        "name": "Legendary Collection",
+        "price_gems": 5000,
+        "discount_percent": 35,
+        "contents": [
+          "skin_ar_mk4_reactive_phoenix",
+          "skin_smg_scorpion_electric",
+          "operator_cyber_commando",
+          "finisher_orbital_strike",
+          "emblem_animated_flame",
+          "credits_5000"
+        ],
+        "value_gems": 7700,
+        "limited_time": true,
+        "end_date": "2025-03-31"
+      },
+      {
+        "id": "bundle_seasonal_summer",
+        "name": "Summer Vibes Bundle",
+        "price_gems": 1800,
+        "discount_percent": 20,
+        "seasonal": true,
+        "contents": [
+          "skin_smg_phantom_neon_blue",
+          "operator_desert_specialist",
+          "spray_animated_victory",
+          "emote_victory_dance"
+        ]
+      }
+    ]
+  },
+  "limited_offers": {
+    "daily_deal": {
+      "description": "One randomly selected item at 40% discount",
+      "refresh_time": "00:00:00 UTC",
+      "discount_percent": 40
+    },
+    "weekly_featured": {
+      "description": "Premium bundle at 30% discount",
+      "refresh_time": "Monday 00:00:00 UTC",
+      "discount_percent": 30
+    },
+    "flash_sale": {
+      "description": "Random 6-hour sale on select items",
+      "discount_percent": 50,
+      "frequency": "2-3 times per week"
+    }
+  },
+  "special_items": {
+    "name_change": {
+      "id": "name_change_token",
+      "name": "Name Change Token",
+      "price_credits": 10000,
+      "price_gems": 500,
+      "description": "Change your in-game name once"
+    },
+    "loadout_slots": {
+      "id": "loadout_slot_additional",
+      "name": "Additional Loadout Slot",
+      "price_credits": 5000,
+      "price_gems": 250,
+      "max_purchase": 5,
+      "description": "Add one more custom loadout slot"
+    }
+  },
+  "rarity_guidelines": {
+    "common": {
+      "price_credits_range": "800-2500",
+      "price_gems_range": "N/A",
+      "description": "Basic cosmetics, solid colors, simple patterns"
+    },
+    "rare": {
+      "price_credits_range": "2500-6000",
+      "price_gems_range": "N/A",
+      "description": "Detailed patterns, special colors, minor effects"
+    },
+    "epic": {
+      "price_credits_range": "8000-15000",
+      "price_gems_range": "500-1200",
+      "description": "Animated elements, unique models, special effects"
+    },
+    "legendary": {
+      "price_credits_range": "N/A (gems only)",
+      "price_gems_range": "1200-2000",
+      "description": "Full custom models, reactive features, kill effects, custom sounds"
+    }
+  },
+  "cosmetic_categories_summary": {
+    "total_weapon_skins": 45,
+    "total_operator_skins": 12,
+    "total_charms": 20,
+    "total_sprays": 30,
+    "total_player_cards": 25,
+    "total_emblems": 20,
+    "total_emotes": 15,
+    "total_finishers": 8,
+    "total_bundles": 12
+  },
+  "design_notes": {
+    "pricing_strategy": "Credits-only items (common/rare) provide F2P progression. Gems unlock premium/exclusive items.",
+    "bundle_value": "Bundles provide 20-40% savings vs individual purchases, incentivizing larger transactions",
+    "limited_offers": "Rotating deals and flash sales create urgency and engagement",
+    "rarity_balance": "50% common, 30% rare, 15% epic, 5% legendary distribution",
+    "no_gameplay_impact": "ALL items are purely cosmetic. No stat changes, no advantages.",
+    "seasonal_rotation": "Limited-time seasonal items return annually, reducing FOMO",
+    "grinding_vs_paying": "Most items available for credits with grinding, or gems for instant access",
+    "whale_friendliness": "High-value bundles and exclusive legendaries cater to big spenders",
+    "references": [
+      "Valorant skin pricing and bundle structure",
+      "Apex Legends seasonal and limited-time offers",
+      "CS:GO weapon skin rarity system",
+      "Fortnite item shop rotation and featured bundles"
+    ]
+  }
+}
