@@ -1,0 +1,126 @@
+{
+  "$schema": "player-progression-schema",
+  "version": "1.0.0",
+  "description": "Player account leveling system with XP curve designed for 8-12 hour progression to mid-tier rewards",
+  "max_level": 100,
+  "prestige_available": true,
+  "max_prestige": 10,
+  "xp_curve": [
+    { "level": 1, "xp_required": 0, "cumulative_xp": 0, "unlock": "tutorial_complete" },
+    { "level": 2, "xp_required": 500, "cumulative_xp": 500, "unlock": "loadout_slot_2" },
+    { "level": 3, "xp_required": 750, "cumulative_xp": 1250, "unlock": "daily_challenge_slot_1" },
+    { "level": 4, "xp_required": 1000, "cumulative_xp": 2250, "unlock": "smg_scorpion" },
+    { "level": 5, "xp_required": 1250, "cumulative_xp": 3500, "unlock": "loadout_slot_3" },
+    { "level": 6, "xp_required": 1500, "cumulative_xp": 5000, "unlock": "shotgun_enforcer" },
+    { "level": 7, "xp_required": 1750, "cumulative_xp": 6750, "unlock": "ranked_mode" },
+    { "level": 8, "xp_required": 2000, "cumulative_xp": 8750, "unlock": "daily_challenge_slot_2" },
+    { "level": 9, "xp_required": 2250, "cumulative_xp": 11000, "unlock": "sniper_marksman" },
+    { "level": 10, "xp_required": 2500, "cumulative_xp": 13500, "unlock": "loadout_slot_4" },
+    { "level": 11, "xp_required": 2750, "cumulative_xp": 16250, "unlock": "calling_card_rare" },
+    { "level": 12, "xp_required": 3000, "cumulative_xp": 19250, "unlock": "ar_vanguard" },
+    { "level": 13, "xp_required": 3250, "cumulative_xp": 22500, "unlock": "weekly_challenge_slot_1" },
+    { "level": 14, "xp_required": 3500, "cumulative_xp": 26000, "unlock": "shotgun_auto12" },
+    { "level": 15, "xp_required": 3750, "cumulative_xp": 29750, "unlock": "loadout_slot_5" },
+    { "level": 16, "xp_required": 4000, "cumulative_xp": 33750, "unlock": "emblem_rare" },
+    { "level": 17, "xp_required": 4250, "cumulative_xp": 38000, "unlock": "daily_challenge_slot_3" },
+    { "level": 18, "xp_required": 4500, "cumulative_xp": 42500, "unlock": "sniper_longshot" },
+    { "level": 19, "xp_required": 4750, "cumulative_xp": 47250, "unlock": "player_title_rare" },
+    { "level": 20, "xp_required": 5000, "cumulative_xp": 52250, "unlock": "credits_1000" },
+    { "level": 25, "xp_required": 6250, "cumulative_xp": 78750, "unlock": "sidearm_revolver" },
+    { "level": 30, "xp_required": 7500, "cumulative_xp": 112500, "unlock": "calling_card_epic" },
+    { "level": 35, "xp_required": 8750, "cumulative_xp": 153750, "unlock": "weekly_challenge_slot_2" },
+    { "level": 40, "xp_required": 10000, "cumulative_xp": 203750, "unlock": "emblem_epic" },
+    { "level": 45, "xp_required": 11250, "cumulative_xp": 262500, "unlock": "player_title_epic" },
+    { "level": 50, "xp_required": 12500, "cumulative_xp": 330000, "unlock": "credits_2500" },
+    { "level": 55, "xp_required": 13750, "cumulative_xp": 406250, "unlock": "calling_card_legendary" },
+    { "level": 60, "xp_required": 15000, "cumulative_xp": 491250, "unlock": "weekly_challenge_slot_3" },
+    { "level": 65, "xp_required": 16250, "cumulative_xp": 585000, "unlock": "emblem_legendary" },
+    { "level": 70, "xp_required": 17500, "cumulative_xp": 687500, "unlock": "player_title_legendary" },
+    { "level": 75, "xp_required": 18750, "cumulative_xp": 798750, "unlock": "credits_5000" },
+    { "level": 80, "xp_required": 20000, "cumulative_xp": 918750, "unlock": "name_change_token" },
+    { "level": 85, "xp_required": 21250, "cumulative_xp": 1047500, "unlock": "spray_legendary" },
+    { "level": 90, "xp_required": 22500, "cumulative_xp": 1185000, "unlock": "finisher_legendary" },
+    { "level": 95, "xp_required": 23750, "cumulative_xp": 1331250, "unlock": "emote_legendary" },
+    { "level": 100, "xp_required": 25000, "cumulative_xp": 1486250, "unlock": "prestige_eligible" }
+  ],
+  "xp_sources": {
+    "match_completion": 300,
+    "match_win": 200,
+    "match_loss": 50,
+    "kill": 20,
+    "assist": 10,
+    "headshot": 5,
+    "objective_capture": 50,
+    "objective_time_s": 2,
+    "medal_earned": 15,
+    "first_blood": 10,
+    "ace": 100,
+    "performance_multipliers": {
+      "top_player": 1.25,
+      "top_3": 1.15,
+      "positive_kd": 1.10
+    }
+  },
+  "prestige_system": {
+    "description": "Prestige resets player level to 1 while retaining all unlocks and adding prestige emblem",
+    "requirements": {
+      "level": 100,
+      "opt_in": true
+    },
+    "rewards_per_prestige": [
+      { "prestige": 1, "reward": "prestige_1_emblem", "credits_bonus": 5000 },
+      { "prestige": 2, "reward": "prestige_2_emblem", "credits_bonus": 5000 },
+      { "prestige": 3, "reward": "prestige_3_emblem", "credits_bonus": 7500 },
+      { "prestige": 4, "reward": "prestige_4_emblem", "credits_bonus": 7500 },
+      { "prestige": 5, "reward": "prestige_5_emblem", "credits_bonus": 10000 },
+      { "prestige": 6, "reward": "prestige_6_emblem", "credits_bonus": 10000 },
+      { "prestige": 7, "reward": "prestige_7_emblem", "credits_bonus": 12500 },
+      { "prestige": 8, "reward": "prestige_8_emblem", "credits_bonus": 12500 },
+      { "prestige": 9, "reward": "prestige_9_emblem", "credits_bonus": 15000 },
+      { "prestige": 10, "reward": "prestige_master_emblem", "credits_bonus": 25000, "title": "Prestige Master" }
+    ],
+    "retained_on_prestige": [
+      "all_weapon_unlocks",
+      "all_attachments",
+      "all_cosmetics",
+      "loadout_slots",
+      "challenge_slots",
+      "ranked_mmr",
+      "friends_list",
+      "settings"
+    ],
+    "reset_on_prestige": [
+      "player_level",
+      "seasonal_rank"
+    ]
+  },
+  "milestone_rewards": {
+    "every_5_levels": { "type": "credits", "amount": 500 },
+    "every_10_levels": { "type": "loot_box", "rarity": "common" },
+    "every_25_levels": { "type": "loot_box", "rarity": "rare" },
+    "level_50": { "type": "loot_box", "rarity": "epic" },
+    "level_100": { "type": "loot_box", "rarity": "legendary" }
+  },
+  "progression_pacing": {
+    "hours_to_level_20": "8-10 hours",
+    "hours_to_level_50": "25-30 hours",
+    "hours_to_level_100": "80-100 hours",
+    "avg_xp_per_match": "400-600",
+    "matches_per_hour": "6-8",
+    "design_philosophy": "Early levels provide functional unlocks. Mid-levels add variety. Late levels are prestige/cosmetics only."
+  },
+  "design_notes": {
+    "unlock_strategy": "Weapons unlock at strategic intervals to maintain progression feel. Core gameplay available by level 10.",
+    "engagement_hooks": [
+      "Level 7 ranked unlock drives initial grind",
+      "Regular cosmetic unlocks maintain long-term engagement",
+      "Prestige system for dedicated players",
+      "Credits every 5 levels enable F2P economy participation"
+    ],
+    "references": [
+      "Call of Duty prestige system",
+      "Apex Legends level rewards",
+      "Valorant account progression"
+    ]
+  }
+}

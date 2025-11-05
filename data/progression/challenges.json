@@ -1,0 +1,286 @@
+{
+  "$schema": "challenges-schema",
+  "version": "1.0.0",
+  "description": "Daily and weekly challenges for player engagement and reward loops",
+  "daily_challenges": {
+    "max_active": 3,
+    "refresh_time": "00:00:00 UTC",
+    "reroll_cost_credits": 100,
+    "challenges": [
+      {
+        "id": "daily_kills_25",
+        "name": "Eliminate 25 Enemies",
+        "description": "Get 25 kills in any game mode",
+        "requirement": { "type": "kills", "count": 25 },
+        "reward": { "xp": 500, "credits": 100 },
+        "weight": 10
+      },
+      {
+        "id": "daily_wins_3",
+        "name": "Victorious",
+        "description": "Win 3 matches",
+        "requirement": { "type": "match_wins", "count": 3 },
+        "reward": { "xp": 750, "credits": 150 },
+        "weight": 8
+      },
+      {
+        "id": "daily_headshots_10",
+        "name": "Sharpshooter",
+        "description": "Get 10 headshot kills",
+        "requirement": { "type": "headshot_kills", "count": 10 },
+        "reward": { "xp": 600, "credits": 125 },
+        "weight": 7
+      },
+      {
+        "id": "daily_ar_kills_15",
+        "name": "Rifle Mastery",
+        "description": "Get 15 kills with Assault Rifles",
+        "requirement": { "type": "weapon_class_kills", "weapon_class": "assault_rifle", "count": 15 },
+        "reward": { "xp": 500, "credits": 100 },
+        "weight": 9
+      },
+      {
+        "id": "daily_smg_kills_20",
+        "name": "Run and Gun",
+        "description": "Get 20 kills with SMGs",
+        "requirement": { "type": "weapon_class_kills", "weapon_class": "smg", "count": 20 },
+        "reward": { "xp": 500, "credits": 100 },
+        "weight": 9
+      },
+      {
+        "id": "daily_objective_time_120",
+        "name": "Objective Player",
+        "description": "Spend 120 seconds on objectives",
+        "requirement": { "type": "objective_time_s", "count": 120, "modes": ["koth", "domination"] },
+        "reward": { "xp": 650, "credits": 125 },
+        "weight": 6
+      },
+      {
+        "id": "daily_matches_5",
+        "name": "Dedicated",
+        "description": "Complete 5 matches",
+        "requirement": { "type": "match_completions", "count": 5 },
+        "reward": { "xp": 800, "credits": 150 },
+        "weight": 7
+      },
+      {
+        "id": "daily_assists_10",
+        "name": "Team Player",
+        "description": "Get 10 assists",
+        "requirement": { "type": "assists", "count": 10 },
+        "reward": { "xp": 450, "credits": 90 },
+        "weight": 8
+      },
+      {
+        "id": "daily_double_kills_5",
+        "name": "Double Trouble",
+        "description": "Get 5 double kills",
+        "requirement": { "type": "multikills", "multikill_type": "double", "count": 5 },
+        "reward": { "xp": 700, "credits": 140 },
+        "weight": 5
+      },
+      {
+        "id": "daily_shotgun_kills_10",
+        "name": "Close Quarters",
+        "description": "Get 10 kills with Shotguns",
+        "requirement": { "type": "weapon_class_kills", "weapon_class": "shotgun", "count": 10 },
+        "reward": { "xp": 500, "credits": 100 },
+        "weight": 7
+      },
+      {
+        "id": "daily_longshot_kills_8",
+        "name": "Distance Demon",
+        "description": "Get 8 longshot kills (40m+)",
+        "requirement": { "type": "longshot_kills", "min_distance": 40, "count": 8 },
+        "reward": { "xp": 600, "credits": 120 },
+        "weight": 5
+      },
+      {
+        "id": "daily_no_deaths_match",
+        "name": "Untouchable",
+        "description": "Win a match without dying",
+        "requirement": { "type": "match_win_no_deaths", "count": 1 },
+        "reward": { "xp": 1000, "credits": 200 },
+        "weight": 2
+      }
+    ]
+  },
+  "weekly_challenges": {
+    "max_active": 3,
+    "refresh_time": "Monday 00:00:00 UTC",
+    "reroll_cost_credits": 250,
+    "challenges": [
+      {
+        "id": "weekly_kills_150",
+        "name": "Eliminator",
+        "description": "Get 150 kills this week",
+        "requirement": { "type": "kills", "count": 150 },
+        "reward": { "xp": 3000, "credits": 500 },
+        "weight": 10
+      },
+      {
+        "id": "weekly_wins_15",
+        "name": "Champion",
+        "description": "Win 15 matches this week",
+        "requirement": { "type": "match_wins", "count": 15 },
+        "reward": { "xp": 4000, "credits": 750 },
+        "weight": 8
+      },
+      {
+        "id": "weekly_headshots_50",
+        "name": "Precision Expert",
+        "description": "Get 50 headshot kills this week",
+        "requirement": { "type": "headshot_kills", "count": 50 },
+        "reward": { "xp": 3500, "credits": 600 },
+        "weight": 7
+      },
+      {
+        "id": "weekly_weapon_master",
+        "name": "Weapon Master",
+        "description": "Get 25 kills with 3 different weapon classes",
+        "requirement": { 
+          "type": "weapon_variety",
+          "weapon_classes": ["assault_rifle", "smg", "shotgun"],
+          "kills_per_class": 25
+        },
+        "reward": { "xp": 3500, "credits": 650 },
+        "weight": 6
+      },
+      {
+        "id": "weekly_mode_variety",
+        "name": "Mode Explorer",
+        "description": "Win a match in TDM, KOTH, and Domination",
+        "requirement": {
+          "type": "mode_wins",
+          "modes": ["tdm", "koth", "domination"],
+          "wins_per_mode": 1
+        },
+        "reward": { "xp": 3000, "credits": 500 },
+        "weight": 7
+      },
+      {
+        "id": "weekly_killstreak_10",
+        "name": "Unstoppable Force",
+        "description": "Get a 10 killstreak",
+        "requirement": { "type": "killstreak", "streak": 10 },
+        "reward": { "xp": 5000, "credits": 1000 },
+        "weight": 3
+      },
+      {
+        "id": "weekly_objective_captures_25",
+        "name": "Objective Specialist",
+        "description": "Capture 25 objectives",
+        "requirement": { "type": "objective_captures", "count": 25 },
+        "reward": { "xp": 3500, "credits": 700 },
+        "weight": 6
+      },
+      {
+        "id": "weekly_top_player_10",
+        "name": "MVP",
+        "description": "Finish as top player in 10 matches",
+        "requirement": { "type": "match_top_player", "count": 10 },
+        "reward": { "xp": 4500, "credits": 900 },
+        "weight": 4
+      },
+      {
+        "id": "weekly_sniper_kills_40",
+        "name": "Overwatch",
+        "description": "Get 40 kills with Sniper Rifles",
+        "requirement": { "type": "weapon_class_kills", "weapon_class": "sniper", "count": 40 },
+        "reward": { "xp": 3000, "credits": 550 },
+        "weight": 6
+      },
+      {
+        "id": "weekly_comeback_wins_5",
+        "name": "Never Give Up",
+        "description": "Win 5 matches after being behind",
+        "requirement": { "type": "comeback_wins", "count": 5 },
+        "reward": { "xp": 4000, "credits": 800 },
+        "weight": 5
+      },
+      {
+        "id": "weekly_perfect_matches_3",
+        "name": "Flawless Victory",
+        "description": "Win 3 matches with 2.0+ K/D",
+        "requirement": { "type": "match_win_kd", "min_kd": 2.0, "count": 3 },
+        "reward": { "xp": 4500, "credits": 850 },
+        "weight": 4
+      },
+      {
+        "id": "weekly_weapon_level_ups_5",
+        "name": "Arsenal Builder",
+        "description": "Level up any weapons 5 times",
+        "requirement": { "type": "weapon_level_ups", "count": 5 },
+        "reward": { "xp": 3000, "credits": 600 },
+        "weight": 7
+      }
+    ]
+  },
+  "seasonal_challenges": {
+    "description": "Long-term challenges that span entire season (8-12 weeks)",
+    "challenges": [
+      {
+        "id": "seasonal_total_kills_2500",
+        "name": "Season Warrior",
+        "description": "Get 2,500 kills this season",
+        "requirement": { "type": "kills", "count": 2500 },
+        "reward": { "xp": 10000, "credits": 3000, "cosmetic": "seasonal_calling_card_warrior" }
+      },
+      {
+        "id": "seasonal_all_weapons_level_5",
+        "name": "Jack of All Trades",
+        "description": "Reach level 5 with all weapon types",
+        "requirement": { "type": "all_weapons_min_level", "level": 5 },
+        "reward": { "xp": 15000, "credits": 5000, "cosmetic": "seasonal_emblem_versatile" }
+      },
+      {
+        "id": "seasonal_ranked_tier",
+        "name": "Competitive Climber",
+        "description": "Reach Gold tier in Ranked mode",
+        "requirement": { "type": "ranked_tier", "tier": "gold" },
+        "reward": { "xp": 12000, "credits": 4000, "cosmetic": "seasonal_title_competitive" }
+      },
+      {
+        "id": "seasonal_win_all_modes",
+        "name": "Mode Master",
+        "description": "Win 50 matches in each game mode",
+        "requirement": { "type": "mode_wins_all", "wins_per_mode": 50 },
+        "reward": { "xp": 20000, "credits": 7500, "cosmetic": "seasonal_weapon_skin_elite" }
+      }
+    ]
+  },
+  "challenge_rewards_summary": {
+    "daily_total_potential": {
+      "xp": "1350-2550 per day",
+      "credits": "250-450 per day"
+    },
+    "weekly_total_potential": {
+      "xp": "10500-13500 per week",
+      "credits": "1850-2650 per week"
+    },
+    "monthly_impact": {
+      "description": "Completing all dailies and weeklies for a month",
+      "xp": "~82000",
+      "credits": "~17500",
+      "equivalent_player_levels": "~8-10 levels"
+    }
+  },
+  "design_notes": {
+    "philosophy": "Challenges guide player behavior toward varied gameplay while providing consistent rewards",
+    "difficulty_curve": "Daily challenges are achievable in 1-2 hours. Weekly challenges require 8-12 hours of focused play.",
+    "variety": "Challenge pool rotates to prevent repetition. Players see new challenges regularly.",
+    "reroll_system": "Optional rerolls for credits allow players to skip undesired challenges without feeling forced",
+    "f2p_friendly": "All challenges completable without purchases. Credits from challenges enable shop participation.",
+    "engagement_targets": [
+      "Daily login incentive",
+      "Multi-day retention through weekly challenges",
+      "Long-term goals via seasonal challenges",
+      "Skill variety encouraged through weapon/mode challenges"
+    ],
+    "references": [
+      "Apex Legends daily/weekly challenge system",
+      "Call of Duty challenge variety and rewards",
+      "Fortnite challenge pacing and engagement"
+    ]
+  }
+}

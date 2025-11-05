@@ -1,0 +1,168 @@
+{
+  "$schema": "currency-schema",
+  "version": "1.0.0",
+  "description": "Two-currency economy: Credits (earnable) and Gems (premium)",
+  "currencies": [
+    {
+      "id": "credits",
+      "type": "earnable",
+      "display_name": "Credits",
+      "symbol": "C",
+      "description": "Earned through gameplay. Used for cosmetics, rerolls, and non-premium items.",
+      "color": "#FFD700",
+      "icon": "currency_credits.png",
+      "max_wallet": 1000000,
+      "sources": [
+        "match_completion",
+        "match_win",
+        "daily_challenges",
+        "weekly_challenges",
+        "seasonal_challenges",
+        "battle_pass",
+        "player_level_ups",
+        "seasonal_rewards",
+        "event_rewards"
+      ],
+      "sinks": [
+        "cosmetic_purchases",
+        "challenge_rerolls",
+        "name_changes",
+        "loadout_slots",
+        "seasonal_content"
+      ],
+      "earning_rates": {
+        "match_completion_avg": 100,
+        "match_win_bonus": 50,
+        "daily_challenges_total": 350,
+        "weekly_challenges_total": 2000,
+        "hourly_rate_casual": "400-600 credits/hour",
+        "hourly_rate_active": "600-900 credits/hour",
+        "daily_cap": null
+      },
+      "anti_inflation": {
+        "no_trading": true,
+        "no_gifting_credits": true,
+        "seasonal_cosmetic_rotation": "Limited items cycle out",
+        "sink_balance": "Cost of cosmetics designed to absorb credits over time"
+      }
+    },
+    {
+      "id": "gems",
+      "type": "premium",
+      "display_name": "Gems",
+      "symbol": "G",
+      "description": "Premium currency purchased with real money. Used for battle pass, exclusive cosmetics, and tier skips.",
+      "color": "#00FFFF",
+      "icon": "currency_gems.png",
+      "max_wallet": 100000,
+      "sources": [
+        "real_money_purchase",
+        "battle_pass_free_rewards",
+        "special_events",
+        "compensation"
+      ],
+      "uses": [
+        "battle_pass_purchase",
+        "exclusive_cosmetics",
+        "tier_skips",
+        "bundles",
+        "limited_offers",
+        "conversion_to_credits"
+      ],
+      "earning_free": {
+        "battle_pass_free_track": 200,
+        "special_events_monthly": 50,
+        "seasonal_login_rewards": 100,
+        "total_free_monthly": "300-400 gems"
+      },
+      "purchase_packages": [
+        { "gems": 500, "price_usd": 4.99, "bonus": 0, "popular": false },
+        { "gems": 1100, "price_usd": 9.99, "bonus": 100, "popular": true },
+        { "gems": 2400, "price_usd": 19.99, "bonus": 400, "popular": true },
+        { "gems": 5500, "price_usd": 49.99, "bonus": 1000, "popular": false },
+        { "gems": 12000, "price_usd": 99.99, "bonus": 3000, "popular": false }
+      ],
+      "conversion_rate": {
+        "enabled": true,
+        "gems_to_credits": {
+          "rate": "100 gems = 1000 credits",
+          "description": "Emergency conversion for players who want credits immediately"
+        },
+        "credits_to_gems": {
+          "enabled": false,
+          "reason": "Prevents black market issues and maintains gem value"
+        }
+      }
+    }
+  ],
+  "earning_philosophy": {
+    "free_to_play_viable": "F2P players can earn meaningful cosmetics through Credits",
+    "premium_value": "Gems provide convenience and exclusive items, not power",
+    "no_pay_to_win": "No gameplay advantages purchasable with Gems",
+    "generous_free_rewards": "Battle pass free track and challenges provide regular Credits",
+    "optional_purchases": "All premium purchases optional and cosmetic-only"
+  },
+  "monetization_targets": {
+    "conversion_rate": "8-12% of players purchase gems",
+    "arpdau": "$0.15-0.25",
+    "arppu": "$8-15 per paying user per month",
+    "ltv_target": "$25-50 per player over 12 months",
+    "battle_pass_adoption": "30-40% of active players"
+  },
+  "regional_pricing": {
+    "enabled": true,
+    "regions": [
+      { "region": "US", "multiplier": 1.0 },
+      { "region": "EU", "multiplier": 1.0 },
+      { "region": "UK", "multiplier": 0.95 },
+      { "region": "BR", "multiplier": 0.6 },
+      { "region": "RU", "multiplier": 0.5 },
+      { "region": "CN", "multiplier": 0.7 },
+      { "region": "SEA", "multiplier": 0.65 },
+      { "region": "LATAM", "multiplier": 0.6 },
+      { "region": "IN", "multiplier": 0.5 }
+    ],
+    "description": "Pricing adjusted for purchasing power parity"
+  },
+  "starter_bundles": {
+    "first_time_buyer": {
+      "gems": 1100,
+      "price_usd": 4.99,
+      "bonus_items": ["exclusive_skin", "500_credits"],
+      "one_time_only": true,
+      "description": "Special offer for first gem purchase"
+    },
+    "welcome_bundle": {
+      "gems": 500,
+      "price_usd": 0.99,
+      "available_until": "level_10",
+      "one_time_only": true
+    }
+  },
+  "anti_abuse": {
+    "purchase_limits": {
+      "daily_gem_purchase_limit": 50000,
+      "refund_policy": "Within 48 hours, unused gems only",
+      "chargeback_protection": "Account flagged on chargeback, gems removed"
+    },
+    "fraud_prevention": {
+      "new_account_purchase_limit": "1000 gems first 7 days",
+      "suspicious_activity_flag": "Rapid large purchases reviewed",
+      "stolen_card_protection": "Payment processor integration"
+    }
+  },
+  "design_notes": {
+    "dual_currency_rationale": "Separates earnable rewards (Credits) from monetization (Gems) for clarity",
+    "credits_purpose": "Provides F2P progression path and shop engagement without purchases",
+    "gems_purpose": "Monetization without compromising game balance or fairness",
+    "balance_strategy": "Generous credit earning keeps F2P engaged, while exclusive gem items drive conversion",
+    "psychological_pricing": "Packages priced at common price points ($4.99, $9.99, etc.)",
+    "bonus_tiers": "Larger purchases provide bonus gems (10-25%) to incentivize higher spending",
+    "references": [
+      "Valorant VP system for premium currency",
+      "Fortnite V-Bucks for conversion rates",
+      "Apex Legends Apex Coins for package sizing",
+      "League of Legends RP for regional pricing"
+    ]
+  }
+}
