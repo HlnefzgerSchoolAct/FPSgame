@@ -14,6 +14,7 @@ import { WeaponDataLoader } from './weapons/WeaponDataLoader.js';
 import { ADSController } from './mechanics/ADSController.js';
 import { SpawnSystemClient } from './mechanics/SpawnSystemClient.js';
 import { AnimationHooks } from './controllers/AnimationHooks.js';
+import { RenderSystem } from './rendering/RenderSystem.js';
 
 export class Game {
   constructor() {
@@ -34,6 +35,9 @@ export class Game {
     this.adsController = new ADSController();
     this.spawnSystem = new SpawnSystemClient();
     this.animationHooks = new AnimationHooks();
+    
+    // Rendering system
+    this.renderSystem = null;
     
     // Current weapon
     this.currentWeapon = null;
@@ -63,6 +67,20 @@ export class Game {
    */
   async init() {
     console.log('Loading game data...');
+    
+    // Initialize rendering system
+    const canvas = document.getElementById('game-canvas');
+    if (canvas) {
+      this.renderSystem = new RenderSystem(canvas, { quality: 'high' });
+      const renderInit = await this.renderSystem.init();
+      if (!renderInit) {
+        console.error('Failed to initialize rendering system');
+        return false;
+      }
+      
+      // Load default map
+      await this.renderSystem.loadMap('arena_hub');
+    }
     
     // Load weapon data
     const loaded = await this.weaponDataLoader.loadAll();
@@ -165,6 +183,33 @@ export class Game {
       this.currentWeapon.update(dt);
     }
     
+    // Update rendering system
+    if (this.renderSystem) {
+      const cameraState = {
+        position: {
+          x: this.playerController.position.x,
+          y: this.playerController.position.y + this.playerController.currentHeight * 0.9,
+          z: this.playerController.position.z
+        },
+        rotation: {
+          x: this.cameraController.pitch,
+          y: this.cameraController.yaw,
+          z: 0
+        }
+      };
+      
+      const weaponState = {
+        mouseInput: input.look,
+        movementState: {
+          isMoving: input.move.x !== 0 || input.move.z !== 0
+        },
+        isADS: this.adsController.inADS()
+      };
+      
+      this.renderSystem.update(dt, cameraState, weaponState, {});
+      this.renderSystem.render(dt);
+    }
+    
     // Emit HUD updates
     this._updateHUD();
   }
@@ -245,6 +290,11 @@ export class Game {
           fireResult.recoil.x * 0.01
         );
         
+        // Apply recoil to weapon rig
+        if (this.renderSystem) {
+          this.renderSystem.applyWeaponRecoil(fireResult.recoil.y, fireResult.recoil.x);
+        }
+        
         // Fire animation hooks
         this.animationHooks.fireMuzzleFlash({
           position: this.playerController.position,
@@ -256,6 +306,15 @@ export class Game {
           position: this.playerController.position,
           weaponId: this.currentWeapon.weaponData.id
         });
+        
+        // Create muzzle flash effect
+        if (this.renderSystem) {
+          const muzzlePos = this.renderSystem.getWeaponMuzzlePosition();
+          const muzzleDir = this.renderSystem.getWeaponMuzzleDirection();
+          if (muzzlePos && muzzleDir) {
+            this.renderSystem.createMuzzleFlash(muzzlePos, muzzleDir, this._getWeaponType());
+          }
+        }
         
         // Perform hit detection
         this._performHitScan(fireResult);
@@ -363,6 +422,16 @@ export class Game {
       1000
     );
     
+    // Create bullet tracer
+    if (this.renderSystem) {
+      const endPos = {
+        x: origin.x + direction.x * (hit ? hit.distance : 100),
+        y: origin.y + direction.y * (hit ? hit.distance : 100),
+        z: origin.z + direction.z * (hit ? hit.distance : 100)
+      };
+      this.renderSystem.createBulletTracer(origin, endPos, 0xffaa00);
+    }
+    
     if (hit) {
       const damage = this.hitDetection.calculateDamage(
         hit.zone === 'head' ? fireResult.headshotDamage : fireResult.damage,
@@ -372,6 +441,27 @@ export class Game {
       );
       
       console.log(`Hit ${hit.zone} at ${hit.distance.toFixed(2)}m for ${damage} damage`);
+      
+      // Create impact effects
+      if (this.renderSystem) {
+        const impactPos = {
+          x: hit.point.x,
+          y: hit.point.y,
+          z: hit.point.z
+        };
+        const impactNormal = { x: 0, y: 1, z: 0 }; // Simple upward normal
+        
+        // Create impact decal
+        this.renderSystem.createImpactDecal(impactPos, impactNormal, 'bullet');
+        
+        // Create hit marker at impact location
+        this.renderSystem.createHitMarker(impactPos, hit.zone === 'head');
+        
+        // Create blood effect if hitting player
+        if (hit.targetId) {
+          this.renderSystem.createBloodEffect(impactPos, direction);
+        }
+      }
       
       // Emit hit event
       window.dispatchEvent(new CustomEvent('hit:local', {
@@ -424,6 +514,11 @@ export class Game {
     
     this.currentWeapon = new WeaponSystem(weaponData, recoilPattern);
     
+    // Load weapon in render system
+    if (this.renderSystem) {
+      this.renderSystem.loadWeapon(weaponData.id);
+    }
+    
     this.animationHooks.fireEquipStart({
       weaponId: weaponData.id,
       equipTime: weaponData.stats.equip_ms
@@ -438,6 +533,23 @@ export class Game {
     }));
     
     console.log('Equipped:', weaponData.name);
+  }
+  
+  /**
+   * Get weapon type for rendering
+   * @private
+   */
+  _getWeaponType() {
+    if (!this.currentWeapon) return 'default';
+    
+    const id = this.currentWeapon.weaponData.id;
+    if (id.startsWith('ar_')) return 'rifle';
+    if (id.startsWith('smg_')) return 'smg';
+    if (id.startsWith('sniper_')) return 'sniper';
+    if (id.startsWith('shotgun_')) return 'shotgun';
+    if (id.startsWith('pistol_') || id.startsWith('magnum_')) return 'pistol';
+    
+    return 'default';
   }
   
   /**
