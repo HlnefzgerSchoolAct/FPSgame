@@ -11,6 +11,11 @@ import { playerDataStore } from '../persistence/PlayerData.js';
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-key-change-in-production';
 const TOKEN_EXPIRY = '7d'; // 7 days
 
+// Warn if using default secret in production
+if (!process.env.JWT_SECRET && process.env.NODE_ENV === 'production') {
+  console.error('⚠️  WARNING: Using default JWT secret in production! Set JWT_SECRET environment variable.');
+}
+
 export class AuthSystem {
   constructor() {
     this.rateLimits = new Map(); // IP -> { count, resetTime }
