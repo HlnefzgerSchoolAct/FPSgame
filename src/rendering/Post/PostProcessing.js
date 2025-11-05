@@ -166,11 +166,21 @@ export class PostProcessing {
   
   /**
    * Render with post-processing
+   * 
+   * Note: Post-processing is currently applied directly by the Renderer
+   * via tone mapping and output color space settings. This method is
+   * reserved for future full-screen passes (bloom, FXAA, etc.) when
+   * integrated with EffectComposer from Three.js examples.
+   * 
+   * For now, quality settings affect:
+   * - Shadow map quality (Renderer.js)
+   * - Bloom enable/disable (via materials)
+   * - Pixel ratio (Renderer.js)
    */
   render() {
-    // For now, just do a simple pass-through
-    // In production, this would render to target and apply effects
-    // Simplified for minimal implementation
+    // Simplified implementation - see note above
+    // Full implementation would use EffectComposer:
+    // this.composer.render();
   }
   
   /**

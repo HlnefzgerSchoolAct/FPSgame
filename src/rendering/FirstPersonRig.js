@@ -152,7 +152,13 @@ export class FirstPersonRig {
       return group;
     } else {
       // Default box for unknown types
-      return new THREE.BoxGeometry(0.1, 0.1, 0.5);
+      const group = new THREE.Group();
+      const defaultMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(0.1, 0.1, 0.5),
+        new THREE.MeshStandardMaterial({ color: 0x333333 })
+      );
+      group.add(defaultMesh);
+      return group;
     }
   }
   

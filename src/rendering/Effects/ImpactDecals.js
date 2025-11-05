@@ -13,7 +13,43 @@ export class ImpactDecals {
     this.maxDecals = 200;
     this.decalLifetime = 30.0; // 30 seconds
     
+    // Pre-generate decal texture
+    this.decalTexture = this._createDecalTexture();
+    
     console.log('ImpactDecals effect created');
+  }
+  
+  /**
+   * Create pre-generated decal texture
+   * @private
+   */
+  _createDecalTexture() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 32;
+    canvas.height = 32;
+    const ctx = canvas.getContext('2d');
+    
+    // Draw bullet hole
+    ctx.fillStyle = '#000000';
+    ctx.beginPath();
+    ctx.arc(16, 16, 12, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Add some random details
+    for (let i = 0; i < 8; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 8 + Math.random() * 8;
+      const x = 16 + Math.cos(angle) * dist;
+      const y = 16 + Math.sin(angle) * dist;
+      ctx.fillStyle = `rgba(0, 0, 0, ${0.3 + Math.random() * 0.3})`;
+      ctx.beginPath();
+      ctx.arc(x, y, 1 + Math.random() * 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.needsUpdate = true;
+    return texture;
   }
   
   /**
@@ -61,42 +97,15 @@ export class ImpactDecals {
   }
   
   /**
-   * Create a decal object
+   * Create a decal object using pre-generated texture
    * @private
    */
   _createDecalObject(type) {
     const size = type === 'bullet' ? 0.1 : 0.15;
     const geometry = new THREE.PlaneGeometry(size, size);
     
-    // Create simple decal texture
-    const canvas = document.createElement('canvas');
-    canvas.width = 32;
-    canvas.height = 32;
-    const ctx = canvas.getContext('2d');
-    
-    // Draw bullet hole
-    ctx.fillStyle = '#000000';
-    ctx.beginPath();
-    ctx.arc(16, 16, 12, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Add some random details
-    for (let i = 0; i < 8; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const dist = 8 + Math.random() * 8;
-      const x = 16 + Math.cos(angle) * dist;
-      const y = 16 + Math.sin(angle) * dist;
-      ctx.fillStyle = `rgba(0, 0, 0, ${0.3 + Math.random() * 0.3})`;
-      ctx.beginPath();
-      ctx.arc(x, y, 1 + Math.random() * 2, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.needsUpdate = true;
-    
     const material = new THREE.MeshBasicMaterial({
-      map: texture,
+      map: this.decalTexture,
       transparent: true,
       opacity: 0.8,
       depthWrite: false,
@@ -147,7 +156,7 @@ export class ImpactDecals {
     } else {
       decal.geometry.dispose();
       decal.material.dispose();
-      if (decal.material.map) decal.material.map.dispose();
+      // Don't dispose shared texture
     }
   }
   
@@ -168,15 +177,20 @@ export class ImpactDecals {
       this.scene.remove(decal);
       decal.geometry.dispose();
       decal.material.dispose();
-      if (decal.material.map) decal.material.map.dispose();
+      // Don't dispose map here - it's shared
     });
     
     // Dispose pooled decals
     this.decalPool.forEach(decal => {
       decal.geometry.dispose();
       decal.material.dispose();
-      if (decal.material.map) decal.material.map.dispose();
+      // Don't dispose map here - it's shared
     });
+    
+    // Dispose shared texture
+    if (this.decalTexture) {
+      this.decalTexture.dispose();
+    }
     
     this.activeDecals = [];
     this.decalPool = [];
