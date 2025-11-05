@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FPS Gameplay System Test</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      background: #1a1a1a;
+      color: #00ff00;
+    }
+    
+    h1 {
+      color: #00ff00;
+      margin-bottom: 20px;
+    }
+    
+    .section {
+      background: #0a0a0a;
+      border: 1px solid #00ff00;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+    
+    .section h2 {
+      margin-top: 0;
+      color: #00ff88;
+    }
+    
+    button {
+      background: #00ff00;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      border-radius: 3px;
+    }
+    
+    button:hover {
+      background: #00dd00;
+    }
+    
+    button:disabled {
+      background: #666;
+      color: #333;
+      cursor: not-allowed;
+    }
+    
+    #output {
+      background: #000;
+      color: #00ff00;
+      padding: 10px;
+      border: 1px solid #00ff00;
+      height: 400px;
+      overflow-y: auto;
+      font-size: 12px;
+      line-height: 1.5;
+      margin-top: 10px;
+    }
+    
+    .test-result {
+      padding: 5px;
+      margin: 2px 0;
+    }
+    
+    .test-result.pass {
+      color: #00ff00;
+    }
+    
+    .test-result.fail {
+      color: #ff0000;
+    }
+    
+    .test-result.info {
+      color: #ffff00;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .stat {
+      background: #0a0a0a;
+      padding: 10px;
+      border: 1px solid #00ff00;
+      border-radius: 3px;
+    }
+    
+    .stat-label {
+      color: #00ff88;
+      font-size: 12px;
+    }
+    
+    .stat-value {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>FPS Gameplay System Test Suite</h1>
+  
+  <div class="section">
+    <h2>System Status</h2>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">Weapons Loaded</div>
+        <div class="stat-value" id="weapons-count">-</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Attachments Loaded</div>
+        <div class="stat-value" id="attachments-count">-</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Recoil Patterns</div>
+        <div class="stat-value" id="patterns-count">-</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Game State</div>
+        <div class="stat-value" id="game-state">menu</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h2>Test Controls</h2>
+    <button onclick="runAllTests()">Run All Tests</button>
+    <button onclick="testWeaponSystem()">Test Weapon System</button>
+    <button onclick="testRecoilPattern()">Test Recoil Patterns</button>
+    <button onclick="testLoadoutManager()">Test Loadout Manager</button>
+    <button onclick="testHealthSystem()">Test Health System</button>
+    <button onclick="testPlayerMovement()">Test Player Movement</button>
+    <button onclick="testHitDetection()">Test Hit Detection</button>
+    <button onclick="clearOutput()">Clear Output</button>
+  </div>
+  
+  <div class="section">
+    <h2>Test Output</h2>
+    <div id="output"></div>
+  </div>
+  
+  <script type="module">
+    import { Game } from './src/Game.js';
+    import { WeaponSystem } from './src/gameplay/WeaponSystem.js';
+    import { HealthSystem } from './src/gameplay/HealthSystem.js';
+    import { PlayerController } from './src/gameplay/PlayerController.js';
+    import { HitDetection } from './src/gameplay/HitDetection.js';
+    
+    let game;
+    const output = document.getElementById('output');
+    
+    function log(message, type = 'info') {
+      const div = document.createElement('div');
+      div.className = `test-result ${type}`;
+      div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      output.appendChild(div);
+      output.scrollTop = output.scrollHeight;
+      console.log(message);
+    }
+    
+    function assert(condition, message) {
+      if (condition) {
+        log(`✓ ${message}`, 'pass');
+        return true;
+      } else {
+        log(`✗ ${message}`, 'fail');
+        return false;
+      }
+    }
+    
+    window.clearOutput = function() {
+      output.innerHTML = '';
+    };
+    
+    async function init() {
+      log('Initializing game system...', 'info');
+      game = new Game();
+      
+      const success = await game.init();
+      
+      if (success) {
+        log('Game system initialized successfully', 'pass');
+        
+        // Update stats
+        document.getElementById('weapons-count').textContent = game.weaponDataLoader.weapons.size;
+        document.getElementById('attachments-count').textContent = game.weaponDataLoader.attachments.size;
+        document.getElementById('patterns-count').textContent = game.weaponDataLoader.recoilPatterns.size;
+        document.getElementById('game-state').textContent = game.gameState.getState();
+        
+        return true;
+      } else {
+        log('Failed to initialize game system', 'fail');
+        return false;
+      }
+    }
+    
+    window.testWeaponSystem = function() {
+      log('=== Testing Weapon System ===', 'info');
+      
+      const weaponData = game.weaponDataLoader.getWeapon('ar_mk4');
+      assert(weaponData !== null, 'MK-4 weapon data loaded');
+      assert(weaponData.stats.dmg_body === 28, 'MK-4 base damage is 28');
+      assert(weaponData.stats.rpm === 650, 'MK-4 RPM is 650');
+      
+      const recoilPattern = game.weaponDataLoader.getRecoilPattern('ar_mk4_pattern');
+      assert(recoilPattern !== null, 'MK-4 recoil pattern loaded');
+      assert(recoilPattern.shots.length === 30, 'MK-4 has 30-shot pattern');
+      
+      const weapon = new WeaponSystem(weaponData, recoilPattern);
+      assert(weapon.currentAmmo === 30, 'Weapon starts with full magazine');
+      
+      const fireResult = weapon.fire();
+      assert(fireResult !== null, 'Weapon can fire');
+      assert(weapon.currentAmmo === 29, 'Ammo decremented after shot');
+      assert(fireResult.damage === 28, 'Fire result returns correct damage');
+      
+      // Test damage falloff
+      const closeDamage = weapon.getDamageAtRange(10);
+      const farDamage = weapon.getDamageAtRange(50);
+      assert(closeDamage >= farDamage, 'Damage decreases with range');
+      log(`  Close damage: ${closeDamage}, Far damage: ${farDamage}`, 'info');
+      
+      // Test reload
+      weapon.currentAmmo = 0;
+      const reloadStarted = weapon.reload();
+      assert(reloadStarted === true, 'Reload initiated successfully');
+      assert(weapon.isReloading === true, 'Weapon is reloading');
+      
+      log('Weapon system tests completed', 'pass');
+    };
+    
+    window.testRecoilPattern = function() {
+      log('=== Testing Recoil Pattern ===', 'info');
+      
+      const patternData = game.weaponDataLoader.getRecoilPattern('ar_mk4_pattern');
+      const weapon = new WeaponSystem(
+        game.weaponDataLoader.getWeapon('ar_mk4'),
+        patternData
+      );
+      
+      let totalRecoilY = 0;
+      for (let i = 0; i < 5; i++) {
+        const result = weapon.fire();
+        if (result) {
+          totalRecoilY += result.recoil.y;
+        }
+        weapon.update(0.016); // Simulate frame
+      }
+      
+      assert(totalRecoilY > 0, 'Recoil accumulates vertically');
+      log(`  Total vertical recoil (5 shots): ${totalRecoilY.toFixed(2)}`, 'info');
+      
+      // Test spread increase
+      weapon.spreadModel.reset();
+      const initialSpread = weapon.spreadModel.currentSpread;
+      weapon.fire();
+      weapon.fire();
+      weapon.fire();
+      const finalSpread = weapon.spreadModel.currentSpread;
+      
+      assert(finalSpread > initialSpread, 'Spread increases with consecutive shots');
+      log(`  Spread: ${initialSpread.toFixed(2)} -> ${finalSpread.toFixed(2)}`, 'info');
+      
+      log('Recoil pattern tests completed', 'pass');
+    };
+    
+    window.testLoadoutManager = function() {
+      log('=== Testing Loadout Manager ===', 'info');
+      
+      const loadout = game.loadoutManager;
+      
+      assert(loadout.slots.primary !== null, 'Primary weapon equipped');
+      assert(loadout.slots.secondary !== null, 'Secondary weapon equipped');
+      
+      const primary = loadout.getEquippedWeapon('primary');
+      assert(primary !== null, 'Can retrieve primary weapon');
+      assert(primary.id === 'ar_mk4', 'Primary is MK-4');
+      
+      // Test attachment
+      const attached = loadout.attachAttachment('primary', 'barrel', 'barrel_extended');
+      assert(attached === true, 'Attachment added successfully');
+      
+      const weaponWithAttachment = loadout.getEquippedWeapon('primary');
+      assert(weaponWithAttachment !== null, 'Can retrieve weapon with attachment');
+      
+      // Test switch
+      const switched = loadout.switchToNext();
+      assert(switched === true, 'Can switch to next weapon');
+      
+      log('Loadout manager tests completed', 'pass');
+    };
+    
+    window.testHealthSystem = function() {
+      log('=== Testing Health System ===', 'info');
+      
+      const health = new HealthSystem(100);
+      
+      assert(health.currentHealth === 100, 'Health starts at max');
+      assert(health.isAlive === true, 'Player is alive');
+      
+      const damaged = health.takeDamage(30);
+      assert(damaged === false, 'Player survived damage');
+      assert(health.currentHealth === 70, 'Health reduced correctly');
+      
+      health.heal(20);
+      assert(health.currentHealth === 90, 'Healing works');
+      
+      health.takeDamage(100);
+      assert(health.isAlive === false, 'Player died from lethal damage');
+      assert(health.currentHealth === 0, 'Health is 0');
+      
+      health.respawn();
+      assert(health.isAlive === true, 'Player respawned');
+      assert(health.currentHealth === 100, 'Health restored on respawn');
+      
+      log('Health system tests completed', 'pass');
+    };
+    
+    window.testPlayerMovement = function() {
+      log('=== Testing Player Movement ===', 'info');
+      
+      const player = new PlayerController({ x: 0, y: 1.8, z: 0 });
+      
+      assert(player.position.y === 1.8, 'Player starts at correct height');
+      assert(player.velocity.x === 0, 'Player starts stationary');
+      
+      // Simulate movement input
+      const input = {
+        move: { x: 0, y: 0, z: -1 },
+        forward: { x: 0, z: -1 },
+        right: { x: 1, z: 0 },
+        jump: false,
+        crouch: false,
+        sprint: false
+      };
+      
+      player.update(input, 0.016, null);
+      
+      assert(Math.abs(player.velocity.z) > 0, 'Player is moving forward');
+      log(`  Velocity: ${player.velocity.z.toFixed(2)} m/s`, 'info');
+      
+      // Test sprint
+      input.sprint = true;
+      player.update(input, 0.016, null);
+      assert(player.isSprinting === true, 'Player is sprinting');
+      
+      // Test crouch
+      input.sprint = false;
+      input.crouch = true;
+      player.update(input, 0.016, null);
+      assert(player.isCrouching === true, 'Player is crouching');
+      
+      log('Player movement tests completed', 'pass');
+    };
+    
+    window.testHitDetection = function() {
+      log('=== Testing Hit Detection ===', 'info');
+      
+      const hitDetection = new HitDetection();
+      
+      // Create a test target
+      const target = {
+        id: 'target1',
+        position: { x: 10, y: 1.8, z: 0 },
+        state: { height: 1.8 },
+        layer: hitDetection.layers.player
+      };
+      
+      // Fire from origin toward target
+      const origin = { x: 0, y: 1.8, z: 0 };
+      const direction = { x: 1, y: 0, z: 0 };
+      
+      const hit = hitDetection.hitscan(origin, direction, 0, [target], 100);
+      
+      assert(hit !== null, 'Raycast detected hit');
+      assert(hit.targetId === 'target1', 'Hit correct target');
+      assert(hit.distance > 0, 'Hit distance calculated');
+      log(`  Hit distance: ${hit.distance.toFixed(2)}m`, 'info');
+      log(`  Hit zone: ${hit.zone}`, 'info');
+      
+      // Test headshot detection
+      const headshot = hitDetection.hitscan(
+        { x: 0, y: 3.2, z: 0 },
+        { x: 1, y: 0, z: 0 },
+        0,
+        [target],
+        100
+      );
+      
+      if (headshot && headshot.zone === 'head') {
+        log('  Headshot detection working', 'pass');
+      }
+      
+      // Test damage calculation
+      const damage = hitDetection.calculateDamage(28, 'head', 10, null);
+      assert(damage > 28, 'Headshot multiplier applied');
+      log(`  Headshot damage: ${damage}`, 'info');
+      
+      log('Hit detection tests completed', 'pass');
+    };
+    
+    window.runAllTests = async function() {
+      clearOutput();
+      log('=== Running All Tests ===', 'info');
+      log('', 'info');
+      
+      testWeaponSystem();
+      log('', 'info');
+      
+      testRecoilPattern();
+      log('', 'info');
+      
+      testLoadoutManager();
+      log('', 'info');
+      
+      testHealthSystem();
+      log('', 'info');
+      
+      testPlayerMovement();
+      log('', 'info');
+      
+      testHitDetection();
+      log('', 'info');
+      
+      log('=== All Tests Completed ===', 'pass');
+    };
+    
+    // Initialize on load
+    init();
+  </script>
+</body>
+</html>
