@@ -1,0 +1,300 @@
+{
+  "$schema": "map-schema",
+  "version": "1.0.0",
+  "map_id": "arena_hub",
+  "name": "Arena Hub",
+  "description": "Symmetrical urban arena with three distinct lanes and verticality. Ideal for competitive play.",
+  "enabled": true,
+  "environment": "urban",
+  "theme": "industrial_complex",
+  "time_of_day": "dusk",
+  "weather": "clear",
+  "dimensions": {
+    "length": 80,
+    "width": 70,
+    "height_min": 0,
+    "height_max": 15,
+    "units": "meters"
+  },
+  "layout": {
+    "design_philosophy": "three_lane_symmetrical",
+    "lanes": [
+      {
+        "id": "left_lane",
+        "name": "Warehouse",
+        "type": "indoor",
+        "width": 12,
+        "length": 60,
+        "primary_engagement_range": "close",
+        "cover_density": "high",
+        "verticality": "medium",
+        "description": "Tight indoor corridors with containers and crates. Favors SMGs and shotguns."
+      },
+      {
+        "id": "center_lane",
+        "name": "Plaza",
+        "type": "outdoor",
+        "width": 20,
+        "length": 50,
+        "primary_engagement_range": "medium",
+        "cover_density": "medium",
+        "verticality": "low",
+        "description": "Open central courtyard with scattered cover. Balanced engagements."
+      },
+      {
+        "id": "right_lane",
+        "name": "Catwalk",
+        "type": "elevated",
+        "width": 8,
+        "length": 55,
+        "primary_engagement_range": "medium_long",
+        "cover_density": "low",
+        "verticality": "high",
+        "description": "Elevated metal walkways with long sightlines. Favors ARs and DMRs."
+      }
+    ],
+    "connectors": [
+      {
+        "connects": ["left_lane", "center_lane"],
+        "position": "north",
+        "type": "doorway",
+        "width": 3
+      },
+      {
+        "connects": ["center_lane", "right_lane"],
+        "position": "north",
+        "type": "stairs",
+        "width": 4
+      },
+      {
+        "connects": ["left_lane", "center_lane"],
+        "position": "south",
+        "type": "wide_opening",
+        "width": 6
+      },
+      {
+        "connects": ["center_lane", "right_lane"],
+        "position": "south",
+        "type": "stairs",
+        "width": 4
+      },
+      {
+        "connects": ["left_lane", "center_lane"],
+        "position": "center",
+        "type": "window",
+        "width": 2,
+        "height": 1.5
+      }
+    ]
+  },
+  "callouts": {
+    "team_a_spawn": { "position": [10, 10, 0], "description": "Team A spawn area" },
+    "team_b_spawn": { "position": [70, 60, 0], "description": "Team B spawn area" },
+    "warehouse_main": { "position": [15, 35, 0], "description": "Main warehouse area" },
+    "warehouse_back": { "position": [12, 50, 0], "description": "Back of warehouse" },
+    "warehouse_containers": { "position": [18, 40, 0], "description": "Container stack" },
+    "plaza_center": { "position": [40, 35, 0], "description": "Central plaza" },
+    "plaza_fountain": { "position": [42, 38, 0], "description": "Fountain cover" },
+    "plaza_statue": { "position": [38, 32, 0], "description": "Statue cover" },
+    "catwalk_top": { "position": [65, 35, 8], "description": "Top of catwalk" },
+    "catwalk_mid": { "position": [60, 35, 8], "description": "Middle catwalk" },
+    "catwalk_platform": { "position": [68, 40, 8], "description": "Upper platform" },
+    "north_connector": { "position": [40, 15, 0], "description": "North connection" },
+    "south_connector": { "position": [40, 55, 0], "description": "South connection" },
+    "stairs_east": { "position": [58, 30, 0], "description": "Eastern stairs" },
+    "stairs_west": { "position": [58, 40, 0], "description": "Western stairs" }
+  },
+  "spawn_zones": {
+    "team_a": [
+      {
+        "id": "a_main_spawn",
+        "position": [10, 10, 0],
+        "radius": 8,
+        "priority": "primary",
+        "facing": [1, 0, 0],
+        "points": 6
+      },
+      {
+        "id": "a_warehouse_spawn",
+        "position": [15, 20, 0],
+        "radius": 6,
+        "priority": "secondary",
+        "facing": [0, 1, 0],
+        "points": 4
+      },
+      {
+        "id": "a_side_spawn",
+        "position": [25, 15, 0],
+        "radius": 5,
+        "priority": "tertiary",
+        "facing": [1, 1, 0],
+        "points": 3
+      }
+    ],
+    "team_b": [
+      {
+        "id": "b_main_spawn",
+        "position": [70, 60, 0],
+        "radius": 8,
+        "priority": "primary",
+        "facing": [-1, 0, 0],
+        "points": 6
+      },
+      {
+        "id": "b_catwalk_spawn",
+        "position": [65, 50, 0],
+        "radius": 6,
+        "priority": "secondary",
+        "facing": [0, -1, 0],
+        "points": 4
+      },
+      {
+        "id": "b_side_spawn",
+        "position": [55, 55, 0],
+        "radius": 5,
+        "priority": "tertiary",
+        "facing": [-1, -1, 0],
+        "points": 3
+      }
+    ]
+  },
+  "objective_locations": {
+    "koth_zones": [
+      {
+        "id": "plaza_point",
+        "position": [40, 35, 0],
+        "radius": 8,
+        "rotation_order": 1
+      },
+      {
+        "id": "warehouse_point",
+        "position": [15, 35, 0],
+        "radius": 7,
+        "rotation_order": 2
+      },
+      {
+        "id": "catwalk_point",
+        "position": [60, 35, 5],
+        "radius": 6,
+        "rotation_order": 3
+      }
+    ],
+    "domination_points": [
+      { "id": "point_a", "position": [15, 35, 0], "name": "Warehouse" },
+      { "id": "point_b", "position": [40, 35, 0], "name": "Plaza" },
+      { "id": "point_c", "position": [60, 35, 8], "name": "Catwalk" }
+    ]
+  },
+  "engagement_zones": {
+    "close_range_zones": [
+      { "area": "warehouse_main", "percentage": 30 },
+      { "area": "warehouse_containers", "percentage": 10 },
+      { "area": "north_connector", "percentage": 5 }
+    ],
+    "medium_range_zones": [
+      { "area": "plaza_center", "percentage": 35 },
+      { "area": "south_connector", "percentage": 10 }
+    ],
+    "long_range_zones": [
+      { "area": "catwalk_top", "percentage": 10 }
+    ],
+    "mixed_zones": [
+      { "area": "general", "percentage": 0 }
+    ]
+  },
+  "cover_distribution": {
+    "total_cover_objects": 85,
+    "cover_types": {
+      "full_height": 35,
+      "half_height": 30,
+      "deployable_positions": 12,
+      "natural_terrain": 8
+    },
+    "cover_spacing_avg_m": 4.5,
+    "cover_density_by_zone": {
+      "warehouse": "high",
+      "plaza": "medium",
+      "catwalk": "low"
+    }
+  },
+  "sightlines": {
+    "longest_sightline_m": 65,
+    "average_sightline_m": 28,
+    "sightline_breaks": 18,
+    "sniper_lanes": 2,
+    "max_cross_map_visibility": false,
+    "key_sightlines": [
+      {
+        "from": "catwalk_top",
+        "to": "plaza_center",
+        "distance": 32,
+        "type": "elevated_to_ground"
+      },
+      {
+        "from": "warehouse_main",
+        "to": "plaza_fountain",
+        "distance": 25,
+        "type": "ground_to_ground"
+      },
+      {
+        "from": "north_connector",
+        "to": "south_connector",
+        "distance": 40,
+        "type": "lane_axis"
+      }
+    ]
+  },
+  "rotation_timings": {
+    "left_to_center": 6,
+    "center_to_right": 8,
+    "left_to_right": 12,
+    "spawn_a_to_center": 10,
+    "spawn_b_to_center": 10,
+    "full_map_traverse": 18,
+    "units": "seconds"
+  },
+  "verticality": {
+    "levels": 2,
+    "max_height_difference": 8,
+    "climb_points": 4,
+    "jump_shortcuts": 2,
+    "fall_damage_threshold": 10
+  },
+  "environmental_features": {
+    "lighting": {
+      "ambient_light": "medium",
+      "shadow_density": "high",
+      "dark_corners": 6,
+      "bright_areas": 3
+    },
+    "audio_zones": {
+      "reverb_areas": ["warehouse_main"],
+      "outdoor_areas": ["plaza_center"],
+      "metal_footsteps": ["catwalk_top"]
+    },
+    "destructible_elements": [],
+    "interactive_elements": {
+      "doors": 4,
+      "breakable_windows": 0
+    }
+  },
+  "balance_notes": {
+    "symmetry": "Near-perfect rotational symmetry for competitive fairness",
+    "weapon_viability": "All weapon classes have viable zones. No universal dominance.",
+    "flow": "Three lanes allow for tactical variety. Central plaza serves as engagement focus.",
+    "rotation_time": "10-second rotations between lanes prevent stalemates",
+    "verticality_balance": "Catwalk provides power position but limited cover and easy to flank",
+    "spawn_safety": "Spawn zones have 15m+ buffer from center and clear escape routes"
+  },
+  "supported_modes": ["tdm", "koth", "domination"],
+  "recommended_player_count": {
+    "min": 8,
+    "max": 12,
+    "optimal": 12
+  },
+  "design_references": [
+    "Dust2 (CS:GO) - three lane structure",
+    "Crossfire (Valorant) - symmetrical competitive design",
+    "Nuketown (Call of Duty) - compact high-action layout"
+  ]
+}

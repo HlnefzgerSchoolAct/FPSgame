@@ -1,0 +1,156 @@
+{
+  "$schema": "game-mode-schema",
+  "version": "1.0.0",
+  "mode_id": "koth",
+  "name": "King of the Hill",
+  "description": "Control the objective zone to earn points. First team to reach the score limit or highest score at time limit wins.",
+  "enabled": true,
+  "team_config": {
+    "team_count": 2,
+    "team_size": 6,
+    "allow_party_size": 6,
+    "auto_balance": true,
+    "balance_threshold": 1
+  },
+  "match_config": {
+    "time_limit_s": 480,
+    "score_limit": 200,
+    "overtime_enabled": true,
+    "overtime_max_duration_s": 180,
+    "overtime_trigger": "tied_at_time_limit_or_contested",
+    "overtime_win_condition": "complete_capture",
+    "mercy_rule": {
+      "enabled": false
+    }
+  },
+  "objective_config": {
+    "objective_type": "control_point",
+    "capture_zones": 1,
+    "zone_rotation": true,
+    "zone_rotation_interval_s": 60,
+    "zone_locations_per_map": 3,
+    "zone_shape": "circle",
+    "zone_radius": 8,
+    "zone_vertical_tolerance": 5,
+    "capture_mechanics": {
+      "capture_rate_per_player_per_s": 5,
+      "max_capture_rate_per_s": 15,
+      "neutralization_required": true,
+      "neutralization_rate_mult": 1.5,
+      "contested_stops_capture": true,
+      "overtime_capture_rate_mult": 1.0
+    },
+    "scoring_mechanics": {
+      "points_per_s_controlled": 2,
+      "tick_interval_ms": 500,
+      "bonus_for_capture": 5,
+      "bonus_for_neutralization": 0
+    }
+  },
+  "scoring": {
+    "kill": 0,
+    "kill_on_objective": 0,
+    "kill_defending_objective": 0,
+    "assist": 0,
+    "objective_capture": 5,
+    "objective_neutralize": 0,
+    "objective_defend_kill": 0,
+    "time_on_objective_per_s": 2,
+    "special_events": {
+      "first_blood": { "bonus": 0, "announcement": true },
+      "final_kill": { "bonus": 0, "announcement": true }
+    }
+  },
+  "spawn_config": {
+    "system": "dynamic_weighted",
+    "spawn_delay_ms": 4000,
+    "spawn_protection_ms": 2500,
+    "spawn_protection_breaks_on": ["move", "shoot", "damage"],
+    "safe_radius_from_enemies": 18,
+    "safe_radius_from_objective": 25,
+    "preferred_spawn_near_teammates": true,
+    "teammate_proximity_bonus": 8,
+    "spawn_zones_per_team": 4,
+    "spawn_rotation_based_on_objective": true,
+    "spawn_fallback_zones": 2,
+    "anti_camping": {
+      "enabled": true,
+      "penalize_spawn_if_camped_for_s": 10,
+      "camping_detection_radius": 6,
+      "camping_penalty_weight": -60
+    }
+  },
+  "respawn_rules": {
+    "type": "immediate",
+    "allow_spectate_while_dead": true,
+    "spectate_team_only": true,
+    "loadout_change_on_respawn": false
+  },
+  "round_structure": {
+    "rounds_to_win": 1,
+    "side_switch": false,
+    "intermission_s": 0
+  },
+  "ui_elements": {
+    "show_scoreboard": true,
+    "show_kill_feed": true,
+    "show_team_scores": true,
+    "show_objective_status": true,
+    "show_objective_timer": true,
+    "show_capture_progress": true,
+    "show_zone_rotation_countdown": true,
+    "show_killcam": true,
+    "killcam_duration_ms": 4000,
+    "show_minimap": true,
+    "show_teammate_outlines": true,
+    "highlight_objective_on_minimap": true,
+    "objective_icon_size": "large"
+  },
+  "match_pacing": {
+    "target_duration_min": 6,
+    "target_duration_max": 8,
+    "expected_kills_per_player": 10,
+    "expected_deaths_per_player": 10,
+    "expected_objective_time_per_player_s": 45,
+    "action_density": "very_high"
+  },
+  "gameplay_modifiers": {
+    "zone_control_benefits": {
+      "respawn_time_reduction": false,
+      "score_multiplier": false
+    },
+    "dynamic_events": {
+      "double_points_event": false,
+      "multi_zone_event": false
+    }
+  },
+  "analytics_events": [
+    "match_start",
+    "match_end",
+    "kill",
+    "death",
+    "objective_contested",
+    "objective_neutralized",
+    "objective_captured",
+    "objective_lost",
+    "zone_rotation",
+    "player_entered_zone",
+    "player_left_zone",
+    "overtime_start",
+    "overtime_capture_attempt"
+  ],
+  "design_notes": {
+    "philosophy": "Focused objective gameplay that encourages team coordination and map control",
+    "target_audience": "Players who want structured objectives with high action",
+    "skill_expression": "Team coordination, positioning, and objective timing",
+    "pacing_strategy": "Zone rotation every 60s keeps the map dynamic and prevents stalemates. 8-minute target duration.",
+    "spawn_strategy": "Spawns rotate based on objective location to prevent long runs. Safe distance from objective prevents instant spawn fragging.",
+    "balance_notes": "Kills don't award team points to emphasize objective play over fragging",
+    "comeback_mechanics": "Zone rotation gives losing team opportunities to reset and control new positions",
+    "references": [
+      "Overwatch Nepal KOTH pacing",
+      "Halo Crazy King rotation mechanics",
+      "Call of Duty Hardpoint spawn logic"
+    ]
+  }
+}
