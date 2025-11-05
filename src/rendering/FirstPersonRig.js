@@ -54,19 +54,22 @@ export class FirstPersonRig {
     // Remove current weapon
     if (this.weaponMesh) {
       this.rigContainer.remove(this.weaponMesh);
-      if (this.weaponMesh.geometry) this.weaponMesh.geometry.dispose();
-      if (this.weaponMesh.material) this.weaponMesh.material.dispose();
+      
+      // Dispose all geometries and materials in the weapon
+      this.weaponMesh.traverse(child => {
+        if (child.geometry) child.geometry.dispose();
+        if (child.material) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach(mat => mat.dispose());
+          } else {
+            child.material.dispose();
+          }
+        }
+      });
     }
     
-    // Create placeholder weapon mesh
-    const weaponGeometry = this._getWeaponGeometry(weaponId);
-    const weaponMaterial = new THREE.MeshStandardMaterial({
-      color: 0x333333,
-      roughness: 0.5,
-      metalness: 0.8
-    });
-    
-    this.weaponMesh = new THREE.Mesh(weaponGeometry, weaponMaterial);
+    // Create placeholder weapon mesh (returns Group or Mesh)
+    this.weaponMesh = this._getWeaponGeometry(weaponId);
     this.weaponMesh.castShadow = false; // Weapons don't cast shadows in FP view
     this.weaponMesh.name = `weapon_${weaponId}`;
     

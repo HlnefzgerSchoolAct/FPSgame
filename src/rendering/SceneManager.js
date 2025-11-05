@@ -32,6 +32,9 @@ export class SceneManager {
     console.log(`Loading map: ${mapId}`);
     
     try {
+      // Clear previous map first
+      this.unloadMap();
+      
       // Fetch map data
       const response = await fetch(`/data/maps/${mapId}.json`);
       if (!response.ok) {
@@ -40,9 +43,6 @@ export class SceneManager {
       
       const mapData = await response.json();
       this.currentMap = mapData;
-      
-      // Clear previous map
-      this.unloadMap();
       
       // Setup scene based on map data
       this._setupEnvironment(mapData);
