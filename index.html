@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arena Blitz - FPS Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      overflow: hidden;
+    }
+    
+    #game-container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+    
+    #game-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: crosshair;
+    }
+    
+    /* HUD */
+    #hud {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+    
+    /* Crosshair */
+    #crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+    }
+    
+    .crosshair-line {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.8);
+      transition: all 0.1s;
+    }
+    
+    .crosshair-line.top {
+      width: 2px;
+      height: 8px;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+    }
+    
+    .crosshair-line.bottom {
+      width: 2px;
+      height: 8px;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+    }
+    
+    .crosshair-line.left {
+      width: 8px;
+      height: 2px;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    .crosshair-line.right {
+      width: 8px;
+      height: 2px;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    /* Health bar */
+    #health-container {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      width: 250px;
+    }
+    
+    #health-label {
+      font-size: 12px;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    #health-bar {
+      width: 100%;
+      height: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    #health-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00ff00 0%, #ffff00 50%, #ff0000 100%);
+      width: 100%;
+      transition: width 0.3s;
+    }
+    
+    /* Ammo counter */
+    #ammo-container {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      text-align: right;
+    }
+    
+    #ammo-current {
+      font-size: 48px;
+      font-weight: bold;
+      line-height: 1;
+    }
+    
+    #ammo-reserve {
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    #ammo-reserve::before {
+      content: '/ ';
+    }
+    
+    /* Weapon info */
+    #weapon-info {
+      position: absolute;
+      bottom: 100px;
+      right: 30px;
+      text-align: right;
+    }
+    
+    #weapon-name {
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    #weapon-mode {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 5px;
+    }
+    
+    /* Hitmarker */
+    #hitmarker {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.1s;
+    }
+    
+    #hitmarker.show {
+      opacity: 1;
+    }
+    
+    .hitmarker-line {
+      position: absolute;
+      background: #fff;
+      width: 3px;
+      height: 12px;
+    }
+    
+    .hitmarker-line.tl {
+      top: 0;
+      left: 0;
+      transform: rotate(-45deg);
+    }
+    
+    .hitmarker-line.tr {
+      top: 0;
+      right: 0;
+      transform: rotate(45deg);
+    }
+    
+    .hitmarker-line.bl {
+      bottom: 0;
+      left: 0;
+      transform: rotate(45deg);
+    }
+    
+    .hitmarker-line.br {
+      bottom: 0;
+      right: 0;
+      transform: rotate(-45deg);
+    }
+    
+    #hitmarker.headshot .hitmarker-line {
+      background: #ff0000;
+    }
+    
+    /* Menu */
+    #menu {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+    }
+    
+    #menu.hidden {
+      display: none;
+    }
+    
+    #menu h1 {
+      font-size: 64px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+    
+    #menu p {
+      font-size: 18px;
+      margin-bottom: 40px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    #start-button {
+      padding: 15px 40px;
+      font-size: 24px;
+      background: #00ff00;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 2px;
+      transition: background 0.3s;
+      pointer-events: all;
+    }
+    
+    #start-button:hover {
+      background: #00dd00;
+    }
+    
+    /* Loading */
+    #loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      text-align: center;
+    }
+    
+    #loading.hidden {
+      display: none;
+    }
+    
+    /* Debug info */
+    #debug-info {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-family: monospace;
+      font-size: 12px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 3px;
+      line-height: 1.5;
+    }
+    
+    #debug-info.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+    
+    <!-- HUD -->
+    <div id="hud">
+      <!-- Crosshair -->
+      <div id="crosshair">
+        <div class="crosshair-line top"></div>
+        <div class="crosshair-line bottom"></div>
+        <div class="crosshair-line left"></div>
+        <div class="crosshair-line right"></div>
+      </div>
+      
+      <!-- Hitmarker -->
+      <div id="hitmarker">
+        <div class="hitmarker-line tl"></div>
+        <div class="hitmarker-line tr"></div>
+        <div class="hitmarker-line bl"></div>
+        <div class="hitmarker-line br"></div>
+      </div>
+      
+      <!-- Health -->
+      <div id="health-container">
+        <div id="health-label">Health</div>
+        <div id="health-bar">
+          <div id="health-fill"></div>
+        </div>
+      </div>
+      
+      <!-- Ammo -->
+      <div id="ammo-container">
+        <div>
+          <span id="ammo-current">30</span>
+          <span id="ammo-reserve">90</span>
+        </div>
+      </div>
+      
+      <!-- Weapon info -->
+      <div id="weapon-info">
+        <div id="weapon-name">MK-4 Assault Rifle</div>
+        <div id="weapon-mode">AUTO</div>
+      </div>
+      
+      <!-- Debug info -->
+      <div id="debug-info">
+        <div>FPS: <span id="fps">60</span></div>
+        <div>Position: <span id="position">0, 0, 0</span></div>
+        <div>Velocity: <span id="velocity">0, 0, 0</span></div>
+        <div>State: <span id="state">menu</span></div>
+      </div>
+    </div>
+    
+    <!-- Menu -->
+    <div id="menu">
+      <h1>Arena Blitz</h1>
+      <p>A competitive browser-based FPS</p>
+      <button id="start-button">Start Game</button>
+    </div>
+    
+    <!-- Loading -->
+    <div id="loading">
+      <div>Loading game data...</div>
+    </div>
+  </div>
+  
+  <script type="module">
+    import { Game } from './src/Game.js';
+    
+    // Initialize game
+    const game = new Game();
+    let lastFPSUpdate = 0;
+    let frameCount = 0;
+    
+    // UI elements
+    const menu = document.getElementById('menu');
+    const loading = document.getElementById('loading');
+    const startButton = document.getElementById('start-button');
+    const healthFill = document.getElementById('health-fill');
+    const ammoCurrent = document.getElementById('ammo-current');
+    const ammoReserve = document.getElementById('ammo-reserve');
+    const weaponName = document.getElementById('weapon-name');
+    const weaponMode = document.getElementById('weapon-mode');
+    const hitmarker = document.getElementById('hitmarker');
+    const crosshair = document.getElementById('crosshair');
+    const debugInfo = document.getElementById('debug-info');
+    
+    // Debug toggle
+    let showDebug = true;
+    window.addEventListener('keydown', (e) => {
+      if (e.code === 'F3') {
+        showDebug = !showDebug;
+        debugInfo.classList.toggle('hidden', !showDebug);
+      }
+    });
+    
+    // Initialize game
+    async function init() {
+      loading.classList.remove('hidden');
+      menu.classList.add('hidden');
+      
+      const success = await game.init();
+      
+      loading.classList.add('hidden');
+      
+      if (success) {
+        menu.classList.remove('hidden');
+      } else {
+        alert('Failed to load game data');
+      }
+    }
+    
+    // Start game
+    startButton.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      game.start();
+      updateDebugInfo();
+    });
+    
+    // HUD event listeners
+    window.addEventListener('hud:update:ammo', (e) => {
+      ammoCurrent.textContent = e.detail.current;
+      ammoReserve.textContent = e.detail.reserve;
+    });
+    
+    window.addEventListener('hud:update:health', (e) => {
+      const percent = e.detail.healthPercent;
+      healthFill.style.width = percent + '%';
+      
+      // Change color based on health
+      if (percent < 30) {
+        healthFill.style.background = '#ff0000';
+      } else if (percent < 60) {
+        healthFill.style.background = '#ffff00';
+      } else {
+        healthFill.style.background = '#00ff00';
+      }
+    });
+    
+    window.addEventListener('hud:weapon:icon', (e) => {
+      weaponName.textContent = e.detail.name;
+    });
+    
+    window.addEventListener('hud:hitmarker', (e) => {
+      hitmarker.classList.remove('headshot');
+      if (e.detail.isHeadshot) {
+        hitmarker.classList.add('headshot');
+      }
+      
+      hitmarker.classList.add('show');
+      setTimeout(() => {
+        hitmarker.classList.remove('show');
+      }, 100);
+    });
+    
+    window.addEventListener('hud:crosshair:spread', (e) => {
+      const spread = e.detail.spread;
+      const offset = 8 + spread * 3; // Base offset + spread
+      
+      const lines = crosshair.querySelectorAll('.crosshair-line');
+      lines[0].style.top = -offset + 'px'; // top
+      lines[1].style.bottom = -offset + 'px'; // bottom
+      lines[2].style.left = -offset + 'px'; // left
+      lines[3].style.right = -offset + 'px'; // right
+    });
+    
+    // Debug info update
+    function updateDebugInfo() {
+      if (!showDebug || !game.running) {
+        requestAnimationFrame(updateDebugInfo);
+        return;
+      }
+      
+      const now = performance.now();
+      frameCount++;
+      
+      if (now - lastFPSUpdate >= 1000) {
+        document.getElementById('fps').textContent = frameCount;
+        frameCount = 0;
+        lastFPSUpdate = now;
+      }
+      
+      const pos = game.playerController.position;
+      document.getElementById('position').textContent = 
+        `${pos.x.toFixed(1)}, ${pos.y.toFixed(1)}, ${pos.z.toFixed(1)}`;
+      
+      const vel = game.playerController.velocity;
+      document.getElementById('velocity').textContent = 
+        `${vel.x.toFixed(1)}, ${vel.y.toFixed(1)}, ${vel.z.toFixed(1)}`;
+      
+      document.getElementById('state').textContent = game.gameState.getState();
+      
+      // Update weapon mode
+      if (game.currentWeapon) {
+        weaponMode.textContent = game.currentWeapon.fireMode.toUpperCase();
+      }
+      
+      requestAnimationFrame(updateDebugInfo);
+    }
+    
+    // Start initialization
+    init();
+  </script>
+</body>
+</html>
