@@ -1,0 +1,322 @@
+{
+  "$schema": "attachment-system-schema",
+  "version": "1.0.0",
+  "description": "Weapon attachments with clear trade-offs to maintain competitive balance. Max +10% advantage in niche compensated by penalties.",
+  "slots": ["barrel", "sight", "underbarrel", "magazine", "stock"],
+  "attachments": {
+    "barrels": [
+      {
+        "id": "barrel_extended",
+        "name": "Extended Barrel",
+        "description": "Increases range and muzzle velocity",
+        "compatible_roles": ["assault_rifle", "smg", "sniper"],
+        "unlock_requirement": { "weapon_level": 5 },
+        "stats": {
+          "falloff_range_mult": 1.15,
+          "bullet_velocity_mult": 1.10,
+          "ads_ms": 25,
+          "move_speed_mult": -0.02
+        },
+        "trade_off": "Better range vs slower handling"
+      },
+      {
+        "id": "barrel_suppressed",
+        "name": "Suppressor",
+        "description": "Hides muzzle flash and reduces sound",
+        "compatible_roles": ["assault_rifle", "smg", "sniper", "sidearm"],
+        "unlock_requirement": { "weapon_level": 8 },
+        "stats": {
+          "sound_reduction": 0.7,
+          "muzzle_flash_mult": 0.1,
+          "falloff_range_mult": 0.95,
+          "bullet_velocity_mult": 0.92,
+          "recoil_mult": 0.95
+        },
+        "trade_off": "Stealth vs reduced range"
+      },
+      {
+        "id": "barrel_compensator",
+        "name": "Muzzle Brake",
+        "description": "Reduces vertical recoil",
+        "compatible_roles": ["assault_rifle", "smg", "sniper"],
+        "unlock_requirement": { "weapon_level": 3 },
+        "stats": {
+          "recoil_vertical_mult": 0.85,
+          "recoil_horizontal_mult": 1.10,
+          "sound_mult": 1.15
+        },
+        "trade_off": "Vertical control vs horizontal kick"
+      },
+      {
+        "id": "barrel_short",
+        "name": "Short Barrel",
+        "description": "Improves mobility and handling",
+        "compatible_roles": ["assault_rifle", "smg", "shotgun"],
+        "unlock_requirement": { "weapon_level": 4 },
+        "stats": {
+          "ads_ms": -30,
+          "move_speed_mult": 0.03,
+          "falloff_range_mult": 0.88,
+          "spread_max": 1.15
+        },
+        "trade_off": "Mobility vs range and accuracy"
+      }
+    ],
+    "sights": [
+      {
+        "id": "sight_rds",
+        "name": "Red Dot Sight",
+        "description": "Clear sight picture for fast target acquisition",
+        "compatible_roles": ["assault_rifle", "smg", "shotgun"],
+        "unlock_requirement": { "weapon_level": 2 },
+        "stats": {
+          "ads_ms": 10,
+          "zoom_level": 1.5,
+          "precision_bonus": 0.05
+        },
+        "trade_off": "Clarity vs slight ADS penalty"
+      },
+      {
+        "id": "sight_holo",
+        "name": "Holographic Sight",
+        "description": "Wide field of view with precise reticle",
+        "compatible_roles": ["assault_rifle", "smg"],
+        "unlock_requirement": { "weapon_level": 6 },
+        "stats": {
+          "ads_ms": 15,
+          "zoom_level": 1.5,
+          "fov_mult": 1.1,
+          "precision_bonus": 0.07
+        },
+        "trade_off": "FOV and precision vs ADS speed"
+      },
+      {
+        "id": "sight_acog",
+        "name": "ACOG Scope",
+        "description": "Medium range magnification",
+        "compatible_roles": ["assault_rifle", "sniper"],
+        "unlock_requirement": { "weapon_level": 10 },
+        "stats": {
+          "ads_ms": 40,
+          "zoom_level": 4.0,
+          "precision_bonus": 0.12,
+          "sway_mult": 1.15
+        },
+        "trade_off": "Range precision vs slow ADS"
+      },
+      {
+        "id": "sight_irons",
+        "name": "Iron Sights",
+        "description": "Default sights, no penalties",
+        "compatible_roles": ["assault_rifle", "smg", "shotgun", "sniper", "sidearm"],
+        "unlock_requirement": { "weapon_level": 0 },
+        "stats": {},
+        "trade_off": "No bonuses or penalties"
+      }
+    ],
+    "underbarrel": [
+      {
+        "id": "grip_vertical",
+        "name": "Vertical Grip",
+        "description": "Reduces vertical recoil",
+        "compatible_roles": ["assault_rifle", "smg"],
+        "unlock_requirement": { "weapon_level": 4 },
+        "stats": {
+          "recoil_vertical_mult": 0.90,
+          "ads_ms": 15,
+          "move_speed_mult": -0.01
+        },
+        "trade_off": "Recoil control vs handling"
+      },
+      {
+        "id": "grip_angled",
+        "name": "Angled Grip",
+        "description": "Faster ADS time",
+        "compatible_roles": ["assault_rifle", "smg"],
+        "unlock_requirement": { "weapon_level": 7 },
+        "stats": {
+          "ads_ms": -25,
+          "recoil_mult": 1.05
+        },
+        "trade_off": "ADS speed vs recoil"
+      },
+      {
+        "id": "laser_sight",
+        "name": "Laser Sight",
+        "description": "Improves hipfire accuracy",
+        "compatible_roles": ["assault_rifle", "smg", "shotgun", "sidearm"],
+        "unlock_requirement": { "weapon_level": 3 },
+        "stats": {
+          "spread_hipfire_mult": 0.85,
+          "visible_to_enemies": true
+        },
+        "trade_off": "Hipfire accuracy vs visibility"
+      },
+      {
+        "id": "flashlight",
+        "name": "Tactical Flashlight",
+        "description": "Illuminates dark areas",
+        "compatible_roles": ["assault_rifle", "smg", "shotgun", "sidearm"],
+        "unlock_requirement": { "weapon_level": 2 },
+        "stats": {
+          "illumination_range": 20,
+          "visible_to_enemies": true,
+          "move_speed_mult": -0.01
+        },
+        "trade_off": "Visibility vs exposure"
+      }
+    ],
+    "magazines": [
+      {
+        "id": "mag_extended",
+        "name": "Extended Magazine",
+        "description": "Increases magazine capacity",
+        "compatible_roles": ["assault_rifle", "smg", "sniper", "sidearm"],
+        "unlock_requirement": { "weapon_level": 6 },
+        "stats": {
+          "mag_size_mult": 1.33,
+          "reload_ms": 300,
+          "move_speed_mult": -0.02
+        },
+        "trade_off": "Capacity vs reload and mobility"
+      },
+      {
+        "id": "mag_fast",
+        "name": "Fast Mag",
+        "description": "Reduces reload time",
+        "compatible_roles": ["assault_rifle", "smg", "sniper", "sidearm"],
+        "unlock_requirement": { "weapon_level": 5 },
+        "stats": {
+          "reload_ms": -400,
+          "mag_size_mult": 0.90
+        },
+        "trade_off": "Reload speed vs capacity"
+      },
+      {
+        "id": "mag_tactical",
+        "name": "Tactical Magazine",
+        "description": "Balanced capacity and reload",
+        "compatible_roles": ["assault_rifle", "smg", "sidearm"],
+        "unlock_requirement": { "weapon_level": 8 },
+        "stats": {
+          "mag_size_mult": 1.15,
+          "reload_ms": -150
+        },
+        "trade_off": "Slight improvements with no major penalty"
+      }
+    ],
+    "stocks": [
+      {
+        "id": "stock_light",
+        "name": "Lightweight Stock",
+        "description": "Improves mobility and ADS speed",
+        "compatible_roles": ["assault_rifle", "smg", "sniper"],
+        "unlock_requirement": { "weapon_level": 5 },
+        "stats": {
+          "move_speed_mult": 0.03,
+          "ads_ms": -30,
+          "recoil_mult": 1.08
+        },
+        "trade_off": "Mobility vs recoil control"
+      },
+      {
+        "id": "stock_heavy",
+        "name": "Heavy Stock",
+        "description": "Reduces recoil and sway",
+        "compatible_roles": ["assault_rifle", "sniper"],
+        "unlock_requirement": { "weapon_level": 9 },
+        "stats": {
+          "recoil_mult": 0.88,
+          "sway_mult": 0.85,
+          "move_speed_mult": -0.03,
+          "ads_ms": 35
+        },
+        "trade_off": "Stability vs mobility"
+      },
+      {
+        "id": "stock_tactical",
+        "name": "Tactical Stock",
+        "description": "Balanced handling improvements",
+        "compatible_roles": ["assault_rifle", "smg"],
+        "unlock_requirement": { "weapon_level": 7 },
+        "stats": {
+          "ads_ms": -15,
+          "recoil_mult": 0.95,
+          "move_speed_mult": 0.01
+        },
+        "trade_off": "Minor improvements across the board"
+      },
+      {
+        "id": "stock_collapsible",
+        "name": "Collapsible Stock",
+        "description": "Extreme mobility at cost of control",
+        "compatible_roles": ["smg"],
+        "unlock_requirement": { "weapon_level": 4 },
+        "stats": {
+          "move_speed_mult": 0.05,
+          "ads_ms": -40,
+          "recoil_mult": 1.15,
+          "sway_mult": 1.20
+        },
+        "trade_off": "Maximum mobility vs poor control"
+      }
+    ]
+  },
+  "balance_rules": {
+    "max_advantage": "No single attachment provides more than 10% advantage in any stat",
+    "trade_offs": "Every positive stat must have a compensating negative or restriction",
+    "tier_caps": "Attachments unlock progressively with weapon XP to prevent immediate power spikes",
+    "no_universal_builds": "Best attachment combination varies by playstyle and map",
+    "cosmetic_variants": "Purely visual attachments available for monetization without gameplay impact"
+  },
+  "example_builds": [
+    {
+      "name": "Aggressive SMG",
+      "weapon": "smg_phantom",
+      "attachments": {
+        "barrel": "barrel_short",
+        "sight": "sight_rds",
+        "underbarrel": "laser_sight",
+        "magazine": "mag_extended",
+        "stock": "stock_collapsible"
+      },
+      "playstyle": "Maximum mobility and hipfire for rushing",
+      "trade_offs": "Sacrifices range and recoil control"
+    },
+    {
+      "name": "Long Range AR",
+      "weapon": "ar_vanguard",
+      "attachments": {
+        "barrel": "barrel_extended",
+        "sight": "sight_acog",
+        "underbarrel": "grip_vertical",
+        "magazine": "mag_tactical",
+        "stock": "stock_heavy"
+      },
+      "playstyle": "Controlled long-range engagements",
+      "trade_offs": "Slow handling, not viable for CQB"
+    },
+    {
+      "name": "Stealth Marksman",
+      "weapon": "sniper_marksman",
+      "attachments": {
+        "barrel": "barrel_suppressed",
+        "sight": "sight_acog",
+        "underbarrel": null,
+        "magazine": "mag_fast",
+        "stock": "stock_light"
+      },
+      "playstyle": "Mobile stealth sniping",
+      "trade_offs": "Reduced range for concealment"
+    }
+  ],
+  "design_notes": {
+    "philosophy": "Attachments create meaningful choices without power creep. Every build has clear strengths and weaknesses.",
+    "anti_p2w": "All attachments unlockable through gameplay. Cosmetic attachment skins available for purchase.",
+    "references": [
+      "Modern Warfare gunsmith balance",
+      "Rainbow Six Siege attachment trade-offs",
+      "Escape from Tarkov modding depth without P2W"
+    ]
+  }
+}

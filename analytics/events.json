@@ -1,0 +1,478 @@
+{
+  "$schema": "analytics-events-schema",
+  "version": "1.0.0",
+  "description": "Core analytics events for tracking player behavior, engagement, and monetization",
+  "event_categories": [
+    "session",
+    "match",
+    "gameplay",
+    "progression",
+    "economy",
+    "social",
+    "technical"
+  ],
+  "events": {
+    "session_events": [
+      {
+        "event_name": "session_start",
+        "description": "Player logs into the game",
+        "properties": {
+          "user_id": "string",
+          "session_id": "string",
+          "platform": "string",
+          "client_version": "string",
+          "timestamp": "datetime"
+        },
+        "frequency": "per session"
+      },
+      {
+        "event_name": "session_end",
+        "description": "Player logs out or disconnects",
+        "properties": {
+          "user_id": "string",
+          "session_id": "string",
+          "duration_s": "integer",
+          "matches_played": "integer",
+          "reason": "string"
+        },
+        "frequency": "per session"
+      }
+    ],
+    "match_events": [
+      {
+        "event_name": "match_queue_start",
+        "description": "Player enters matchmaking queue",
+        "properties": {
+          "user_id": "string",
+          "mode": "string",
+          "party_size": "integer",
+          "mmr": "integer",
+          "timestamp": "datetime"
+        }
+      },
+      {
+        "event_name": "match_found",
+        "description": "Matchmaking finds a match",
+        "properties": {
+          "user_id": "string",
+          "match_id": "string",
+          "queue_time_s": "integer",
+          "avg_team_mmr": "integer",
+          "mmr_difference": "integer"
+        }
+      },
+      {
+        "event_name": "match_start",
+        "description": "Match begins",
+        "properties": {
+          "match_id": "string",
+          "mode": "string",
+          "map": "string",
+          "team_a_players": "array",
+          "team_b_players": "array",
+          "timestamp": "datetime"
+        }
+      },
+      {
+        "event_name": "match_end",
+        "description": "Match concludes",
+        "properties": {
+          "match_id": "string",
+          "duration_s": "integer",
+          "winning_team": "string",
+          "final_score": "object",
+          "reason": "string"
+        }
+      },
+      {
+        "event_name": "match_leave",
+        "description": "Player leaves match early",
+        "properties": {
+          "user_id": "string",
+          "match_id": "string",
+          "time_remaining_s": "integer",
+          "reason": "string"
+        }
+      }
+    ],
+    "gameplay_events": [
+      {
+        "event_name": "kill",
+        "description": "Player eliminates an enemy",
+        "properties": {
+          "killer_id": "string",
+          "victim_id": "string",
+          "weapon_id": "string",
+          "headshot": "boolean",
+          "distance": "float",
+          "match_id": "string",
+          "timestamp": "datetime"
+        }
+      },
+      {
+        "event_name": "death",
+        "description": "Player is eliminated",
+        "properties": {
+          "victim_id": "string",
+          "killer_id": "string",
+          "weapon_id": "string",
+          "location": "object",
+          "match_id": "string"
+        }
+      },
+      {
+        "event_name": "assist",
+        "description": "Player assists in a kill",
+        "properties": {
+          "assister_id": "string",
+          "killer_id": "string",
+          "victim_id": "string",
+          "damage_dealt": "integer",
+          "match_id": "string"
+        }
+      },
+      {
+        "event_name": "headshot",
+        "description": "Player lands a headshot",
+        "properties": {
+          "user_id": "string",
+          "weapon_id": "string",
+          "match_id": "string"
+        }
+      },
+      {
+        "event_name": "damage_dealt",
+        "description": "Player deals damage to enemy",
+        "properties": {
+          "attacker_id": "string",
+          "victim_id": "string",
+          "damage": "integer",
+          "weapon_id": "string",
+          "body_part": "string"
+        }
+      },
+      {
+        "event_name": "damage_taken",
+        "description": "Player receives damage",
+        "properties": {
+          "victim_id": "string",
+          "attacker_id": "string",
+          "damage": "integer",
+          "weapon_id": "string"
+        }
+      },
+      {
+        "event_name": "shot_fired",
+        "description": "Player fires weapon",
+        "properties": {
+          "user_id": "string",
+          "weapon_id": "string",
+          "hit": "boolean",
+          "accuracy": "float"
+        }
+      },
+      {
+        "event_name": "weapon_switch",
+        "description": "Player switches weapon",
+        "properties": {
+          "user_id": "string",
+          "from_weapon": "string",
+          "to_weapon": "string",
+          "match_id": "string"
+        }
+      },
+      {
+        "event_name": "reload",
+        "description": "Player reloads weapon",
+        "properties": {
+          "user_id": "string",
+          "weapon_id": "string",
+          "ammo_remaining": "integer"
+        }
+      },
+      {
+        "event_name": "objective_capture",
+        "description": "Player captures objective",
+        "properties": {
+          "user_id": "string",
+          "objective_id": "string",
+          "team": "string",
+          "match_id": "string"
+        }
+      },
+      {
+        "event_name": "objective_contested",
+        "description": "Objective becomes contested",
+        "properties": {
+          "objective_id": "string",
+          "match_id": "string",
+          "players_contesting": "array"
+        }
+      }
+    ],
+    "progression_events": [
+      {
+        "event_name": "level_up",
+        "description": "Player levels up account",
+        "properties": {
+          "user_id": "string",
+          "new_level": "integer",
+          "xp_earned": "integer",
+          "unlock_id": "string"
+        }
+      },
+      {
+        "event_name": "weapon_level_up",
+        "description": "Weapon levels up",
+        "properties": {
+          "user_id": "string",
+          "weapon_id": "string",
+          "new_level": "integer",
+          "unlock_id": "string"
+        }
+      },
+      {
+        "event_name": "challenge_progress",
+        "description": "Progress on challenge",
+        "properties": {
+          "user_id": "string",
+          "challenge_id": "string",
+          "progress": "integer",
+          "target": "integer"
+        }
+      },
+      {
+        "event_name": "challenge_completed",
+        "description": "Challenge completed",
+        "properties": {
+          "user_id": "string",
+          "challenge_id": "string",
+          "challenge_type": "string",
+          "reward": "object"
+        }
+      },
+      {
+        "event_name": "bp_tier_unlock",
+        "description": "Battle pass tier unlocked",
+        "properties": {
+          "user_id": "string",
+          "tier": "integer",
+          "xp_earned": "integer",
+          "reward": "object"
+        }
+      },
+      {
+        "event_name": "ranked_match_end",
+        "description": "Ranked match completed",
+        "properties": {
+          "user_id": "string",
+          "match_id": "string",
+          "mmr_change": "integer",
+          "new_mmr": "integer",
+          "new_rank": "string",
+          "rp_change": "integer"
+        }
+      },
+      {
+        "event_name": "rank_up",
+        "description": "Player ranks up",
+        "properties": {
+          "user_id": "string",
+          "old_rank": "string",
+          "new_rank": "string",
+          "mmr": "integer"
+        }
+      },
+      {
+        "event_name": "prestige",
+        "description": "Player prestiges",
+        "properties": {
+          "user_id": "string",
+          "prestige_level": "integer",
+          "reward": "object"
+        }
+      }
+    ],
+    "economy_events": [
+      {
+        "event_name": "currency_earn",
+        "description": "Player earns currency",
+        "properties": {
+          "user_id": "string",
+          "currency_type": "string",
+          "amount": "integer",
+          "source": "string",
+          "balance_after": "integer"
+        }
+      },
+      {
+        "event_name": "currency_spend",
+        "description": "Player spends currency",
+        "properties": {
+          "user_id": "string",
+          "currency_type": "string",
+          "amount": "integer",
+          "item_id": "string",
+          "category": "string",
+          "balance_after": "integer"
+        }
+      },
+      {
+        "event_name": "purchase",
+        "description": "Real money purchase",
+        "properties": {
+          "user_id": "string",
+          "product_id": "string",
+          "price_usd": "float",
+          "price_local": "float",
+          "currency_code": "string",
+          "gems_received": "integer",
+          "first_purchase": "boolean"
+        }
+      },
+      {
+        "event_name": "shop_view",
+        "description": "Player views shop",
+        "properties": {
+          "user_id": "string",
+          "section": "string",
+          "featured_items": "array"
+        }
+      },
+      {
+        "event_name": "item_preview",
+        "description": "Player previews item",
+        "properties": {
+          "user_id": "string",
+          "item_id": "string",
+          "price": "object"
+        }
+      },
+      {
+        "event_name": "equip_item",
+        "description": "Player equips cosmetic",
+        "properties": {
+          "user_id": "string",
+          "item_id": "string",
+          "category": "string",
+          "slot": "string"
+        }
+      },
+      {
+        "event_name": "battle_pass_purchase",
+        "description": "Player purchases battle pass",
+        "properties": {
+          "user_id": "string",
+          "pass_type": "string",
+          "price_gems": "integer",
+          "current_tier": "integer"
+        }
+      },
+      {
+        "event_name": "challenge_reroll",
+        "description": "Player rerolls challenge",
+        "properties": {
+          "user_id": "string",
+          "challenge_id": "string",
+          "cost_credits": "integer",
+          "new_challenge_id": "string"
+        }
+      }
+    ],
+    "social_events": [
+      {
+        "event_name": "friend_add",
+        "description": "Player adds friend",
+        "properties": {
+          "user_id": "string",
+          "friend_id": "string"
+        }
+      },
+      {
+        "event_name": "party_create",
+        "description": "Player creates party",
+        "properties": {
+          "user_id": "string",
+          "party_id": "string"
+        }
+      },
+      {
+        "event_name": "party_join",
+        "description": "Player joins party",
+        "properties": {
+          "user_id": "string",
+          "party_id": "string",
+          "party_size": "integer"
+        }
+      },
+      {
+        "event_name": "chat_message",
+        "description": "Player sends chat message",
+        "properties": {
+          "user_id": "string",
+          "chat_type": "string",
+          "message_length": "integer"
+        }
+      }
+    ],
+    "technical_events": [
+      {
+        "event_name": "client_error",
+        "description": "Client-side error occurs",
+        "properties": {
+          "user_id": "string",
+          "error_type": "string",
+          "error_message": "string",
+          "stack_trace": "string"
+        }
+      },
+      {
+        "event_name": "disconnect",
+        "description": "Player disconnects unexpectedly",
+        "properties": {
+          "user_id": "string",
+          "match_id": "string",
+          "reason": "string",
+          "connection_quality": "object"
+        }
+      },
+      {
+        "event_name": "performance_issue",
+        "description": "Performance degradation detected",
+        "properties": {
+          "user_id": "string",
+          "fps_avg": "float",
+          "latency_avg": "integer",
+          "issue_type": "string"
+        }
+      }
+    ]
+  },
+  "event_pipeline": {
+    "collection": "Client-side SDK collects events",
+    "batching": "Events batched every 30 seconds or 50 events",
+    "transmission": "Sent via HTTPS to analytics server",
+    "storage": "Stored in time-series database",
+    "processing": "Real-time processing for critical events, batch processing for analysis",
+    "retention": "Raw events: 90 days, Aggregated data: 2 years"
+  },
+  "privacy_compliance": {
+    "gdpr_compliant": true,
+    "user_consent": "Collected with opt-in consent",
+    "pii_handling": "User IDs hashed, no direct PII in events",
+    "data_deletion": "User can request data deletion",
+    "anonymization": "Events anonymized after retention period"
+  },
+  "design_notes": {
+    "event_volume": "Expected 100-200 events per player per hour",
+    "critical_events": "Match start/end, purchases, level ups tracked with highest priority",
+    "sampling": "High-frequency events (shot_fired) may be sampled at 10-20% for performance",
+    "real_time_dashboards": "Session, match, and economy events displayed in real-time dashboards",
+    "references": [
+      "Google Analytics for Games event structure",
+      "Amplitude event taxonomy",
+      "Unity Analytics event best practices",
+      "Mixpanel product analytics patterns"
+    ]
+  }
+}

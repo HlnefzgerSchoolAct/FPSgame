@@ -1,0 +1,269 @@
+{
+  "$schema": "rewards-schema",
+  "version": "1.0.0",
+  "description": "Match rewards and performance multipliers for credits and XP earnings",
+  "match_rewards": {
+    "base_rewards": {
+      "match_completion": {
+        "credits": 100,
+        "xp": 300,
+        "weapon_xp": 50,
+        "bp_xp": 300
+      },
+      "match_win": {
+        "credits": 50,
+        "xp": 200,
+        "weapon_xp": 25,
+        "bp_xp": 200
+      },
+      "match_loss": {
+        "credits": 0,
+        "xp": 50,
+        "weapon_xp": 10,
+        "bp_xp": 50
+      }
+    },
+    "performance_multipliers": {
+      "top_player": {
+        "multiplier": 1.25,
+        "description": "Highest score on team"
+      },
+      "top_3": {
+        "multiplier": 1.15,
+        "description": "Top 3 players on team"
+      },
+      "positive_kd": {
+        "multiplier": 1.10,
+        "description": "K/D ratio above 1.0"
+      },
+      "comeback_win": {
+        "multiplier": 1.20,
+        "description": "Win after being behind by 20+ points"
+      },
+      "dominating_win": {
+        "multiplier": 1.10,
+        "description": "Win by 30+ point margin"
+      }
+    },
+    "streak_bonuses": {
+      "win_streak_3": {
+        "credits": 100,
+        "xp": 200,
+        "description": "3 wins in a row"
+      },
+      "win_streak_5": {
+        "credits": 250,
+        "xp": 500,
+        "description": "5 wins in a row"
+      },
+      "win_streak_10": {
+        "credits": 500,
+        "xp": 1000,
+        "description": "10 wins in a row"
+      },
+      "first_win_daily": {
+        "credits": 150,
+        "xp": 300,
+        "bp_xp": 1000,
+        "description": "First win of the day"
+      }
+    }
+  },
+  "mode_specific_rewards": {
+    "tdm": {
+      "base_multiplier": 1.0,
+      "duration_avg_min": 8,
+      "credits_per_minute": 18.75
+    },
+    "koth": {
+      "base_multiplier": 1.05,
+      "duration_avg_min": 7,
+      "credits_per_minute": 21.43,
+      "objective_time_bonus": {
+        "credits_per_second": 0.5,
+        "xp_per_second": 2
+      }
+    },
+    "domination": {
+      "base_multiplier": 1.10,
+      "duration_avg_min": 10,
+      "credits_per_minute": 16.50,
+      "capture_bonus": {
+        "credits": 20,
+        "xp": 50
+      }
+    },
+    "ranked": {
+      "base_multiplier": 1.25,
+      "description": "Ranked matches provide 25% bonus credits and XP",
+      "win_bonus_additional": 100,
+      "loss_consolation": 50
+    }
+  },
+  "action_rewards": {
+    "kills": {
+      "kill": { "xp": 20, "weapon_xp": 50 },
+      "headshot_kill": { "xp": 25, "weapon_xp": 75 },
+      "longshot_kill": { "xp": 30, "weapon_xp": 60 },
+      "pointblank_kill": { "xp": 25, "weapon_xp": 55 },
+      "revenge_kill": { "xp": 15, "weapon_xp": 40 },
+      "first_blood": { "xp": 10, "weapon_xp": 15 }
+    },
+    "multikills": {
+      "double_kill": { "xp": 20, "weapon_xp": 20 },
+      "triple_kill": { "xp": 50, "weapon_xp": 50 },
+      "quad_kill": { "xp": 100, "weapon_xp": 80 },
+      "ace": { "xp": 100, "weapon_xp": 100, "credits": 50 }
+    },
+    "killstreaks": {
+      "3_streak": { "xp": 0 },
+      "5_streak": { "xp": 50 },
+      "7_streak": { "xp": 75 },
+      "10_streak": { "xp": 150, "credits": 50 },
+      "15_streak": { "xp": 300, "credits": 100 }
+    },
+    "assists": {
+      "assist": { "xp": 10, "weapon_xp": 25 },
+      "objective_assist": { "xp": 15, "weapon_xp": 30 }
+    },
+    "objectives": {
+      "capture": { "xp": 50, "credits": 20 },
+      "neutralize": { "xp": 25, "credits": 10 },
+      "defend": { "xp": 15 },
+      "objective_kill": { "xp": 10, "weapon_xp": 10 }
+    }
+  },
+  "cosmetic_drops": {
+    "match_completion_drop": {
+      "chance": 0.05,
+      "description": "5% chance for cosmetic drop after match",
+      "rarity_weights": {
+        "common": 70,
+        "rare": 20,
+        "epic": 8,
+        "legendary": 2
+      }
+    },
+    "pity_timer": {
+      "enabled": true,
+      "max_matches_without_drop": 30,
+      "guaranteed_rarity": "rare"
+    },
+    "drop_categories": [
+      { "type": "weapon_skin", "weight": 35 },
+      { "type": "player_card", "weight": 25 },
+      { "type": "spray", "weight": 20 },
+      { "type": "emblem", "weight": 15 },
+      { "type": "charm", "weight": 5 }
+    ]
+  },
+  "weekly_milestone_rewards": {
+    "description": "Additional rewards for weekly playtime milestones",
+    "milestones": [
+      {
+        "matches_played": 10,
+        "reward": { "credits": 500, "xp": 500 }
+      },
+      {
+        "matches_played": 25,
+        "reward": { "credits": 1000, "xp": 1000, "loot_box": "common" }
+      },
+      {
+        "matches_played": 50,
+        "reward": { "credits": 2000, "xp": 2000, "loot_box": "rare" }
+      },
+      {
+        "matches_played": 100,
+        "reward": { "credits": 5000, "xp": 5000, "loot_box": "epic" }
+      }
+    ],
+    "reset": "weekly"
+  },
+  "special_event_multipliers": {
+    "double_xp_weekend": {
+      "xp_multiplier": 2.0,
+      "description": "Special weekend events with double XP"
+    },
+    "bonus_credits_week": {
+      "credits_multiplier": 1.5,
+      "description": "Special promotional weeks"
+    },
+    "battle_pass_boost": {
+      "bp_xp_multiplier": 1.5,
+      "description": "End of season BP XP boost"
+    }
+  },
+  "afk_penalties": {
+    "detection": "No input for 60+ seconds",
+    "penalties": {
+      "no_match_rewards": true,
+      "no_progression": true,
+      "ranked_rp_loss": 50,
+      "temporary_ban_escalation": [
+        { "offense": 1, "duration_minutes": 30 },
+        { "offense": 2, "duration_minutes": 120 },
+        { "offense": 3, "duration_minutes": 1440 }
+      ]
+    }
+  },
+  "leave_penalties": {
+    "early_leave": {
+      "credits_forfeit": "all",
+      "xp_forfeit": "all",
+      "ranked_rp_loss": 50,
+      "temporary_ban": "10 minutes",
+      "escalation": "doubles per offense in 24h"
+    },
+    "disconnect_grace": {
+      "duration_seconds": 90,
+      "description": "90 second reconnect window with no penalty"
+    }
+  },
+  "economy_balance": {
+    "credits_per_hour_targets": {
+      "casual_player": "400-600 credits/hour",
+      "active_player": "600-900 credits/hour",
+      "hardcore_player": "900-1200 credits/hour"
+    },
+    "daily_earning_potential": {
+      "matches_only": "600-900 credits (6-10 matches)",
+      "with_dailies": "950-1250 credits",
+      "with_weeklies_prorated": "1250-1550 credits",
+      "with_streaks": "1400-1800 credits"
+    },
+    "weekly_earning_potential": {
+      "total_credits": "8750-12850 credits",
+      "breakdown": {
+        "matches": "4200-6300",
+        "daily_challenges": "2450-3150",
+        "weekly_challenges": "1850-2650",
+        "streaks_bonuses": "250-750"
+      }
+    },
+    "monthly_earning_estimate": {
+      "casual_player": "15000-20000 credits/month",
+      "active_player": "35000-50000 credits/month",
+      "hardcore_player": "60000-80000 credits/month"
+    }
+  },
+  "reward_philosophy": {
+    "consistency": "Players should earn rewards consistently, not sporadically",
+    "skill_reward": "Better performance yields better rewards, but participation is rewarded",
+    "time_respect": "Rewards scale appropriately with time investment",
+    "anti_grind": "Diminishing returns on excessive play to prevent burnout",
+    "variety_encouragement": "Bonuses for playing different modes and weapons",
+    "fair_f2p": "F2P players can earn meaningful progression without purchases"
+  },
+  "design_notes": {
+    "reward_loop": "Match rewards → challenges → battle pass → seasonal rewards create layered progression",
+    "credit_sinks": "Cosmetics priced to absorb credits over weeks/months, maintaining value",
+    "drop_system": "Random cosmetic drops add excitement without being primary progression",
+    "multiplier_stacking": "Multiple multipliers can stack (top player + streak + mode bonus)",
+    "references": [
+      "Apex Legends match rewards and progression",
+      "Call of Duty XP and credit earning rates",
+      "Overwatch loot box and currency system",
+      "Valorant performance-based rewards"
+    ]
+  }
+}

@@ -1,0 +1,349 @@
+{
+  "$schema": "map-schema",
+  "version": "1.0.0",
+  "map_id": "shipyard",
+  "name": "Shipyard",
+  "description": "Asymmetric dockside map with containers, cranes, and ships. Multiple vertical levels and varied engagement ranges.",
+  "enabled": true,
+  "environment": "coastal",
+  "theme": "industrial_port",
+  "time_of_day": "dawn",
+  "weather": "foggy",
+  "dimensions": {
+    "length": 90,
+    "width": 75,
+    "height_min": 0,
+    "height_max": 20,
+    "units": "meters"
+  },
+  "layout": {
+    "design_philosophy": "three_lane_asymmetric",
+    "lanes": [
+      {
+        "id": "docks_lane",
+        "name": "Docks",
+        "type": "outdoor_elevated",
+        "width": 18,
+        "length": 70,
+        "primary_engagement_range": "medium_long",
+        "cover_density": "low",
+        "verticality": "high",
+        "description": "Elevated dock platforms with long sightlines and crane access. Favors ARs and snipers."
+      },
+      {
+        "id": "container_lane",
+        "name": "Container Yard",
+        "type": "mixed",
+        "width": 25,
+        "length": 65,
+        "primary_engagement_range": "close_medium",
+        "cover_density": "very_high",
+        "verticality": "medium",
+        "description": "Dense container maze with multiple routes. CQB heaven for SMGs and shotguns."
+      },
+      {
+        "id": "ship_lane",
+        "name": "Ship Interior",
+        "type": "indoor",
+        "width": 15,
+        "length": 50,
+        "primary_engagement_range": "close",
+        "cover_density": "medium",
+        "verticality": "medium",
+        "description": "Inside cargo ship with corridors and rooms. Tight combat favoring SMGs."
+      }
+    ],
+    "connectors": [
+      {
+        "connects": ["docks_lane", "container_lane"],
+        "position": "north",
+        "type": "ramp",
+        "width": 5
+      },
+      {
+        "connects": ["container_lane", "ship_lane"],
+        "position": "north",
+        "type": "gangway",
+        "width": 3
+      },
+      {
+        "connects": ["docks_lane", "container_lane"],
+        "position": "center",
+        "type": "ladder",
+        "width": 1
+      },
+      {
+        "connects": ["container_lane", "ship_lane"],
+        "position": "south",
+        "type": "loading_ramp",
+        "width": 6
+      },
+      {
+        "connects": ["docks_lane", "ship_lane"],
+        "position": "south",
+        "type": "crane_platform",
+        "width": 4
+      }
+    ]
+  },
+  "callouts": {
+    "team_a_spawn": { "position": [12, 12, 0], "description": "South spawn" },
+    "team_b_spawn": { "position": [78, 63, 0], "description": "North spawn" },
+    "crane_top": { "position": [20, 35, 18], "description": "Top of main crane" },
+    "crane_base": { "position": [20, 35, 0], "description": "Base of crane" },
+    "upper_docks": { "position": [18, 45, 5], "description": "Upper dock platform" },
+    "lower_docks": { "position": [15, 50, 0], "description": "Lower dock level" },
+    "red_containers": { "position": [40, 30, 0], "description": "Red container stack" },
+    "blue_containers": { "position": [45, 45, 0], "description": "Blue container area" },
+    "container_alley": { "position": [42, 38, 0], "description": "Narrow alley between containers" },
+    "container_top": { "position": [48, 40, 6], "description": "On top of containers" },
+    "forklift": { "position": [38, 50, 0], "description": "Forklift near containers" },
+    "ship_deck": { "position": [65, 35, 8], "description": "Ship's main deck" },
+    "ship_bridge": { "position": [70, 35, 12], "description": "Ship's bridge" },
+    "ship_cargo_hold": { "position": [63, 40, 2], "description": "Inside cargo hold" },
+    "ship_corridor": { "position": [67, 42, 8], "description": "Ship's corridor" },
+    "gangway": { "position": [58, 35, 4], "description": "Gangway to ship" },
+    "loading_zone": { "position": [52, 55, 0], "description": "Loading area" },
+    "warehouse": { "position": [25, 60, 0], "description": "Small warehouse" },
+    "office": { "position": [75, 50, 5], "description": "Port office" }
+  },
+  "spawn_zones": {
+    "team_a": [
+      {
+        "id": "a_main_spawn",
+        "position": [12, 12, 0],
+        "radius": 10,
+        "priority": "primary",
+        "facing": [1, 1, 0],
+        "points": 6
+      },
+      {
+        "id": "a_warehouse_spawn",
+        "position": [25, 20, 0],
+        "radius": 7,
+        "priority": "secondary",
+        "facing": [0, 1, 0],
+        "points": 4
+      },
+      {
+        "id": "a_dock_spawn",
+        "position": [15, 25, 0],
+        "radius": 6,
+        "priority": "tertiary",
+        "facing": [1, 0, 0],
+        "points": 3
+      },
+      {
+        "id": "a_fallback_spawn",
+        "position": [20, 15, 0],
+        "radius": 5,
+        "priority": "fallback",
+        "facing": [1, 1, 0],
+        "points": 2
+      }
+    ],
+    "team_b": [
+      {
+        "id": "b_main_spawn",
+        "position": [78, 63, 0],
+        "radius": 10,
+        "priority": "primary",
+        "facing": [-1, -1, 0],
+        "points": 6
+      },
+      {
+        "id": "b_office_spawn",
+        "position": [68, 55, 0],
+        "radius": 7,
+        "priority": "secondary",
+        "facing": [0, -1, 0],
+        "points": 4
+      },
+      {
+        "id": "b_ship_spawn",
+        "position": [72, 50, 0],
+        "radius": 6,
+        "priority": "tertiary",
+        "facing": [-1, 0, 0],
+        "points": 3
+      },
+      {
+        "id": "b_fallback_spawn",
+        "position": [75, 58, 0],
+        "radius": 5,
+        "priority": "fallback",
+        "facing": [-1, -1, 0],
+        "points": 2
+      }
+    ]
+  },
+  "objective_locations": {
+    "koth_zones": [
+      {
+        "id": "container_point",
+        "position": [42, 38, 0],
+        "radius": 9,
+        "rotation_order": 1
+      },
+      {
+        "id": "dock_point",
+        "position": [18, 45, 5],
+        "radius": 7,
+        "rotation_order": 2
+      },
+      {
+        "id": "ship_deck_point",
+        "position": [65, 35, 8],
+        "radius": 8,
+        "rotation_order": 3
+      }
+    ],
+    "domination_points": [
+      { "id": "point_a", "position": [18, 45, 5], "name": "Docks" },
+      { "id": "point_b", "position": [42, 38, 0], "name": "Containers" },
+      { "id": "point_c", "position": [65, 35, 8], "name": "Ship" }
+    ],
+    "bomb_sites": [
+      { "id": "site_a", "position": [25, 50, 0], "radius": 12, "name": "Warehouse" },
+      { "id": "site_b", "position": [65, 35, 8], "radius": 10, "name": "Ship Deck" }
+    ]
+  },
+  "engagement_zones": {
+    "close_range_zones": [
+      { "area": "container_alley", "percentage": 25 },
+      { "area": "ship_cargo_hold", "percentage": 15 },
+      { "area": "ship_corridor", "percentage": 10 }
+    ],
+    "medium_range_zones": [
+      { "area": "container_yard_general", "percentage": 20 },
+      { "area": "loading_zone", "percentage": 10 },
+      { "area": "ship_deck", "percentage": 5 }
+    ],
+    "long_range_zones": [
+      { "area": "upper_docks", "percentage": 10 },
+      { "area": "crane_top", "percentage": 5 }
+    ],
+    "mixed_zones": [
+      { "area": "general_circulation", "percentage": 0 }
+    ]
+  },
+  "cover_distribution": {
+    "total_cover_objects": 120,
+    "cover_types": {
+      "full_height": 60,
+      "half_height": 35,
+      "deployable_positions": 15,
+      "natural_terrain": 10
+    },
+    "cover_spacing_avg_m": 3.8,
+    "cover_density_by_zone": {
+      "container_yard": "very_high",
+      "ship_interior": "medium",
+      "docks": "low"
+    }
+  },
+  "sightlines": {
+    "longest_sightline_m": 75,
+    "average_sightline_m": 32,
+    "sightline_breaks": 24,
+    "sniper_lanes": 3,
+    "max_cross_map_visibility": false,
+    "key_sightlines": [
+      {
+        "from": "crane_top",
+        "to": "container_yard",
+        "distance": 35,
+        "type": "elevated_overwatch"
+      },
+      {
+        "from": "upper_docks",
+        "to": "loading_zone",
+        "distance": 45,
+        "type": "elevated_to_ground"
+      },
+      {
+        "from": "ship_bridge",
+        "to": "blue_containers",
+        "distance": 28,
+        "type": "elevated_angle"
+      },
+      {
+        "from": "gangway",
+        "to": "forklift",
+        "distance": 20,
+        "type": "chokepoint"
+      }
+    ]
+  },
+  "rotation_timings": {
+    "docks_to_containers": 7,
+    "containers_to_ship": 8,
+    "docks_to_ship": 14,
+    "spawn_a_to_center": 12,
+    "spawn_b_to_center": 11,
+    "full_map_traverse": 22,
+    "units": "seconds"
+  },
+  "verticality": {
+    "levels": 3,
+    "max_height_difference": 18,
+    "climb_points": 6,
+    "jump_shortcuts": 4,
+    "fall_damage_threshold": 10,
+    "notable_vertical_positions": [
+      { "name": "crane_top", "height": 18, "access": "ladder" },
+      { "name": "ship_bridge", "height": 12, "access": "stairs" },
+      { "name": "container_top", "height": 6, "access": "jump" },
+      { "name": "upper_docks", "height": 5, "access": "ramp" }
+    ]
+  },
+  "environmental_features": {
+    "lighting": {
+      "ambient_light": "low",
+      "shadow_density": "very_high",
+      "dark_corners": 12,
+      "bright_areas": 4,
+      "fog_density": "medium"
+    },
+    "audio_zones": {
+      "reverb_areas": ["ship_cargo_hold", "warehouse"],
+      "outdoor_areas": ["docks", "container_yard"],
+      "metal_footsteps": ["ship_deck", "upper_docks", "crane"]
+    },
+    "weather_effects": {
+      "fog": true,
+      "rain": false,
+      "visibility_reduction": 0.15
+    },
+    "destructible_elements": [
+      { "type": "crates", "count": 8 },
+      { "type": "barrels", "count": 6 }
+    ],
+    "interactive_elements": {
+      "doors": 6,
+      "breakable_windows": 4,
+      "movable_containers": 2
+    }
+  },
+  "balance_notes": {
+    "symmetry": "Asymmetric design balanced through rotation timings and objective placement",
+    "weapon_viability": "Container yard favors CQB, docks favor range, ship offers mixed engagements",
+    "flow": "Complex routing with multiple vertical options. High skill ceiling for map knowledge.",
+    "rotation_time": "12-second average allows for tactical repositioning and prevents spawn trapping",
+    "verticality_balance": "Crane and ship bridge are powerful but exposed. Risk-reward positioning.",
+    "spawn_safety": "Four spawn zones per team with 18m+ buffer from contested areas",
+    "fog_impact": "Fog reduces long-range effectiveness by ~15%, balancing sniper power"
+  },
+  "supported_modes": ["tdm", "koth", "domination", "search_and_destroy"],
+  "recommended_player_count": {
+    "min": 10,
+    "max": 16,
+    "optimal": 12
+  },
+  "design_references": [
+    "Crash (Call of Duty 4) - vertical complexity",
+    "Shipment (Call of Duty) - close quarters intensity",
+    "Haven (Valorant) - asymmetric three-lane with unique zones",
+    "Coastline (Rainbow Six Siege) - indoor/outdoor mix"
+  ]
+}

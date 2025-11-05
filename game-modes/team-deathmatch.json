@@ -1,0 +1,120 @@
+{
+  "$schema": "game-mode-schema",
+  "version": "1.0.0",
+  "mode_id": "tdm",
+  "name": "Team Deathmatch",
+  "description": "Classic team-based elimination. First team to reach the score limit or highest score at time limit wins.",
+  "enabled": true,
+  "team_config": {
+    "team_count": 2,
+    "team_size": 6,
+    "allow_party_size": 6,
+    "auto_balance": true,
+    "balance_threshold": 1
+  },
+  "match_config": {
+    "time_limit_s": 600,
+    "score_limit": 75,
+    "overtime_enabled": true,
+    "overtime_max_duration_s": 120,
+    "overtime_trigger": "tied_at_time_limit",
+    "overtime_win_condition": "sudden_death",
+    "mercy_rule": {
+      "enabled": true,
+      "score_diff_threshold": 40,
+      "min_elapsed_time_s": 240
+    }
+  },
+  "scoring": {
+    "kill": 1,
+    "assist": 0,
+    "headshot_bonus": 0,
+    "killstreak_bonuses": [
+      { "kills": 3, "bonus": 0, "announcement": "killing_spree" },
+      { "kills": 5, "bonus": 0, "announcement": "rampage" },
+      { "kills": 7, "bonus": 0, "announcement": "dominating" },
+      { "kills": 10, "bonus": 0, "announcement": "unstoppable" }
+    ],
+    "multikill_bonuses": [
+      { "kills": 2, "window_ms": 3000, "bonus": 0, "announcement": "double_kill" },
+      { "kills": 3, "window_ms": 4000, "bonus": 0, "announcement": "triple_kill" },
+      { "kills": 4, "window_ms": 5000, "bonus": 0, "announcement": "quad_kill" }
+    ],
+    "special_events": {
+      "first_blood": { "bonus": 0, "announcement": true },
+      "final_kill": { "bonus": 0, "announcement": true, "replay": true },
+      "revenge_kill": { "bonus": 0, "announcement": false }
+    }
+  },
+  "spawn_config": {
+    "system": "dynamic_weighted",
+    "spawn_delay_ms": 3000,
+    "spawn_protection_ms": 2000,
+    "spawn_protection_breaks_on": ["move", "shoot", "damage"],
+    "safe_radius_from_enemies": 15,
+    "preferred_spawn_near_teammates": true,
+    "teammate_proximity_bonus": 10,
+    "spawn_zones_per_team": 3,
+    "spawn_rotation_on_control_shift": true,
+    "anti_camping": {
+      "enabled": true,
+      "penalize_spawn_if_camped_for_s": 8,
+      "camping_detection_radius": 5,
+      "camping_penalty_weight": -50
+    }
+  },
+  "respawn_rules": {
+    "type": "immediate",
+    "allow_spectate_while_dead": true,
+    "spectate_team_only": true,
+    "loadout_change_on_respawn": false
+  },
+  "round_structure": {
+    "rounds_to_win": 1,
+    "side_switch": false,
+    "intermission_s": 0
+  },
+  "ui_elements": {
+    "show_scoreboard": true,
+    "show_kill_feed": true,
+    "show_team_scores": true,
+    "show_killcam": true,
+    "killcam_duration_ms": 5000,
+    "final_killcam": true,
+    "show_minimap": true,
+    "show_teammate_outlines": true
+  },
+  "match_pacing": {
+    "target_duration_min": 8,
+    "target_duration_max": 10,
+    "expected_kills_per_player": 12.5,
+    "expected_deaths_per_player": 12.5,
+    "action_density": "high"
+  },
+  "analytics_events": [
+    "match_start",
+    "match_end",
+    "kill",
+    "death",
+    "assist",
+    "killstreak",
+    "multikill",
+    "first_blood",
+    "final_kill",
+    "spawn",
+    "overtime_start",
+    "mercy_rule_trigger"
+  ],
+  "design_notes": {
+    "philosophy": "Fast-paced, constant action. Pure gunplay focus without objectives.",
+    "target_audience": "Players who want straightforward fragging without tactical complexity",
+    "skill_expression": "Individual mechanical skill and positioning",
+    "pacing_strategy": "10-minute matches prevent stalemates while allowing comebacks",
+    "spawn_strategy": "Dynamic spawns prevent spawn camping while keeping players in action",
+    "references": [
+      "Call of Duty TDM scoring and pacing",
+      "Halo spawn system for fairness",
+      "Valorant deathmatch for quick iteration"
+    ]
+  }
+}

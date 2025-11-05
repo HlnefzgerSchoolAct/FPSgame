@@ -1,0 +1,307 @@
+{
+  "$schema": "pricing-schema",
+  "version": "1.0.0",
+  "description": "Comprehensive pricing for all purchasable items with regional adjustments and monetization targets",
+  "gem_packages": {
+    "packages": [
+      {
+        "id": "gems_500",
+        "gems": 500,
+        "price_usd": 4.99,
+        "bonus_gems": 0,
+        "value_per_dollar": 100.2,
+        "popular": false
+      },
+      {
+        "id": "gems_1100",
+        "gems": 1100,
+        "price_usd": 9.99,
+        "bonus_gems": 100,
+        "value_per_dollar": 110.1,
+        "popular": true,
+        "badge": "Most Popular"
+      },
+      {
+        "id": "gems_2400",
+        "gems": 2400,
+        "price_usd": 19.99,
+        "bonus_gems": 400,
+        "value_per_dollar": 120.1,
+        "popular": true,
+        "badge": "Best Value"
+      },
+      {
+        "id": "gems_5500",
+        "gems": 5500,
+        "price_usd": 49.99,
+        "bonus_gems": 1000,
+        "value_per_dollar": 110.0,
+        "popular": false
+      },
+      {
+        "id": "gems_12000",
+        "gems": 12000,
+        "price_usd": 99.99,
+        "bonus_gems": 3000,
+        "value_per_dollar": 120.0,
+        "popular": false
+      }
+    ],
+    "first_time_buyer": {
+      "id": "gems_starter",
+      "gems": 1100,
+      "price_usd": 4.99,
+      "bonus_items": ["skin_ar_mk4_urban_camo", "credits_500"],
+      "one_time": true,
+      "discount_percent": 50
+    }
+  },
+  "battle_pass_pricing": {
+    "premium_pass": {
+      "price_gems": 1000,
+      "price_usd": 9.99,
+      "includes": ["50_tier_rewards", "20_percent_xp_boost"]
+    },
+    "premium_plus": {
+      "price_gems": 2500,
+      "price_usd": 24.99,
+      "includes": ["premium_pass", "25_tier_skip", "exclusive_title", "exclusive_emblem"]
+    },
+    "tier_skip": {
+      "price_gems": 150,
+      "price_usd": 1.49,
+      "max_purchase": 50
+    },
+    "tier_bundle_10": {
+      "price_gems": 1200,
+      "price_usd": 11.99,
+      "discount_percent": 20
+    }
+  },
+  "cosmetic_pricing": {
+    "weapon_skins": {
+      "common": { "credits": 2500, "gems": null },
+      "rare": { "credits": 5000, "gems": null },
+      "epic": { "credits": 12000, "gems": 850 },
+      "legendary": { "credits": null, "gems": 1750 },
+      "reactive_legendary": { "credits": null, "gems": 2000 }
+    },
+    "operator_skins": {
+      "rare": { "credits": 8000, "gems": null },
+      "epic": { "credits": null, "gems": 1200 },
+      "legendary": { "credits": null, "gems": 2000 }
+    },
+    "accessories": {
+      "charm_common": { "credits": 1000, "gems": null },
+      "charm_rare": { "credits": 2500, "gems": null },
+      "charm_epic": { "credits": null, "gems": 500 },
+      "spray_common": { "credits": 800, "gems": null },
+      "spray_rare": { "credits": 2000, "gems": null },
+      "spray_epic": { "credits": null, "gems": 600 },
+      "player_card_common": { "credits": 1500, "gems": null },
+      "player_card_rare": { "credits": 3500, "gems": null },
+      "player_card_epic": { "credits": 8000, "gems": null },
+      "emblem_common": { "credits": 1200, "gems": null },
+      "emblem_rare": { "credits": 3000, "gems": null },
+      "emblem_epic": { "credits": 10000, "gems": null },
+      "emblem_legendary": { "credits": null, "gems": 1200 },
+      "emote_rare": { "credits": 4000, "gems": null },
+      "emote_epic": { "credits": null, "gems": 800 },
+      "emote_legendary": { "credits": null, "gems": 1200 },
+      "finisher_epic": { "credits": null, "gems": 1000 },
+      "finisher_legendary": { "credits": null, "gems": 1500 }
+    }
+  },
+  "bundle_pricing": {
+    "starter_bundle": {
+      "price_gems": 1000,
+      "value_gems": 1430,
+      "discount_percent": 30,
+      "price_usd_equivalent": 9.99
+    },
+    "weapon_bundle": {
+      "price_gems": 2500,
+      "value_gems": 3350,
+      "discount_percent": 25,
+      "price_usd_equivalent": 24.99
+    },
+    "legendary_bundle": {
+      "price_gems": 5000,
+      "value_gems": 7700,
+      "discount_percent": 35,
+      "price_usd_equivalent": 49.99
+    },
+    "seasonal_bundle": {
+      "price_gems": 1800,
+      "value_gems": 2250,
+      "discount_percent": 20,
+      "price_usd_equivalent": 17.99
+    }
+  },
+  "special_items_pricing": {
+    "name_change": {
+      "credits": 10000,
+      "gems": 500,
+      "usd_equivalent": 4.99
+    },
+    "loadout_slot": {
+      "credits": 5000,
+      "gems": 250,
+      "usd_equivalent": 2.49,
+      "max_purchase": 5
+    },
+    "challenge_reroll": {
+      "daily_reroll_credits": 100,
+      "weekly_reroll_credits": 250,
+      "gems": null
+    }
+  },
+  "regional_pricing": {
+    "multipliers": {
+      "US": 1.0,
+      "EU": 1.0,
+      "UK": 0.95,
+      "CA": 0.85,
+      "AU": 0.90,
+      "BR": 0.60,
+      "MX": 0.65,
+      "AR": 0.55,
+      "RU": 0.50,
+      "TR": 0.55,
+      "CN": 0.70,
+      "JP": 0.95,
+      "KR": 0.85,
+      "SEA": 0.65,
+      "IN": 0.50,
+      "ZA": 0.60
+    },
+    "examples": {
+      "1100_gems_package": {
+        "US": "$9.99",
+        "EU": "€9.99",
+        "UK": "£8.99",
+        "BR": "R$34.99",
+        "RU": "₽449",
+        "IN": "₹499",
+        "CN": "¥58"
+      }
+    }
+  },
+  "monetization_analysis": {
+    "conversion_targets": {
+      "dau": 10000,
+      "conversion_rate": 0.10,
+      "paying_users_daily": 1000
+    },
+    "arpdau_calculation": {
+      "target_arpdau": "$0.20",
+      "daily_revenue": "$2000",
+      "monthly_revenue": "$60000"
+    },
+    "arppu_calculation": {
+      "target_arppu": "$12/month",
+      "monthly_paying_users": 3000,
+      "monthly_revenue_from_arppu": "$36000"
+    },
+    "revenue_breakdown": {
+      "battle_pass": "40%",
+      "weapon_skins": "30%",
+      "bundles": "20%",
+      "operator_skins": "7%",
+      "accessories": "3%"
+    },
+    "ltv_targets": {
+      "casual_player": "$10-20 over 12 months",
+      "active_player": "$30-60 over 12 months",
+      "whale": "$200-500+ over 12 months"
+    }
+  },
+  "price_optimization": {
+    "psychological_pricing": {
+      "use_99_endings": true,
+      "examples": ["$4.99", "$9.99", "$19.99", "$49.99"],
+      "reasoning": "Perceived as lower cost"
+    },
+    "bonus_structure": {
+      "small_packages": "0-5% bonus",
+      "medium_packages": "10-15% bonus",
+      "large_packages": "20-25% bonus",
+      "reasoning": "Incentivize larger purchases without devaluing currency"
+    },
+    "bundle_discounts": {
+      "minimum": "20%",
+      "optimal": "25-35%",
+      "maximum": "50% (limited time only)",
+      "reasoning": "Create perceived value while maintaining margins"
+    }
+  },
+  "pricing_strategy": {
+    "battle_pass_value": "Battle pass provides 7.5x value vs store purchases, making it best investment",
+    "credit_earning": "F2P players can earn 35k-50k credits/month, enough for 2-4 epic items or multiple rare items",
+    "gem_exclusivity": "Legendary items gem-only to drive premium currency purchases",
+    "bundle_strategy": "Bundles offer significant savings (20-35%) to incentivize bundle purchases over individual items",
+    "seasonal_rotation": "Limited-time items create urgency without permanent FOMO (items return seasonally)",
+    "whale_optimization": "Legendary bundles at $49.99-$99.99 price points target high spenders"
+  },
+  "competitive_analysis": {
+    "valorant": {
+      "battle_pass_price": "$10",
+      "premium_skin_price": "$17-25",
+      "bundle_price": "$50-70"
+    },
+    "apex_legends": {
+      "battle_pass_price": "$10",
+      "legendary_skin_price": "$18",
+      "event_bundle_price": "$60"
+    },
+    "fortnite": {
+      "battle_pass_price": "$10",
+      "legendary_skin_price": "$20",
+      "bundle_price": "$25-50"
+    },
+    "arena_blitz_positioning": {
+      "battle_pass": "Competitive at $10",
+      "legendary_skins": "Lower at $15-20 (gems equivalent)",
+      "bundles": "Value-focused at $25-50",
+      "strategy": "Slightly lower pricing to attract players from competitors"
+    }
+  },
+  "pricing_tests": {
+    "planned_ab_tests": [
+      {
+        "test": "Battle pass price",
+        "variants": ["$9.99", "$11.99"],
+        "metric": "Conversion rate and total revenue"
+      },
+      {
+        "test": "Starter bundle price",
+        "variants": ["$4.99", "$7.99"],
+        "metric": "First-time buyer conversion"
+      },
+      {
+        "test": "Legendary skin price",
+        "variants": ["1750 gems", "2000 gems"],
+        "metric": "Purchase rate and whale spending"
+      },
+      {
+        "test": "Bundle discount",
+        "variants": ["25%", "35%"],
+        "metric": "Bundle purchase rate vs individual items"
+      }
+    ]
+  },
+  "design_notes": {
+    "philosophy": "Pricing balances monetization with player goodwill. Competitive with market leaders.",
+    "f2p_respect": "Generous credit earning ensures F2P players feel valued and can access content",
+    "premium_value": "Premium purchases must feel worth the money. No regret purchases.",
+    "regional_fairness": "Adjusted pricing ensures accessibility in lower-income regions",
+    "no_exploitation": "No loot boxes with random rewards. All items clearly priced.",
+    "transparency": "Players know exactly what they're buying. No hidden costs.",
+    "references": [
+      "Valorant pricing for premium positioning",
+      "Fortnite for psychological pricing",
+      "Apex for regional pricing strategy",
+      "LoL for long-term monetization balance"
+    ]
+  }
+}

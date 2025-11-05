@@ -1,0 +1,413 @@
+{
+  "$schema": "weapon-balance-schema",
+  "version": "1.0.0",
+  "last_updated": "2025-11-05",
+  "weapons": [
+    {
+      "id": "ar_mk4",
+      "name": "MK-4 Assault Rifle",
+      "role": "assault_rifle",
+      "description": "Versatile mid-range rifle with balanced stats",
+      "tier": "base",
+      "stats": {
+        "dmg_body": 28,
+        "dmg_head": 56,
+        "rpm": 650,
+        "mag_size": 30,
+        "reload_ms": 2200,
+        "ads_ms": 250,
+        "move_speed_mult": 0.95,
+        "recoil_pattern": "ar_mk4_pattern",
+        "spread_min": 0.15,
+        "spread_max": 2.5,
+        "spread_ads_mult": 0.4,
+        "falloff": [
+          { "range": 0, "dmg_mult": 1.0 },
+          { "range": 25, "dmg_mult": 1.0 },
+          { "range": 40, "dmg_mult": 0.85 },
+          { "range": 60, "dmg_mult": 0.6 }
+        ],
+        "sway": 1.0,
+        "equip_ms": 400,
+        "switch_ms": 350,
+        "penetration_level": 2,
+        "fire_mode": ["auto", "burst"],
+        "burst_count": 3,
+        "burst_delay_ms": 100
+      },
+      "ttk_analysis": {
+        "close_range": { "shots_to_kill": 4, "ttk_ms": 277, "headshot_ttk_ms": 92 },
+        "mid_range": { "shots_to_kill": 4, "ttk_ms": 277, "headshot_ttk_ms": 92 },
+        "long_range": { "shots_to_kill": 6, "ttk_ms": 461, "headshot_ttk_ms": 185 }
+      }
+    },
+    {
+      "id": "ar_vanguard",
+      "name": "Vanguard AR",
+      "role": "assault_rifle",
+      "description": "High damage, slower fire rate AR for controlled engagements",
+      "tier": "base",
+      "stats": {
+        "dmg_body": 32,
+        "dmg_head": 64,
+        "rpm": 550,
+        "mag_size": 25,
+        "reload_ms": 2400,
+        "ads_ms": 280,
+        "move_speed_mult": 0.93,
+        "recoil_pattern": "ar_vanguard_pattern",
+        "spread_min": 0.12,
+        "spread_max": 2.2,
+        "spread_ads_mult": 0.35,
+        "falloff": [
+          { "range": 0, "dmg_mult": 1.0 },
+          { "range": 30, "dmg_mult": 1.0 },
+          { "range": 50, "dmg_mult": 0.88 },
+          { "range": 70, "dmg_mult": 0.65 }
+        ],
+        "sway": 1.1,
+        "equip_ms": 420,
+        "switch_ms": 380,
+        "penetration_level": 3,
+        "fire_mode": ["auto"],
+        "burst_count": 0,
+        "burst_delay_ms": 0
+      },
+      "ttk_analysis": {
+        "close_range": { "shots_to_kill": 4, "ttk_ms": 327, "headshot_ttk_ms": 109 },
+        "mid_range": { "shots_to_kill": 4, "ttk_ms": 327, "headshot_ttk_ms": 109 },
+        "long_range": { "shots_to_kill": 5, "ttk_ms": 436, "headshot_ttk_ms": 218 }
+      }
+    },
+    {
+      "id": "smg_phantom",
+      "name": "Phantom SMG",
+      "role": "smg",
+      "description": "High mobility, high fire rate SMG for close quarters",
+      "tier": "base",
+      "stats": {
+        "dmg_body": 22,
+        "dmg_head": 44,
+        "rpm": 900,
+        "mag_size": 35,
+        "reload_ms": 1800,
+        "ads_ms": 180,
+        "move_speed_mult": 1.02,
+        "recoil_pattern": "smg_phantom_pattern",
+        "spread_min": 0.25,
+        "spread_max": 3.5,
+        "spread_ads_mult": 0.5,
+        "falloff": [
+          { "range": 0, "dmg_mult": 1.0 },
+          { "range": 15, "dmg_mult": 1.0 },
+          { "range": 25, "dmg_mult": 0.7 },
+          { "range": 40, "dmg_mult": 0.45 }
+        ],
+        "sway": 0.7,
+        "equip_ms": 300,
+        "switch_ms": 250,
+        "penetration_level": 1,
+        "fire_mode": ["auto"],
+        "burst_count": 0,
+        "burst_delay_ms": 0
+      },
+      "ttk_analysis": {
+        "close_range": { "shots_to_kill": 5, "ttk_ms": 267, "headshot_ttk_ms": 133 },
+        "mid_range": { "shots_to_kill": 7, "ttk_ms": 400, "headshot_ttk_ms": 200 },
+        "long_range": { "shots_to_kill": 11, "ttk_ms": 667, "headshot_ttk_ms": 400 }
+      }
+    },
+    {
+      "id": "smg_scorpion",
+      "name": "Scorpion SMG",
+      "role": "smg",
+      "description": "Balanced SMG with controllable recoil",
+      "tier": "base",
+      "stats": {
+        "dmg_body": 24,
+        "dmg_head": 48,
+        "rpm": 800,
+        "mag_size": 30,
+        "reload_ms": 1900,
+        "ads_ms": 200,
+        "move_speed_mult": 1.0,
+        "recoil_pattern": "smg_scorpion_pattern",
+        "spread_min": 0.20,
+        "spread_max": 3.0,
+        "spread_ads_mult": 0.45,
+        "falloff": [
+          { "range": 0, "dmg_mult": 1.0 },
+          { "range": 18, "dmg_mult": 1.0 },
+          { "range": 30, "dmg_mult": 0.75 },
+          { "range": 45, "dmg_mult": 0.5 }
+        ],
+        "sway": 0.8,
+        "equip_ms": 320,
+        "switch_ms": 270,
+        "penetration_level": 1,
+        "fire_mode": ["auto"],
+        "burst_count": 0,
+        "burst_delay_ms": 0
+      },
+      "ttk_analysis": {
+        "close_range": { "shots_to_kill": 5, "ttk_ms": 300, "headshot_ttk_ms": 150 },
+        "mid_range": { "shots_to_kill": 6, "ttk_ms": 375, "headshot_ttk_ms": 188 },
+        "long_range": { "shots_to_kill": 10, "ttk_ms": 675, "headshot_ttk_ms": 375 }
+      }
+    },
+    {
+      "id": "shotgun_enforcer",
+      "name": "Enforcer Shotgun",
+      "role": "shotgun",
+      "description": "Pump-action powerhouse for extreme close range",
+      "tier": "base",
+      "stats": {
+        "dmg_body": 18,
+        "dmg_head": 27,
+        "rpm": 80,
+        "mag_size": 8,
+        "reload_ms": 3500,
+        "reload_per_shell_ms": 600,
+        "ads_ms": 300,
+        "move_speed_mult": 0.97,
+        "recoil_pattern": "shotgun_enforcer_pattern",
+        "spread_min": 2.0,
+        "spread_max": 8.0,
+        "spread_ads_mult": 0.6,
+        "pellet_count": 8,
+        "falloff": [
+          { "range": 0, "dmg_mult": 1.0 },
+          { "range": 8, "dmg_mult": 1.0 },
+          { "range": 15, "dmg_mult": 0.5 },
+          { "range": 25, "dmg_mult": 0.2 }
+        ],
+        "sway": 1.2,
+        "equip_ms": 450,
+        "switch_ms": 400,
+        "penetration_level": 1,
+        "fire_mode": ["pump"],
+        "burst_count": 0,
+        "burst_delay_ms": 0
+      },
+      "ttk_analysis": {
+        "close_range": { "shots_to_kill": 1, "ttk_ms": 0, "headshot_ttk_ms": 0 },
+        "mid_range": { "shots_to_kill": 2, "ttk_ms": 750, "headshot_ttk_ms": 750 },
+        "long_range": { "shots_to_kill": 5, "ttk_ms": 3000, "headshot_ttk_ms": 3000 }
+      }
+    },
+    {
+      "id": "shotgun_auto12",
+      "name": "Auto-12 Shotgun",
+      "role": "shotgun",
+      "description": "Semi-auto shotgun with faster follow-up shots",
+      "tier": "base",
+      "stats": {
+        "dmg_body": 15,
+        "dmg_head": 23,
+        "rpm": 180,
+        "mag_size": 10,
+        "reload_ms": 3200,
+        "reload_per_shell_ms": 550,
+        "ads_ms": 280,
+        "move_speed_mult": 0.98,
+        "recoil_pattern": "shotgun_auto12_pattern",
+        "spread_min": 2.5,
+        "spread_max": 9.0,
+        "spread_ads_mult": 0.65,
+        "pellet_count": 8,
+        "falloff": [
+          { "range": 0, "dmg_mult": 1.0 },
+          { "range": 6, "dmg_mult": 1.0 },
+          { "range": 12, "dmg_mult": 0.55 },
+          { "range": 20, "dmg_mult": 0.25 }
+        ],
+        "sway": 1.1,
+        "equip_ms": 430,
+        "switch_ms": 380,
+        "penetration_level": 1,
+        "fire_mode": ["semi"],
+        "burst_count": 0,
+        "burst_delay_ms": 0
+      },
+      "ttk_analysis": {
+        "close_range": { "shots_to_kill": 1, "ttk_ms": 0, "headshot_ttk_ms": 0 },
+        "mid_range": { "shots_to_kill": 2, "ttk_ms": 333, "headshot_ttk_ms": 333 },
+        "long_range": { "shots_to_kill": 4, "ttk_ms": 1000, "headshot_ttk_ms": 1000 }
+      }
+    },
+    {
+      "id": "sniper_longshot",
+      "name": "Longshot Sniper",
+      "role": "sniper",
+      "description": "Bolt-action precision rifle for long range elimination",
+      "tier": "base",
+      "stats": {
+        "dmg_body": 95,
+        "dmg_head": 190,
+        "rpm": 48,
+        "mag_size": 5,
+        "reload_ms": 3000,
+        "ads_ms": 450,
+        "move_speed_mult": 0.88,
+        "recoil_pattern": "sniper_longshot_pattern",
+        "spread_min": 0.05,
+        "spread_max": 4.0,
+        "spread_ads_mult": 0.01,
+        "falloff": [
+          { "range": 0, "dmg_mult": 0.9 },
+          { "range": 30, "dmg_mult": 1.0 },
+          { "range": 80, "dmg_mult": 1.0 },
+          { "range": 120, "dmg_mult": 0.95 }
+        ],
+        "sway": 2.5,
+        "equip_ms": 600,
+        "switch_ms": 550,
+        "penetration_level": 5,
+        "fire_mode": ["bolt"],
+        "burst_count": 0,
+        "burst_delay_ms": 0,
+        "scope_zoom": 8.0
+      },
+      "ttk_analysis": {
+        "close_range": { "shots_to_kill": 2, "ttk_ms": 1250, "headshot_ttk_ms": 0 },
+        "mid_range": { "shots_to_kill": 2, "ttk_ms": 1250, "headshot_ttk_ms": 0 },
+        "long_range": { "shots_to_kill": 2, "ttk_ms": 1250, "headshot_ttk_ms": 0 }
+      }
+    },
+    {
+      "id": "sniper_marksman",
+      "name": "Marksman DMR",
+      "role": "sniper",
+      "description": "Semi-auto designated marksman rifle for aggressive sniping",
+      "tier": "base",
+      "stats": {
+        "dmg_body": 58,
+        "dmg_head": 116,
+        "rpm": 220,
+        "mag_size": 10,
+        "reload_ms": 2800,
+        "ads_ms": 350,
+        "move_speed_mult": 0.92,
+        "recoil_pattern": "sniper_marksman_pattern",
+        "spread_min": 0.10,
+        "spread_max": 3.0,
+        "spread_ads_mult": 0.25,
+        "falloff": [
+          { "range": 0, "dmg_mult": 0.85 },
+          { "range": 20, "dmg_mult": 1.0 },
+          { "range": 60, "dmg_mult": 1.0 },
+          { "range": 90, "dmg_mult": 0.9 }
+        ],
+        "sway": 1.8,
+        "equip_ms": 500,
+        "switch_ms": 450,
+        "penetration_level": 3,
+        "fire_mode": ["semi"],
+        "burst_count": 0,
+        "burst_delay_ms": 0,
+        "scope_zoom": 4.0
+      },
+      "ttk_analysis": {
+        "close_range": { "shots_to_kill": 2, "ttk_ms": 273, "headshot_ttk_ms": 0 },
+        "mid_range": { "shots_to_kill": 2, "ttk_ms": 273, "headshot_ttk_ms": 0 },
+        "long_range": { "shots_to_kill": 2, "ttk_ms": 273, "headshot_ttk_ms": 0 }
+      }
+    },
+    {
+      "id": "sidearm_p9",
+      "name": "P-9 Pistol",
+      "role": "sidearm",
+      "description": "Reliable backup weapon with fast draw",
+      "tier": "base",
+      "stats": {
+        "dmg_body": 30,
+        "dmg_head": 60,
+        "rpm": 400,
+        "mag_size": 15,
+        "reload_ms": 1500,
+        "ads_ms": 150,
+        "move_speed_mult": 1.05,
+        "recoil_pattern": "sidearm_p9_pattern",
+        "spread_min": 0.30,
+        "spread_max": 4.0,
+        "spread_ads_mult": 0.40,
+        "falloff": [
+          { "range": 0, "dmg_mult": 1.0 },
+          { "range": 12, "dmg_mult": 1.0 },
+          { "range": 25, "dmg_mult": 0.7 },
+          { "range": 40, "dmg_mult": 0.45 }
+        ],
+        "sway": 0.9,
+        "equip_ms": 250,
+        "switch_ms": 200,
+        "penetration_level": 1,
+        "fire_mode": ["semi"],
+        "burst_count": 0,
+        "burst_delay_ms": 0
+      },
+      "ttk_analysis": {
+        "close_range": { "shots_to_kill": 4, "ttk_ms": 450, "headshot_ttk_ms": 150 },
+        "mid_range": { "shots_to_kill": 5, "ttk_ms": 600, "headshot_ttk_ms": 300 },
+        "long_range": { "shots_to_kill": 8, "ttk_ms": 1050, "headshot_ttk_ms": 600 }
+      }
+    },
+    {
+      "id": "sidearm_revolver",
+      "name": "Magnum Revolver",
+      "role": "sidearm",
+      "description": "High damage revolver with limited capacity",
+      "tier": "base",
+      "stats": {
+        "dmg_body": 55,
+        "dmg_head": 110,
+        "rpm": 180,
+        "mag_size": 6,
+        "reload_ms": 2200,
+        "ads_ms": 200,
+        "move_speed_mult": 1.03,
+        "recoil_pattern": "sidearm_revolver_pattern",
+        "spread_min": 0.20,
+        "spread_max": 3.5,
+        "spread_ads_mult": 0.35,
+        "falloff": [
+          { "range": 0, "dmg_mult": 1.0 },
+          { "range": 15, "dmg_mult": 1.0 },
+          { "range": 30, "dmg_mult": 0.85 },
+          { "range": 50, "dmg_mult": 0.65 }
+        ],
+        "sway": 1.3,
+        "equip_ms": 300,
+        "switch_ms": 250,
+        "penetration_level": 2,
+        "fire_mode": ["semi"],
+        "burst_count": 0,
+        "burst_delay_ms": 0
+      },
+      "ttk_analysis": {
+        "close_range": { "shots_to_kill": 2, "ttk_ms": 333, "headshot_ttk_ms": 0 },
+        "mid_range": { "shots_to_kill": 2, "ttk_ms": 333, "headshot_ttk_ms": 0 },
+        "long_range": { "shots_to_kill": 3, "ttk_ms": 667, "headshot_ttk_ms": 333 }
+      }
+    }
+  ],
+  "balance_notes": {
+    "design_philosophy": "TTK parity within 10-15% across weapon classes at intended ranges. Clear role definition with range-based advantages.",
+    "ttk_targets": {
+      "close_range": "250-350ms (SMG/Shotgun optimal)",
+      "mid_range": "300-450ms (AR optimal)",
+      "long_range": "400-700ms (Sniper/DMR optimal)"
+    },
+    "class_niches": {
+      "assault_rifle": "Versatile mid-range, good at 20-50m",
+      "smg": "High mobility CQB, dominant under 20m",
+      "shotgun": "Extreme close range burst, under 12m",
+      "sniper": "Long range precision, 40m+",
+      "sidearm": "Emergency backup, fast switch"
+    },
+    "references": [
+      "CS:GO weapon balance for TTK targets",
+      "Valorant damage falloff curves",
+      "Call of Duty attachment system philosophy"
+    ]
+  }
+}

@@ -1,0 +1,240 @@
+{
+  "$schema": "battle-pass-schema",
+  "version": "1.0.0",
+  "season_id": "season_1",
+  "season_name": "First Strike",
+  "start_date": "2025-01-15",
+  "end_date": "2025-03-31",
+  "duration_weeks": 10,
+  "max_tier": 50,
+  "free_track": true,
+  "premium_track": true,
+  "premium_price_gems": 1000,
+  "tier_skip_price_gems": 150,
+  "xp_per_tier": 10000,
+  "xp_sources": {
+    "match_completion": 300,
+    "match_win": 200,
+    "daily_challenge_completion": 500,
+    "weekly_challenge_completion": 2000,
+    "seasonal_challenge_completion": 5000
+  },
+  "tiers": [
+    {
+      "tier": 1,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 200 },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_ar_mk4_digital_camo" }
+    },
+    {
+      "tier": 2,
+      "xp_required": 10000,
+      "free_reward": { "type": "player_card", "item_id": "card_rookie" },
+      "premium_reward": { "type": "credits", "amount": 500 }
+    },
+    {
+      "tier": 3,
+      "xp_required": 10000,
+      "free_reward": { "type": "spray", "item_id": "spray_thumbs_up" },
+      "premium_reward": { "type": "weapon_charm", "item_id": "charm_bullet" }
+    },
+    {
+      "tier": 4,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 250 },
+      "premium_reward": { "type": "emote", "item_id": "emote_salute" }
+    },
+    {
+      "tier": 5,
+      "xp_required": 10000,
+      "free_reward": { "type": "emblem", "item_id": "emblem_bronze_star" },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_smg_phantom_neon" }
+    },
+    {
+      "tier": 6,
+      "xp_required": 10000,
+      "free_reward": { "type": "xp_boost", "duration_hours": 2, "multiplier": 1.25 },
+      "premium_reward": { "type": "credits", "amount": 750 }
+    },
+    {
+      "tier": 7,
+      "xp_required": 10000,
+      "free_reward": { "type": "spray", "item_id": "spray_gg" },
+      "premium_reward": { "type": "player_title", "item_id": "title_first_strike" }
+    },
+    {
+      "tier": 8,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 300 },
+      "premium_reward": { "type": "finisher", "item_id": "finisher_lightning" }
+    },
+    {
+      "tier": 9,
+      "xp_required": 10000,
+      "free_reward": { "type": "player_card", "item_id": "card_veteran" },
+      "premium_reward": { "type": "weapon_charm", "item_id": "charm_medal" }
+    },
+    {
+      "tier": 10,
+      "xp_required": 10000,
+      "free_reward": { "type": "weapon_skin", "item_id": "skin_sidearm_p9_urban" },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_shotgun_enforcer_tactical" }
+    },
+    {
+      "tier": 15,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 500 },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_sniper_marksman_arctic" }
+    },
+    {
+      "tier": 20,
+      "xp_required": 10000,
+      "free_reward": { "type": "emblem", "item_id": "emblem_silver_star" },
+      "premium_reward": { "type": "operator_skin", "item_id": "operator_tactical_black" }
+    },
+    {
+      "tier": 25,
+      "xp_required": 10000,
+      "free_reward": { "type": "xp_boost", "duration_hours": 4, "multiplier": 1.5 },
+      "premium_reward": { "type": "weapon_bundle", "item_id": "bundle_ar_complete_set" }
+    },
+    {
+      "tier": 30,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 750 },
+      "premium_reward": { "type": "emote", "item_id": "emote_victory_dance" }
+    },
+    {
+      "tier": 35,
+      "xp_required": 10000,
+      "free_reward": { "type": "spray", "item_id": "spray_legendary_mark" },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_ar_vanguard_gold" }
+    },
+    {
+      "tier": 40,
+      "xp_required": 10000,
+      "free_reward": { "type": "player_card", "item_id": "card_elite" },
+      "premium_reward": { "type": "finisher", "item_id": "finisher_orbital_strike" }
+    },
+    {
+      "tier": 45,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 1000 },
+      "premium_reward": { "type": "operator_skin", "item_id": "operator_elite_ops" }
+    },
+    {
+      "tier": 50,
+      "xp_required": 10000,
+      "free_reward": { "type": "emblem", "item_id": "emblem_gold_star" },
+      "premium_reward": { "type": "reactive_weapon_skin", "item_id": "skin_smg_scorpion_reactive_phoenix" }
+    }
+  ],
+  "tier_summary": {
+    "total_tiers": 50,
+    "free_track_rewards": {
+      "credits": 3500,
+      "cosmetics": 12,
+      "xp_boosts": 2
+    },
+    "premium_track_rewards": {
+      "weapon_skins": 9,
+      "operator_skins": 2,
+      "emotes": 2,
+      "finishers": 2,
+      "charms": 2,
+      "titles": 1,
+      "credits": 1250,
+      "exclusive_items": 5
+    },
+    "total_xp_required": 500000,
+    "estimated_hours": {
+      "casual_player": "80-100 hours",
+      "active_player": "50-70 hours",
+      "hardcore_player": "35-50 hours"
+    }
+  },
+  "progression_boosters": {
+    "daily_first_win": {
+      "bonus_xp": 1000,
+      "description": "First win of the day grants bonus BP XP"
+    },
+    "party_bonus": {
+      "bonus_mult": 1.10,
+      "description": "10% bonus BP XP when playing with friends"
+    },
+    "premium_bonus": {
+      "bonus_mult": 1.20,
+      "description": "Premium pass holders earn 20% more BP XP"
+    }
+  },
+  "late_season_catch_up": {
+    "enabled": true,
+    "start_week": 7,
+    "xp_reduction_per_tier": 0.15,
+    "description": "Last 3 weeks of season reduce XP per tier by 15% to help late starters"
+  },
+  "monetization": {
+    "premium_pass_price_gems": 1000,
+    "premium_pass_value": {
+      "items_count": 50,
+      "estimated_value_gems": 7500,
+      "value_multiplier": "7.5x",
+      "credits_included": 1250
+    },
+    "tier_skip_price_gems": 150,
+    "tier_skip_bundle_10": {
+      "price_gems": 1200,
+      "discount": "20%"
+    },
+    "premium_plus": {
+      "price_gems": 2500,
+      "includes": [
+        "premium_pass",
+        "instant_tier_25_unlock",
+        "exclusive_title",
+        "exclusive_emblem"
+      ]
+    }
+  },
+  "post_tier_50": {
+    "enabled": true,
+    "reward_type": "prestige_tiers",
+    "xp_per_prestige_tier": 15000,
+    "prestige_rewards": [
+      { "tier": 51, "reward": { "type": "credits", "amount": 500 } },
+      { "tier": 52, "reward": { "type": "credits", "amount": 500 } },
+      { "tier": 55, "reward": { "type": "rare_loot_box", "count": 1 } },
+      { "tier": 60, "reward": { "type": "epic_loot_box", "count": 1 } },
+      { "tier": 65, "reward": { "type": "legendary_loot_box", "count": 1 } }
+    ],
+    "description": "Players who complete tier 50 can continue earning credits and loot boxes"
+  },
+  "season_rewards": {
+    "completion_bonuses": {
+      "tier_10": { "title": "Strike Initiate" },
+      "tier_25": { "title": "Strike Operative" },
+      "tier_50": { "title": "First Strike Elite", "emblem": "emblem_season_1_complete" }
+    }
+  },
+  "design_notes": {
+    "philosophy": "Battle pass provides consistent rewards for engagement without forcing purchases",
+    "free_track_value": "Free track must provide meaningful rewards to all players. ~3500 credits allows F2P shop purchases.",
+    "premium_value": "Premium pass offers 7.5x value compared to direct store purchases, making it best monetary investment",
+    "completion_rate_target": "Design for 60-70% of active premium players to complete tier 50",
+    "pacing": "10,000 XP per tier with ~5,000-6,000 XP available per day from challenges = ~2 tiers per day for active players",
+    "no_fomo": "Past battle pass items may return in future shop rotations (at higher prices) to avoid excessive FOMO",
+    "engagement_goals": [
+      "Daily login incentive through first win bonus",
+      "Regular play through XP requirements",
+      "Challenge completion encouraged",
+      "Social play rewarded via party bonus"
+    ],
+    "monetization_balance": "Premium pass is best value, but tier skips available for whales. No pay-to-win elements.",
+    "references": [
+      "Fortnite battle pass structure and value proposition",
+      "Apex Legends premium rewards and free track balance",
+      "Valorant pass completion rates and pacing",
+      "Call of Duty tier skip monetization"
+    ]
+  }
+}
