@@ -6,6 +6,7 @@
 import { i18n } from './LocalizationManager.js';
 import { MainMenu } from './Menus/MainMenu.js';
 import { Shop } from './Menus/Shop.js';
+import { Settings } from './Menus/Settings.js';
 import { Crosshair, setupCrosshairEvents } from './HUD/Crosshair.js';
 import { AmmoHealth, setupAmmoHealthEvents } from './HUD/AmmoHealth.js';
 import { KillFeed, setupKillFeedEvents } from './HUD/KillFeed.js';
@@ -24,6 +25,7 @@ export class UIManager {
     // Components
     this.mainMenu = null;
     this.shop = null;
+    this.settings = null;
     this.crosshair = null;
     this.ammoHealth = null;
     this.killFeed = null;
@@ -150,6 +152,14 @@ export class UIManager {
     const shopEl = this.shop.create();
     shopEl.classList.add('hidden');
     this.menuContainer.appendChild(shopEl);
+
+    // Settings
+    this.settings = new Settings({
+      onClose: () => this.showMainMenu()
+    });
+    const settingsEl = this.settings.create();
+    settingsEl.classList.add('hidden');
+    this.menuContainer.appendChild(settingsEl);
   }
 
   showHUD() {
@@ -193,12 +203,18 @@ export class UIManager {
   }
 
   showSettings() {
-    Toast.info('Settings menu coming soon');
+    this.hideAllMenus();
+    if (this.settings) {
+      this.settings.show();
+      this.currentMenu = this.settings;
+      screenReader.announce('Settings opened');
+    }
   }
 
   hideAllMenus() {
     if (this.mainMenu) this.mainMenu.hide();
     if (this.shop) this.shop.hide();
+    if (this.settings) this.settings.hide();
   }
 
   startGame() {
