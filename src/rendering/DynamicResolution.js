@@ -2,6 +2,7 @@
  * DynamicResolution.js - Dynamic resolution scaling system
  * Adjusts rendering resolution based on performance to maintain target FPS
  */
+import * as THREE from 'three';
 
 export class DynamicResolution {
   constructor(renderer, targetFPS = 60) {
@@ -167,7 +168,11 @@ export class DynamicResolution {
    * Get resolution statistics
    */
   getStats() {
-    const size = this.renderer.getSize(new THREE.Vector2());
+    // Reuse size vector to avoid allocation
+    if (!this._tempSize) {
+      this._tempSize = new THREE.Vector2();
+    }
+    const size = this.renderer.getSize(this._tempSize);
     const actualSize = {
       width: Math.floor(size.width * this.currentScale),
       height: Math.floor(size.height * this.currentScale)

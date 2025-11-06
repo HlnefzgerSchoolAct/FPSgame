@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
             // Map assets dynamically imported
             if (id.includes('/scene/maps/')) {
               const match = id.match(/maps\/([^/]+)/);
-              return match ? `map-${match[1]}` : 'map';
+              return match && match[1] ? `map-${match[1]}` : 'map';
             }
             // Rendering system
             if (id.includes('/rendering/')) {

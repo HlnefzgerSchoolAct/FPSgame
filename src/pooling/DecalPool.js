@@ -56,8 +56,12 @@ export class DecalPool extends ObjectPool {
     // Offset slightly along normal to prevent z-fighting
     decal.position.addScaledVector(normal, 0.01);
     
-    // Orient to surface normal
-    decal.lookAt(position.clone().add(normal));
+    // Orient to surface normal (reuse temp vector to avoid allocation)
+    if (!this._tempLookAt) {
+      this._tempLookAt = new THREE.Vector3();
+    }
+    this._tempLookAt.copy(position).add(normal);
+    decal.lookAt(this._tempLookAt);
     
     decal.userData.active = true;
     decal.userData.lifetime = 0;

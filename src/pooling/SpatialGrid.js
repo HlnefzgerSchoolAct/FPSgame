@@ -164,13 +164,16 @@ export class SpatialGrid {
     const step = this.cellSize * 0.5;
     const numSteps = Math.ceil(maxDistance / step);
     
-    const point = new THREE.Vector3();
+    // Reuse point vector to avoid allocations
+    if (!this._tempRayPoint) {
+      this._tempRayPoint = new THREE.Vector3();
+    }
     
     for (let i = 0; i <= numSteps; i++) {
       const t = i * step;
-      point.copy(origin).addScaledVector(direction, t);
+      this._tempRayPoint.copy(origin).addScaledVector(direction, t);
       
-      const key = this.getCellKey(point);
+      const key = this.getCellKey(this._tempRayPoint);
       const cell = this.cells.get(key);
       
       if (cell) {

@@ -133,18 +133,23 @@ export class ParticlePool extends ObjectPool {
   emitBurst(position, count, options = {}) {
     const particles = [];
     
+    // Reuse velocity vector to avoid allocations
+    if (!this._tempVelocity) {
+      this._tempVelocity = new THREE.Vector3();
+    }
+    
     for (let i = 0; i < count; i++) {
       const angle = (Math.PI * 2 * i) / count;
       const speed = options.speed || 2.0;
       const spread = options.spread || 0.5;
       
-      const velocity = new THREE.Vector3(
+      this._tempVelocity.set(
         Math.cos(angle) * speed + (Math.random() - 0.5) * spread,
         Math.random() * speed,
         Math.sin(angle) * speed + (Math.random() - 0.5) * spread
       );
       
-      particles.push(this.spawn(position, velocity, options));
+      particles.push(this.spawn(position, this._tempVelocity, options));
     }
     
     return particles;
