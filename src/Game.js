@@ -15,6 +15,7 @@ import { ADSController } from './mechanics/ADSController.js';
 import { SpawnSystemClient } from './mechanics/SpawnSystemClient.js';
 import { AnimationHooks } from './controllers/AnimationHooks.js';
 import { RenderSystem } from './rendering/RenderSystem.js';
+import { metrics } from '../performance/metrics.js';
 
 export class Game {
   constructor() {
@@ -55,6 +56,7 @@ export class Game {
     // Performance
     this.targetFPS = 60;
     this.maxDeltaTime = 1 / 30; // Clamp to 30fps minimum
+    this.metrics = metrics; // Performance metrics
     
     // Mock data for testing
     this.mockTargets = [];
@@ -142,6 +144,9 @@ export class Game {
   _gameLoop(currentTime = 0) {
     if (!this.running) return;
     
+    // Begin frame measurement
+    this.metrics.beginFrame();
+    
     // Calculate delta time
     this.deltaTime = (currentTime - this.lastTime) / 1000;
     this.lastTime = currentTime;
@@ -153,6 +158,9 @@ export class Game {
     if (this.gameState.isPlaying()) {
       this.update(this.deltaTime);
     }
+    
+    // End frame measurement
+    this.metrics.endFrame();
     
     // Continue loop
     requestAnimationFrame((time) => this._gameLoop(time));

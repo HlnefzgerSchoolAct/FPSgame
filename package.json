@@ -6,17 +6,27 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:analyze": "vite build --mode production",
     "preview": "vite preview",
     "server": "node server/index.js",
-    "server:dev": "node --watch server/index.js"
+    "server:dev": "node --watch server/index.js",
+    "optimize:assets": "node scripts/optimize-assets.js",
+    "optimize:textures": "node scripts/optimize-assets.js textures",
+    "optimize:meshes": "node scripts/optimize-assets.js meshes",
+    "optimize:atlases": "node scripts/optimize-assets.js atlases",
+    "optimize:all": "node scripts/optimize-assets.js all"
   },
   "dependencies": {
-    "three": "^0.159.0",
-    "ws": "^8.18.0",
+    "jsonwebtoken": "^9.0.2",
     "msgpackr": "^1.11.0",
-    "jsonwebtoken": "^9.0.2"
+    "three": "^0.159.0",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
-    "vite": "^5.0.0"
+    "rollup-plugin-visualizer": "^6.0.5",
+    "stats.js": "^0.17.0",
+    "terser": "^5.44.1",
+    "vite": "^5.0.0",
+    "vite-plugin-compression": "^0.5.1"
   }
 }
