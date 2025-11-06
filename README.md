@@ -330,6 +330,60 @@ All files pass validation ✓
 - Mixpanel: Product analytics
 - Unity Analytics: Game-specific KPIs
 
+## 🧪 Testing & Quality Assurance
+
+Arena Blitz has a comprehensive test suite ensuring game stability, performance, and quality.
+
+### Test Suite Overview
+- **Unit Tests**: 81+ tests covering core gameplay systems
+- **Integration Tests**: System interaction validation
+- **E2E Tests**: Full game flow automation with Playwright
+- **Accessibility Tests**: WCAG 2.1 Level AA compliance
+- **Performance Tests**: FPS monitoring and memory leak detection
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run unit tests
+npm run test:unit
+
+# Run unit tests with coverage
+npm run test:unit:coverage
+
+# Run E2E tests
+npm run test:e2e
+
+# Run E2E tests in headed mode
+npm run test:e2e:headed
+
+# Run accessibility tests
+npm run test:a11y
+
+# Run performance tests
+npm run test:perf
+```
+
+### Test Coverage
+- **Priority Modules**: 70%+ coverage target
+- **Health System**: ✅ 100% coverage
+- **Authentication**: ✅ 100% coverage
+- **Hit Detection**: ✅ 95% coverage
+- **Combat Integration**: ✅ Full flow tests
+
+### CI/CD Integration
+Tests run automatically on:
+- Every push to main/develop branches
+- Every pull request
+- Automated test reports and coverage
+
+### Documentation
+- [Comprehensive Test Plan](tests/test-plan.md)
+- [Test Suite README](tests/README.md)
+- [QA Weekly Report Template](docs/qa/weekly-report-template.md)
+
 ## 🚀 Next Steps
 
 ### For Development Team:
@@ -342,12 +396,16 @@ All files pass validation ✓
 7. Build A/B testing infrastructure
 
 ### For QA Team:
-1. Validate weapon TTK at specified ranges
-2. Test attachment trade-offs and combinations
-3. Verify map spawn safety and rotation timings
-4. Check progression unlock flow
-5. Test economy credit earning and spending
-6. Validate shop prices and bundle discounts
+1. ✅ Test infrastructure set up (Vitest, Playwright, axe-core)
+2. ✅ 81+ unit and integration tests passing
+3. Validate weapon TTK at specified ranges
+4. Test attachment trade-offs and combinations
+5. Verify map spawn safety and rotation timings
+6. Check progression unlock flow
+7. Test economy credit earning and spending
+8. Validate shop prices and bundle discounts
+9. Run manual playtest sessions
+10. Document and fix discovered bugs
 
 ### For LiveOps Team:
 1. Plan seasonal content roadmap
