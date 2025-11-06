@@ -10,6 +10,8 @@
     "preview": "vite preview",
     "server": "node server/index.js",
     "server:dev": "node --watch server/index.js",
+    "dev:full": "docker-compose up",
+    "generate:secrets": "node scripts/generate-secrets.js",
     "optimize:assets": "node scripts/optimize-assets.js",
     "optimize:textures": "node scripts/optimize-assets.js textures",
     "optimize:meshes": "node scripts/optimize-assets.js meshes",

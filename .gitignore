@@ -3,6 +3,8 @@ dist/
 .DS_Store
 *.log
 .env
+.env.local
+.env.*.local
 .vscode/
 .idea/
 coverage/
@@ -10,3 +12,31 @@ playwright-report/
 test-results/
 .vitest/
 *.tgz
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Build artifacts
+stats.html
+*.br
+*.gz
+
+# Secrets and credentials
+*.pem
+*.key
+*.crt
+secrets/
+.secrets
+
+# Vercel
+.vercel
+
+# Fly.io
+.fly/
+
+# OS
+Thumbs.db
+*.swp
+*.swo
+*~

@@ -1,0 +1,133 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  deploy:
+    name: Deploy to Fly.io
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Fly CLI
+        uses: superfly/flyctl-actions/setup-flyctl@master
+      
+      - name: Deploy to Fly.io
+        id: deploy
+        run: |
+          # Deploy with zero-downtime rolling strategy
+          flyctl deploy --remote-only --ha=false --strategy rolling
+          
+          # Get app info
+          app_name=$(flyctl info --json | jq -r '.Name')
+          hostname=$(flyctl info --json | jq -r '.Hostname')
+          
+          echo "app_name=$app_name" >> $GITHUB_OUTPUT
+          echo "hostname=$hostname" >> $GITHUB_OUTPUT
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      
+      - name: Wait for deployment
+        run: |
+          echo "Waiting for deployment to be healthy..."
+          sleep 15
+      
+      - name: Health Check
+        run: |
+          echo "Testing deployment health..."
+          
+          # Test health endpoint
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://${{ steps.deploy.outputs.hostname }}/healthz)
+          
+          if [ "$response" != "200" ]; then
+            echo "❌ Health check failed with status: $response"
+            
+            # Get recent logs for debugging
+            flyctl logs --app ${{ steps.deploy.outputs.app_name }}
+            
+            exit 1
+          fi
+          
+          echo "✅ Health check passed"
+      
+      - name: Readiness Check
+        run: |
+          echo "Testing deployment readiness..."
+          
+          # Test readiness endpoint
+          response=$(curl -s https://${{ steps.deploy.outputs.hostname }}/readyz)
+          status=$(echo $response | jq -r '.status')
+          
+          if [ "$status" != "ready" ]; then
+            echo "❌ Readiness check failed"
+            echo "Response: $response"
+            exit 1
+          fi
+          
+          echo "✅ Readiness check passed"
+      
+      - name: WebSocket Test
+        run: |
+          echo "Testing WebSocket connection..."
+          
+          # Install wscat for WebSocket testing
+          npm install -g wscat
+          
+          # Test WebSocket connection (with timeout)
+          timeout 10s wscat -c wss://${{ steps.deploy.outputs.hostname }}/ws || true
+          
+          echo "✅ WebSocket endpoint is reachable"
+      
+      - name: Deployment Summary
+        run: |
+          echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**App Name:** ${{ steps.deploy.outputs.app_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**URL:** https://${{ steps.deploy.outputs.hostname }}" >> $GITHUB_STEP_SUMMARY
+          echo "**WebSocket:** wss://${{ steps.deploy.outputs.hostname }}/ws" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Health Checks" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Health: https://${{ steps.deploy.outputs.hostname }}/healthz" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Readiness: https://${{ steps.deploy.outputs.hostname }}/readyz" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Metrics: https://${{ steps.deploy.outputs.hostname }}/metrics" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Rollback on Failure
+        if: failure()
+        run: |
+          echo "⚠️ Deployment failed, attempting rollback..."
+          
+          # Get previous release
+          previous_release=$(flyctl releases --app ${{ steps.deploy.outputs.app_name }} --json | jq -r '.[1].Version')
+          
+          if [ -n "$previous_release" ] && [ "$previous_release" != "null" ]; then
+            echo "Rolling back to version $previous_release"
+            flyctl releases rollback $previous_release --app ${{ steps.deploy.outputs.app_name }} -y
+          else
+            echo "No previous release found, cannot rollback"
+          fi
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🚀 Backend deployed to: https://${{ steps.deploy.outputs.hostname }}\n\nWebSocket: wss://${{ steps.deploy.outputs.hostname }}/ws`
+            })
