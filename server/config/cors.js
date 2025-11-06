@@ -46,11 +46,12 @@ export function isOriginAllowed(origin) {
   for (const allowed of allowedOrigins) {
     if (allowed === '*') return true;
     
-    // Convert wildcard pattern to regex
+    // Convert wildcard pattern to regex (escape special chars properly)
     if (allowed.includes('*')) {
+      // Escape all regex special characters except *
       const pattern = allowed
-        .replace(/\./g, '\\.')
-        .replace(/\*/g, '.*');
+        .replace(/[.+?^${}()|[\]\\]/g, '\\$&')  // Escape special regex chars including backslash
+        .replace(/\*/g, '.*');  // Convert * to regex .*
       const regex = new RegExp(`^${pattern}$`);
       if (regex.test(origin)) return true;
     }
