@@ -1,0 +1,357 @@
+/**
+ * Responsive CSS - Mobile, tablet, and desktop breakpoints
+ * Touch-friendly targets and mobile optimizations
+ */
+
+/* Breakpoints */
+/* Mobile: < 768px */
+/* Tablet: 768px - 1024px */
+/* Desktop: > 1024px */
+
+/* ===== Touch Targets ===== */
+@media (max-width: 1024px) {
+  /* Ensure all interactive elements meet 44x44px minimum touch target */
+  button, a, input, select, textarea, .interactive {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Increase tap target padding */
+  button {
+    padding: var(--space-md) var(--space-lg);
+  }
+}
+
+/* ===== Mobile Portrait (< 768px) ===== */
+@media (max-width: 767px) {
+  :root {
+    /* Adjust base font size for mobile */
+    --font-size-base: 0.875rem; /* 14px */
+  }
+  
+  /* HUD adjustments */
+  .hud-vitals {
+    bottom: 15px;
+    left: 15px;
+    min-width: 120px;
+  }
+  
+  .vitals-bar {
+    height: 20px;
+  }
+  
+  .hud-ammo {
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .ammo-current {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .ammo-reserve {
+    font-size: var(--font-size-lg);
+  }
+  
+  .hud-weapon {
+    display: none; /* Hide weapon name on mobile to reduce clutter */
+  }
+  
+  .kill-feed {
+    top: 10px;
+    right: 10px;
+    min-width: 180px;
+    max-width: 220px;
+  }
+  
+  .kill-feed-item {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .objective-widget {
+    padding: var(--space-sm) var(--space-md);
+  }
+  
+  .objective-title {
+    font-size: 10px;
+  }
+  
+  .objective-status {
+    font-size: var(--font-size-lg);
+  }
+  
+  /* Menu adjustments */
+  .menu-content {
+    padding: var(--space-md);
+  }
+  
+  .menu-logo {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .menu-subtitle {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-xl);
+  }
+  
+  .menu-nav {
+    min-width: 100%;
+  }
+  
+  /* Grid layouts stack on mobile */
+  .lobby-container,
+  .loadout-grid,
+  .shop-items-grid,
+  .postmatch-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .shop-container,
+  .battlepass-container,
+  .settings-container,
+  .postmatch-container {
+    padding: var(--space-md);
+  }
+  
+  /* Settings stacked layout */
+  .settings-sections {
+    flex-wrap: wrap;
+  }
+  
+  .settings-section-tab {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: var(--space-sm);
+  }
+  
+  .settings-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  
+  .settings-item-control {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  /* Battle pass horizontal scroll hint */
+  .battlepass-tiers::after {
+    content: '';
+    flex-shrink: 0;
+    width: var(--space-md);
+  }
+  
+  /* Modal full-screen on mobile */
+  .modal-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    max-height: 100vh;
+  }
+}
+
+/* ===== Tablet (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Two-column grids for medium screens */
+  .shop-items-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .loadout-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .postmatch-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* Lobby side-by-side but narrower */
+  .lobby-container {
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--space-lg);
+  }
+}
+
+/* ===== Desktop (> 1024px) ===== */
+@media (min-width: 1025px) {
+  /* Max width containers */
+  .shop-container,
+  .battlepass-container {
+    max-width: 1600px;
+  }
+  
+  .settings-container {
+    max-width: 1000px;
+  }
+  
+  .postmatch-container {
+    max-width: 1400px;
+  }
+  
+  /* Multi-column grids */
+  .shop-items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  
+  .loadout-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+/* ===== Landscape Mobile ===== */
+@media (max-width: 1024px) and (orientation: landscape) {
+  /* Adjust HUD for landscape mobile */
+  .hud-vitals {
+    bottom: 10px;
+    left: 10px;
+  }
+  
+  .hud-ammo {
+    bottom: 10px;
+    right: 10px;
+  }
+  
+  .objective-widget {
+    top: 10px;
+  }
+  
+  .kill-feed {
+    top: 10px;
+    right: 10px;
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+  
+  /* Compact menu for landscape */
+  .menu-logo {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-sm);
+  }
+  
+  .menu-subtitle {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-lg);
+  }
+}
+
+/* ===== Touch Device Optimizations ===== */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .shop-item-card:hover,
+  .loadout-card:hover,
+  .shop-section-tab:hover,
+  .settings-section-tab:hover {
+    transform: none;
+  }
+  
+  /* Active state for touch feedback */
+  .shop-item-card:active,
+  .loadout-card:active {
+    transform: scale(0.98);
+  }
+  
+  button:active {
+    transform: scale(0.95);
+  }
+  
+  /* Larger scrollbars for touch */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border-primary);
+    border-radius: var(--radius-md);
+  }
+}
+
+/* ===== Print Styles ===== */
+@media print {
+  /* Hide non-essential UI when printing */
+  .hud,
+  .menu-container,
+  button,
+  .interactive {
+    display: none !important;
+  }
+  
+  /* Optimize for print */
+  body {
+    background: white;
+    color: black;
+  }
+}
+
+/* ===== High DPI / Retina Displays ===== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Sharper borders and shadows */
+  .shop-item-card,
+  .loadout-card,
+  .battlepass-tier {
+    border-width: 1px;
+  }
+}
+
+/* ===== Simplified Mobile HUD Mode ===== */
+body.mobile-simplified-hud {
+  /* Ultra-minimal HUD for mobile */
+  .kill-feed {
+    display: none;
+  }
+  
+  .objective-widget {
+    font-size: var(--font-size-sm);
+    padding: var(--space-xs) var(--space-sm);
+  }
+  
+  .hud-score {
+    display: none;
+  }
+  
+  .hud-weapon {
+    display: none;
+  }
+}
+
+/* ===== Large Text Mode ===== */
+@media (min-width: 1920px) {
+  :root {
+    /* Scale up for large displays */
+    --font-size-base: 1.125rem; /* 18px */
+  }
+}
+
+/* ===== Narrow Screens ===== */
+@media (max-width: 360px) {
+  /* Extra small mobile phones */
+  :root {
+    --font-size-base: 0.8125rem; /* 13px */
+    --space-md: 0.75rem;
+    --space-lg: 1rem;
+  }
+  
+  .ammo-current {
+    font-size: var(--font-size-xl);
+  }
+  
+  .menu-logo {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* ===== Very Wide Screens ===== */
+@media (min-width: 2560px) {
+  /* 4K and ultra-wide displays */
+  .shop-container,
+  .battlepass-container {
+    max-width: 2000px;
+  }
+  
+  .shop-items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+}
