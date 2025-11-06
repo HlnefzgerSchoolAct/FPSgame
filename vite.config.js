@@ -9,6 +9,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const apiOrigin = env.VITE_PUBLIC_API_ORIGIN || 'http://localhost:3001';
   
+  // Convert HTTP to WS for WebSocket proxy (safely replace protocol only)
+  const wsOrigin = apiOrigin.replace(/^https?:/, (match) => match === 'https:' ? 'wss:' : 'ws:');
+  
   return {
     // Define constants available in client code
     define: {
@@ -26,7 +29,7 @@ export default defineConfig(({ mode }) => {
           ws: false,
         },
         '/ws': {
-          target: apiOrigin.replace('http', 'ws'),
+          target: wsOrigin,
           changeOrigin: true,
           secure: false,
           ws: true,

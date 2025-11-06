@@ -41,9 +41,12 @@ class TokenBucket {
   }
 }
 
+// Parse rate limit from env once at module load
+const DEFAULT_RPS = parseInt(process.env.RATE_LIMIT_RPS) || 100;
+
 class RateLimiter {
   constructor(options = {}) {
-    this.rps = options.rps || parseInt(process.env.RATE_LIMIT_RPS) || 100;
+    this.rps = options.rps || DEFAULT_RPS;
     this.capacity = options.capacity || this.rps * 2; // 2 seconds burst
     this.buckets = new Map();
     this.cleanupInterval = options.cleanupInterval || 300000; // 5 minutes
@@ -73,14 +76,32 @@ class RateLimiter {
   }
 
   startCleanup() {
+    // Only run cleanup if bucket count exceeds threshold to avoid unnecessary work
     setInterval(() => {
+      // Skip cleanup if we don't have many buckets
+      if (this.buckets.size < 100) return;
+      
       const now = Date.now();
       const timeout = 600000; // 10 minutes
+      const keysToDelete = [];
       
+      // Collect keys to delete (avoid modifying map while iterating)
       for (const [key, bucket] of this.buckets.entries()) {
         if (now - bucket.lastRefill > timeout) {
-          this.buckets.delete(key);
+          keysToDelete.push(key);
         }
+        
+        // Limit cleanup batch size for performance
+        if (keysToDelete.length >= 1000) break;
+      }
+      
+      // Delete stale buckets
+      for (const key of keysToDelete) {
+        this.buckets.delete(key);
+      }
+      
+      if (keysToDelete.length > 0) {
+        console.log(`Rate limiter: cleaned up ${keysToDelete.length} stale buckets`);
       }
     }, this.cleanupInterval);
   }

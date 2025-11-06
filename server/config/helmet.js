@@ -38,9 +38,11 @@ export function getSecurityHeaders(options = {}) {
     ].join(', '),
     
     // Content Security Policy
+    // Note: 'unsafe-eval' is required for Three.js WebGL shader compilation
+    // TODO: Consider migrating to nonce-based CSP in the future for better security
     'Content-Security-Policy': [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // unsafe-eval needed for Three.js
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // unsafe-eval: Three.js requires this
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob:",
       "font-src 'self' data:",

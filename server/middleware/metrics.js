@@ -154,8 +154,14 @@ export function getMetrics() {
 export function recordHttpRequest(method, path, status, duration) {
   const metrics = getMetrics();
   
-  // Normalize path (remove IDs, etc.)
-  const normalizedPath = path.replace(/\/[0-9a-f-]+/gi, '/:id');
+  // Normalize path (remove various ID patterns)
+  let normalizedPath = path;
+  // Remove UUIDs (8-4-4-4-12 hex digits)
+  normalizedPath = normalizedPath.replace(/\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi, '/:id');
+  // Remove other hex/alphanumeric IDs (6+ chars)
+  normalizedPath = normalizedPath.replace(/\/[0-9a-zA-Z_-]{6,}/g, '/:id');
+  // Remove query strings
+  normalizedPath = normalizedPath.split('?')[0];
   
   metrics.incrementCounter('http_requests_total', {
     method,

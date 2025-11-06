@@ -6,7 +6,7 @@
 import http from 'http';
 import { WebSocketServer } from 'ws';
 import { healthzHandler, readyzHandler } from './healthz.js';
-import { metricsHandler, metricsMiddleware, recordWebSocketEvent, setActiveConnections } from './middleware/metrics.js';
+import { metricsHandler, metricsMiddleware, recordWebSocketEvent, setActiveConnections, recordHttpRequest } from './middleware/metrics.js';
 import { rateLimitMiddleware, getClientId } from './middleware/rateLimit.js';
 import { corsMiddleware, validateWebSocketOrigin } from './config/cors.js';
 import { applySecurityHeaders } from './config/helmet.js';
@@ -35,7 +35,7 @@ export function createHttpServer(gameServer, options = {}) {
       const originalEnd = res.end;
       res.end = function(...args) {
         const duration = (Date.now() - start) / 1000;
-        // Record metric (simplified inline version)
+        recordHttpRequest(req.method, req.url, res.statusCode, duration);
         originalEnd.apply(res, args);
       };
     }
@@ -154,8 +154,8 @@ export function startServer(server, port) {
  * @param {Object} gameServer - Game server instance
  * @returns {Promise} Promise that resolves when shutdown is complete
  */
-export function gracefulShutdown(server, gameServer) {
-  return new Promise((resolve) => {
+export async function gracefulShutdown(server, gameServer) {
+  return new Promise(async (resolve) => {
     console.log('\n🛑 Shutting down gracefully...');
     
     // Stop accepting new connections
@@ -172,7 +172,7 @@ export function gracefulShutdown(server, gameServer) {
 
     // Stop game server
     if (gameServer.stop) {
-      gameServer.stop();
+      await gameServer.stop();
     }
 
     // Wait a bit for connections to close
