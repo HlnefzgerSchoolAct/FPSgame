@@ -435,6 +435,148 @@
     "total_finishers": 8,
     "total_bundles": 12
   },
+  "seasonal_content_plan": {
+    "description": "Quarterly seasonal events with themed cosmetics, game modes, and limited-time rewards",
+    "seasons": [
+      {
+        "season": "Season 1: First Strike",
+        "theme": "Military tactical operations",
+        "duration_weeks": 10,
+        "start_date": "2025-01-15",
+        "end_date": "2025-03-31",
+        "exclusive_cosmetics": [
+          "skin_ar_mk4_reactive_phoenix",
+          "operator_cyber_commando",
+          "emblem_first_strike_elite",
+          "spray_first_strike",
+          "finisher_orbital_strike"
+        ],
+        "event_mode": "Tactical Ops - 5v5 objective-based competitive mode",
+        "limited_bundles": [
+          "bundle_first_strike_collection",
+          "bundle_tactical_operator"
+        ],
+        "reroll_tokens": 3
+      },
+      {
+        "season": "Season 2: Urban Warfare",
+        "theme": "City combat and street warfare",
+        "duration_weeks": 10,
+        "start_date": "2025-04-01",
+        "end_date": "2025-06-15",
+        "exclusive_cosmetics": [
+          "skin_shotgun_enforcer_neon_city",
+          "operator_urban_ops",
+          "emblem_street_warrior",
+          "spray_graffiti_king",
+          "finisher_neon_explosion"
+        ],
+        "event_mode": "Urban Assault - Close quarters combat in city maps",
+        "limited_bundles": [
+          "bundle_urban_warfare_complete",
+          "bundle_neon_weapons"
+        ],
+        "reroll_tokens": 3
+      },
+      {
+        "season": "Season 3: Desert Storm",
+        "theme": "Desert warfare and sandstorm operations",
+        "duration_weeks": 10,
+        "start_date": "2025-06-16",
+        "end_date": "2025-08-31",
+        "exclusive_cosmetics": [
+          "skin_sniper_longshot_desert_eagle",
+          "operator_desert_specialist_elite",
+          "emblem_sandstorm",
+          "spray_desert_ops",
+          "finisher_sandstorm_strike"
+        ],
+        "event_mode": "Sandstorm Survival - Limited visibility tactical combat",
+        "limited_bundles": [
+          "bundle_desert_storm_collection",
+          "bundle_elite_sniper"
+        ],
+        "reroll_tokens": 3
+      },
+      {
+        "season": "Season 4: Winter Ops",
+        "theme": "Arctic warfare and winter combat",
+        "duration_weeks": 12,
+        "start_date": "2025-09-01",
+        "end_date": "2025-12-31",
+        "exclusive_cosmetics": [
+          "skin_ar_mk4_ice_king",
+          "operator_arctic_commando",
+          "emblem_frozen_elite",
+          "spray_winter_victory",
+          "finisher_blizzard_strike"
+        ],
+        "event_mode": "Frozen Warfare - Snow maps with environmental hazards",
+        "limited_bundles": [
+          "bundle_winter_ops_mega",
+          "bundle_arctic_elite"
+        ],
+        "reroll_tokens": 4,
+        "special_holiday_event": "Holiday themed items during December"
+      }
+    ],
+    "event_rotation": {
+      "frequency": "Every 10-12 weeks",
+      "overlap_weeks": 1,
+      "description": "1 week overlap allows players to complete previous season while starting new one"
+    },
+    "seasonal_cosmetics_availability": {
+      "during_season": "Available in shop and battle pass",
+      "after_season": "Removed from regular rotation",
+      "return_schedule": "Returns in anniversary events or special vault rotations at 50% higher prices",
+      "no_permanent_fomo": "All seasonal items eventually return, maintaining fairness"
+    },
+    "seasonal_challenges": {
+      "count_per_season": 15,
+      "xp_reward": 5000,
+      "cosmetic_rewards": "3-5 exclusive seasonal items",
+      "reroll_tokens": "2-3 per season for F2P, 5-7 for premium"
+    },
+    "limited_time_modes": {
+      "duration": "Available throughout season",
+      "rotation_schedule": "Weekends for high-intensity modes, weekdays for casual modes",
+      "incentives": "Bonus XP and credits for playing seasonal modes"
+    }
+  },
+  "shop_rotation_details": {
+    "weekly_featured": {
+      "slots": 6,
+      "refresh_day": "Monday",
+      "refresh_time": "00:00:00 UTC",
+      "contents": [
+        "1 legendary bundle (30% discount)",
+        "2 epic weapon skins",
+        "1 operator skin",
+        "1 finisher or emote",
+        "1 accessories bundle"
+      ],
+      "pricing": "Featured items at 10-30% discount"
+    },
+    "daily_micro_rotations": {
+      "slots": 4,
+      "refresh_time": "00:00:00 UTC",
+      "contents": [
+        "2 weapon skins (common/rare)",
+        "1 charm or spray",
+        "1 player card or emblem"
+      ],
+      "pricing": "One item at 40% discount (daily deal)",
+      "algorithm": "Personalized based on player preferences and unlocked items"
+    },
+    "permanent_sections": {
+      "all_weapon_skins": "Browse all available weapon skins by class",
+      "all_operators": "Browse all operator skins",
+      "all_accessories": "Browse charms, sprays, cards, emblems",
+      "battle_pass": "Current season battle pass",
+      "bundles": "All available bundles",
+      "gem_packs": "Premium currency purchases"
+    }
+  },
   "design_notes": {
     "pricing_strategy": "Credits-only items (common/rare) provide F2P progression. Gems unlock premium/exclusive items.",
     "bundle_value": "Bundles provide 20-40% savings vs individual purchases, incentivizing larger transactions",
@@ -444,11 +586,14 @@
     "seasonal_rotation": "Limited-time seasonal items return annually, reducing FOMO",
     "grinding_vs_paying": "Most items available for credits with grinding, or gems for instant access",
     "whale_friendliness": "High-value bundles and exclusive legendaries cater to big spenders",
+    "seasonal_strategy": "Each season introduces 30-50 new cosmetics (15-20 free, 30-40 premium) maintaining content freshness",
+    "shop_rotation_strategy": "Weekly featured creates anticipation, daily micro-rotations drive daily logins",
     "references": [
       "Valorant skin pricing and bundle structure",
       "Apex Legends seasonal and limited-time offers",
       "CS:GO weapon skin rarity system",
-      "Fortnite item shop rotation and featured bundles"
+      "Fortnite item shop rotation and featured bundles",
+      "Destiny 2 seasonal content model"
     ]
   }
 }

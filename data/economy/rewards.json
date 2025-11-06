@@ -254,16 +254,147 @@
     "variety_encouragement": "Bonuses for playing different modes and weapons",
     "fair_f2p": "F2P players can earn meaningful progression without purchases"
   },
+  "rewarded_ads": {
+    "enabled": true,
+    "description": "Optional ad viewing for bonus rewards. Never interrupts gameplay or appears mid-match.",
+    "placement_rules": {
+      "never_mid_match": true,
+      "only_in_menus": true,
+      "player_initiated": true,
+      "cooldown_minutes": 30
+    },
+    "ad_opportunities": [
+      {
+        "id": "post_match_bonus",
+        "location": "Match end screen",
+        "frequency": "After every match completion",
+        "reward": {
+          "credits": 50,
+          "xp": 100,
+          "bp_xp": 100
+        },
+        "display": "Optional 'Watch Ad for +50 Credits' button"
+      },
+      {
+        "id": "daily_bonus_multiplier",
+        "location": "Main menu",
+        "frequency": "Once per day",
+        "reward": {
+          "credits_multiplier": 1.5,
+          "duration_matches": 5
+        },
+        "display": "Watch ad to activate 1.5x Credits for next 5 matches"
+      },
+      {
+        "id": "cosmetic_reroll",
+        "location": "Shop / Loot drop screen",
+        "frequency": "Unlimited (with cooldown)",
+        "reward": {
+          "type": "reroll_cosmetic_drop"
+        },
+        "display": "Reroll loot drop by watching ad",
+        "cooldown_minutes": 30
+      },
+      {
+        "id": "challenge_reroll",
+        "location": "Challenges screen",
+        "frequency": "3 per day",
+        "reward": {
+          "type": "reroll_daily_challenge"
+        },
+        "display": "Watch ad to reroll unwanted challenge",
+        "daily_limit": 3
+      },
+      {
+        "id": "battle_pass_xp_boost",
+        "location": "Battle pass screen",
+        "frequency": "Once per day",
+        "reward": {
+          "bp_xp": 500
+        },
+        "display": "Watch ad for bonus 500 BP XP (0.05 tiers)"
+      }
+    ],
+    "ad_limits": {
+      "max_ads_per_session": 5,
+      "max_ads_per_day": 20,
+      "cooldown_between_ads_minutes": 5,
+      "description": "Prevents ad fatigue and maintains player experience"
+    },
+    "revenue_estimates": {
+      "avg_cpm": "$8-12",
+      "avg_revenue_per_ad": "$0.008-0.012",
+      "daily_ad_views_per_user": "2-4 ads",
+      "monthly_ad_revenue_per_user": "$0.50-1.50",
+      "notes": "Ad revenue supplements monetization but isn't primary revenue source"
+    },
+    "player_experience_guidelines": {
+      "always_optional": "Never force ads on players",
+      "clear_value": "Always show exactly what reward player gets",
+      "respect_time": "Keep ads short (15-30 seconds max)",
+      "no_interruption": "Never during match, loading, or critical moments",
+      "premium_exclusion": "Consider disabling ads for battle pass owners or paying users"
+    }
+  },
+  "cosmetic_reroll_tokens": {
+    "enabled": true,
+    "description": "Tokens that allow rerolling cosmetic drops for a different item",
+    "earn_methods": [
+      {
+        "method": "battle_pass_rewards",
+        "tiers": [15, 30, 45],
+        "tokens_per_tier": 1
+      },
+      {
+        "method": "seasonal_event_completion",
+        "tokens": 3
+      },
+      {
+        "method": "rewarded_ads",
+        "tokens": 1,
+        "cooldown_minutes": 30
+      },
+      {
+        "method": "shop_purchase_gems",
+        "price_gems": 100,
+        "tokens": 1
+      },
+      {
+        "method": "weekly_milestone",
+        "matches_required": 50,
+        "tokens": 1
+      }
+    ],
+    "usage": {
+      "reroll_scope": "Same rarity tier, different item",
+      "no_rarity_upgrade": true,
+      "no_duplicate_protection": false,
+      "description": "Reroll gives new random item of same rarity"
+    },
+    "seasonal_limited_tokens": {
+      "enabled": true,
+      "description": "Special tokens that guarantee seasonal cosmetic items",
+      "earn_methods": [
+        "Seasonal event grand prize",
+        "Premium battle pass tier 50 bonus",
+        "Limited-time shop bundle"
+      ],
+      "count_per_season": "2-3 tokens available for F2P, 5-7 for premium pass holders"
+    }
+  },
   "design_notes": {
     "reward_loop": "Match rewards → challenges → battle pass → seasonal rewards create layered progression",
     "credit_sinks": "Cosmetics priced to absorb credits over weeks/months, maintaining value",
     "drop_system": "Random cosmetic drops add excitement without being primary progression",
     "multiplier_stacking": "Multiple multipliers can stack (top player + streak + mode bonus)",
+    "rewarded_ads_philosophy": "Ads are optional value-adds, never intrusive. Provide meaningful rewards without feeling exploitative.",
+    "reroll_tokens": "Add player agency to cosmetic drops while maintaining gacha excitement. Limited availability preserves value.",
     "references": [
       "Apex Legends match rewards and progression",
       "Call of Duty XP and credit earning rates",
       "Overwatch loot box and currency system",
-      "Valorant performance-based rewards"
+      "Valorant performance-based rewards",
+      "Mobile game rewarded ad best practices"
     ]
   }
 }
