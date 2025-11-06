@@ -17,7 +17,48 @@
     "match_win": 200,
     "daily_challenge_completion": 500,
     "weekly_challenge_completion": 2000,
-    "seasonal_challenge_completion": 5000
+    "seasonal_challenge_completion": 5000,
+    "notes": "Daily challenges grant 500 XP (3 per day = 1500 XP/day). Weekly challenges grant 2000 XP (10 per week = 20000 XP/week). Combined with match XP, allows ~12,500 XP per day for active players."
+  },
+  "challenge_system": {
+    "daily_challenges": {
+      "count": 3,
+      "xp_per_challenge": 500,
+      "total_daily_xp": 1500,
+      "reset_time": "00:00:00 UTC",
+      "examples": [
+        "Win 2 matches",
+        "Get 15 kills with assault rifles",
+        "Capture 5 objectives",
+        "Deal 5000 damage"
+      ]
+    },
+    "weekly_challenges": {
+      "count": 10,
+      "xp_per_challenge": 2000,
+      "total_weekly_xp": 20000,
+      "reset_time": "Monday 00:00:00 UTC",
+      "examples": [
+        "Win 10 matches",
+        "Get 50 headshots",
+        "Complete 20 daily challenges",
+        "Play 5 matches in each mode",
+        "Earn 10,000 weapon XP"
+      ],
+      "acceleration_value": "Completing all weekly challenges = 2 tiers per week (20% of total progress)"
+    },
+    "seasonal_challenges": {
+      "count": 15,
+      "xp_per_challenge": 5000,
+      "total_seasonal_xp": 75000,
+      "examples": [
+        "Complete 50 daily challenges",
+        "Win 100 matches",
+        "Reach player level 50",
+        "Earn 100,000 credits"
+      ],
+      "acceleration_value": "Completing all seasonal challenges = 7.5 tiers (15% of total progress)"
+    }
   },
   "tiers": [
     {
@@ -81,10 +122,58 @@
       "premium_reward": { "type": "weapon_skin", "item_id": "skin_shotgun_enforcer_tactical" }
     },
     {
+      "tier": 11,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 300 },
+      "premium_reward": { "type": "spray", "item_id": "spray_animated_victory" }
+    },
+    {
+      "tier": 12,
+      "xp_required": 10000,
+      "free_reward": { "type": "emblem", "item_id": "emblem_bronze_star" },
+      "premium_reward": { "type": "weapon_charm", "item_id": "charm_golden_skull" }
+    },
+    {
+      "tier": 13,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 350 },
+      "premium_reward": { "type": "player_card", "item_id": "card_veteran" }
+    },
+    {
+      "tier": 14,
+      "xp_required": 10000,
+      "free_reward": { "type": "spray", "item_id": "spray_gg" },
+      "premium_reward": { "type": "credits", "amount": 800 }
+    },
+    {
       "tier": 15,
       "xp_required": 10000,
       "free_reward": { "type": "credits", "amount": 500 },
       "premium_reward": { "type": "weapon_skin", "item_id": "skin_sniper_marksman_arctic" }
+    },
+    {
+      "tier": 16,
+      "xp_required": 10000,
+      "free_reward": { "type": "player_card", "item_id": "card_veteran" },
+      "premium_reward": { "type": "spray", "item_id": "spray_legendary_mark" }
+    },
+    {
+      "tier": 17,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 400 },
+      "premium_reward": { "type": "emote", "item_id": "emote_salute" }
+    },
+    {
+      "tier": 18,
+      "xp_required": 10000,
+      "free_reward": { "type": "spray", "item_id": "spray_thumbs_up" },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_smg_phantom_carbon" }
+    },
+    {
+      "tier": 19,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 450 },
+      "premium_reward": { "type": "player_card", "item_id": "card_elite" }
     },
     {
       "tier": 20,
@@ -93,10 +182,58 @@
       "premium_reward": { "type": "operator_skin", "item_id": "operator_tactical_black" }
     },
     {
+      "tier": 21,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 500 },
+      "premium_reward": { "type": "weapon_charm", "item_id": "charm_medal" }
+    },
+    {
+      "tier": 22,
+      "xp_required": 10000,
+      "free_reward": { "type": "xp_boost", "duration_hours": 3, "multiplier": 1.3 },
+      "premium_reward": { "type": "credits", "amount": 1000 }
+    },
+    {
+      "tier": 23,
+      "xp_required": 10000,
+      "free_reward": { "type": "spray", "item_id": "spray_legendary_mark" },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_ar_vanguard_tactical" }
+    },
+    {
+      "tier": 24,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 550 },
+      "premium_reward": { "type": "emblem", "item_id": "emblem_silver_star" }
+    },
+    {
       "tier": 25,
       "xp_required": 10000,
       "free_reward": { "type": "xp_boost", "duration_hours": 4, "multiplier": 1.5 },
-      "premium_reward": { "type": "weapon_bundle", "item_id": "bundle_ar_complete_set" }
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_ar_mk4_chrome" }
+    },
+    {
+      "tier": 26,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 600 },
+      "premium_reward": { "type": "spray", "item_id": "spray_animated_victory" }
+    },
+    {
+      "tier": 27,
+      "xp_required": 10000,
+      "free_reward": { "type": "player_card", "item_id": "card_elite" },
+      "premium_reward": { "type": "emote", "item_id": "emote_taunt" }
+    },
+    {
+      "tier": 28,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 650 },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_shotgun_enforcer_beast" }
+    },
+    {
+      "tier": 29,
+      "xp_required": 10000,
+      "free_reward": { "type": "emblem", "item_id": "emblem_gold_star" },
+      "premium_reward": { "type": "credits", "amount": 1200 }
     },
     {
       "tier": 30,
@@ -105,10 +242,58 @@
       "premium_reward": { "type": "emote", "item_id": "emote_victory_dance" }
     },
     {
+      "tier": 31,
+      "xp_required": 10000,
+      "free_reward": { "type": "spray", "item_id": "spray_gg" },
+      "premium_reward": { "type": "weapon_charm", "item_id": "charm_golden_skull" }
+    },
+    {
+      "tier": 32,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 700 },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_smg_phantom_neon_blue" }
+    },
+    {
+      "tier": 33,
+      "xp_required": 10000,
+      "free_reward": { "type": "player_card", "item_id": "card_veteran" },
+      "premium_reward": { "type": "emblem", "item_id": "emblem_animated_flame" }
+    },
+    {
+      "tier": 34,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 750 },
+      "premium_reward": { "type": "credits", "amount": 1500 }
+    },
+    {
       "tier": 35,
       "xp_required": 10000,
       "free_reward": { "type": "spray", "item_id": "spray_legendary_mark" },
       "premium_reward": { "type": "weapon_skin", "item_id": "skin_ar_vanguard_gold" }
+    },
+    {
+      "tier": 36,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 800 },
+      "premium_reward": { "type": "player_card", "item_id": "card_elite" }
+    },
+    {
+      "tier": 37,
+      "xp_required": 10000,
+      "free_reward": { "type": "xp_boost", "duration_hours": 3, "multiplier": 1.4 },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_sniper_longshot_arctic" }
+    },
+    {
+      "tier": 38,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 850 },
+      "premium_reward": { "type": "emote", "item_id": "emote_victory_dance" }
+    },
+    {
+      "tier": 39,
+      "xp_required": 10000,
+      "free_reward": { "type": "emblem", "item_id": "emblem_silver_star" },
+      "premium_reward": { "type": "credits", "amount": 1800 }
     },
     {
       "tier": 40,
@@ -117,40 +302,92 @@
       "premium_reward": { "type": "finisher", "item_id": "finisher_orbital_strike" }
     },
     {
+      "tier": 41,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 900 },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_sidearm_revolver_ivory" }
+    },
+    {
+      "tier": 42,
+      "xp_required": 10000,
+      "free_reward": { "type": "spray", "item_id": "spray_animated_victory" },
+      "premium_reward": { "type": "weapon_charm", "item_id": "charm_medal" }
+    },
+    {
+      "tier": 43,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 950 },
+      "premium_reward": { "type": "operator_skin", "item_id": "operator_desert_specialist" }
+    },
+    {
+      "tier": 44,
+      "xp_required": 10000,
+      "free_reward": { "type": "emblem", "item_id": "emblem_gold_star" },
+      "premium_reward": { "type": "credits", "amount": 2000 }
+    },
+    {
       "tier": 45,
       "xp_required": 10000,
       "free_reward": { "type": "credits", "amount": 1000 },
-      "premium_reward": { "type": "operator_skin", "item_id": "operator_elite_ops" }
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_sniper_longshot_dragon" }
+    },
+    {
+      "tier": 46,
+      "xp_required": 10000,
+      "free_reward": { "type": "player_card", "item_id": "card_elite" },
+      "premium_reward": { "type": "emote", "item_id": "emote_taunt" }
+    },
+    {
+      "tier": 47,
+      "xp_required": 10000,
+      "free_reward": { "type": "xp_boost", "duration_hours": 5, "multiplier": 1.5 },
+      "premium_reward": { "type": "weapon_skin", "item_id": "skin_smg_scorpion_electric" }
+    },
+    {
+      "tier": 48,
+      "xp_required": 10000,
+      "free_reward": { "type": "credits", "amount": 1100 },
+      "premium_reward": { "type": "finisher", "item_id": "finisher_lightning" }
+    },
+    {
+      "tier": 49,
+      "xp_required": 10000,
+      "free_reward": { "type": "emblem", "item_id": "emblem_animated_flame" },
+      "premium_reward": { "type": "operator_skin", "item_id": "operator_cyber_commando" }
     },
     {
       "tier": 50,
       "xp_required": 10000,
       "free_reward": { "type": "emblem", "item_id": "emblem_gold_star" },
-      "premium_reward": { "type": "reactive_weapon_skin", "item_id": "skin_smg_scorpion_reactive_phoenix" }
+      "premium_reward": { "type": "reactive_weapon_skin", "item_id": "skin_ar_mk4_reactive_phoenix" }
     }
   ],
   "tier_summary": {
     "total_tiers": 50,
     "free_track_rewards": {
-      "credits": 3500,
-      "cosmetics": 12,
-      "xp_boosts": 2
+      "credits": 15000,
+      "cosmetics": 20,
+      "xp_boosts": 5
     },
     "premium_track_rewards": {
-      "weapon_skins": 9,
-      "operator_skins": 2,
-      "emotes": 2,
-      "finishers": 2,
-      "charms": 2,
+      "weapon_skins": 18,
+      "operator_skins": 4,
+      "emotes": 5,
+      "finishers": 3,
+      "charms": 6,
+      "sprays": 4,
+      "player_cards": 3,
+      "emblems": 3,
       "titles": 1,
-      "credits": 1250,
-      "exclusive_items": 5
+      "credits": 6500,
+      "exclusive_items": 8
     },
     "total_xp_required": 500000,
     "estimated_hours": {
-      "casual_player": "80-100 hours",
-      "active_player": "50-70 hours",
-      "hardcore_player": "35-50 hours"
+      "target": "~40 hours with weekly challenges",
+      "casual_player": "50-60 hours (playing 1-2 hours daily with challenges)",
+      "active_player": "35-45 hours (playing 2-3 hours daily with challenges)",
+      "hardcore_player": "25-35 hours (efficient play with all challenges completed)"
     }
   },
   "progression_boosters": {
