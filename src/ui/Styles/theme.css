@@ -1,0 +1,189 @@
+/**
+ * Theme CSS - Colors, Branding, and Visual Identity
+ * WCAG 2.1 AA compliant color schemes
+ */
+
+:root {
+  /* Primary brand colors */
+  --color-primary-50: #e6f7ff;
+  --color-primary-100: #bae7ff;
+  --color-primary-200: #91d5ff;
+  --color-primary-300: #69c0ff;
+  --color-primary-400: #40a9ff;
+  --color-primary-500: #1890ff;
+  --color-primary-600: #096dd9;
+  --color-primary-700: #0050b3;
+  --color-primary-800: #003a8c;
+  --color-primary-900: #002766;
+  
+  /* Success colors */
+  --color-success-50: #f0fff4;
+  --color-success-100: #c6f6d5;
+  --color-success-200: #9ae6b4;
+  --color-success-300: #68d391;
+  --color-success-400: #48bb78;
+  --color-success-500: #38a169;
+  --color-success-600: #2f855a;
+  --color-success-700: #276749;
+  --color-success-800: #22543d;
+  --color-success-900: #1c4532;
+  
+  /* Warning colors */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+  
+  /* Danger colors */
+  --color-danger-50: #fef2f2;
+  --color-danger-100: #fee2e2;
+  --color-danger-200: #fecaca;
+  --color-danger-300: #fca5a5;
+  --color-danger-400: #f87171;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+  --color-danger-700: #b91c1c;
+  --color-danger-800: #991b1b;
+  --color-danger-900: #7f1d1d;
+  
+  /* Neutral colors (dark theme) */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  
+  /* Dark background colors */
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #1a1a1a;
+  --color-bg-tertiary: #2a2a2a;
+  --color-bg-elevated: #333333;
+  --color-bg-overlay: rgba(0, 0, 0, 0.9);
+  
+  /* Text colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.7);
+  --color-text-tertiary: rgba(255, 255, 255, 0.5);
+  --color-text-disabled: rgba(255, 255, 255, 0.3);
+  
+  /* Border colors */
+  --color-border-primary: rgba(255, 255, 255, 0.1);
+  --color-border-secondary: rgba(255, 255, 255, 0.05);
+  --color-border-focus: var(--color-primary-500);
+  
+  /* Currency colors */
+  --color-currency-credits: #FFD700;
+  --color-currency-gems: #00FFFF;
+  
+  /* Rarity colors */
+  --color-rarity-common: #9ca3af;
+  --color-rarity-rare: #3b82f6;
+  --color-rarity-epic: #8b5cf6;
+  --color-rarity-legendary: #f59e0b;
+  
+  /* HUD specific colors */
+  --color-hud-health: #48bb78;
+  --color-hud-health-low: #ef4444;
+  --color-hud-armor: #3b82f6;
+  --color-hud-ammo: #fbbf24;
+  --color-hud-crosshair: rgba(255, 255, 255, 0.9);
+  --color-hud-hitmarker: #ffffff;
+  --color-hud-hitmarker-headshot: #ef4444;
+  --color-hud-damage: #ef4444;
+  
+  /* Semantic colors */
+  --color-background: var(--color-bg-primary);
+  --color-surface: var(--color-bg-secondary);
+  --color-surface-elevated: var(--color-bg-elevated);
+  --color-text: var(--color-text-primary);
+  --color-text-muted: var(--color-text-secondary);
+  --color-border: var(--color-border-primary);
+}
+
+/* Dark theme (default) */
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #ffffff;
+    --color-bg-primary: #000000;
+    --color-bg-secondary: #111111;
+    --color-border-primary: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Colorblind modes */
+body.colorblind-protanopia {
+  /* Red-blind mode */
+  --color-hud-health: #3b82f6;
+  --color-hud-health-low: #8b5cf6;
+  --color-danger-500: #8b5cf6;
+  --color-success-500: #fbbf24;
+}
+
+body.colorblind-deuteranopia {
+  /* Green-blind mode */
+  --color-hud-health: #3b82f6;
+  --color-success-500: #fbbf24;
+}
+
+body.colorblind-tritanopia {
+  /* Blue-blind mode */
+  --color-primary-500: #ef4444;
+  --color-hud-armor: #48bb78;
+}
+
+/* High contrast mode class */
+body.high-contrast {
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #ffffff;
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #111111;
+  --color-bg-tertiary: #222222;
+  --color-border-primary: rgba(255, 255, 255, 0.4);
+  --color-border-secondary: rgba(255, 255, 255, 0.2);
+}
+
+/* Text scaling options */
+body.text-scale-small {
+  font-size: 14px;
+}
+
+body.text-scale-normal {
+  font-size: 16px;
+}
+
+body.text-scale-large {
+  font-size: 18px;
+}
+
+body.text-scale-xlarge {
+  font-size: 20px;
+}

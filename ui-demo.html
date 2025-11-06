@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arena Blitz - UI Demo</title>
+  
+  <!-- Load CSS -->
+  <link rel="stylesheet" href="/src/ui/Styles/base.css">
+  <link rel="stylesheet" href="/src/ui/Styles/theme.css">
+  <link rel="stylesheet" href="/src/ui/Styles/hud.css">
+  <link rel="stylesheet" href="/src/ui/Styles/menus.css">
+  <link rel="stylesheet" href="/src/ui/Styles/responsive.css">
+  <link rel="stylesheet" href="/src/ui/Styles/accessibility.css">
+  
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    #game-container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    }
+    
+    /* Demo game canvas placeholder */
+    #game-canvas {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: radial-gradient(circle, rgba(30,30,50,1) 0%, rgba(10,10,20,1) 100%);
+    }
+    
+    /* Component styles that aren't in separate files */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-lg);
+      font-family: var(--font-primary);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      line-height: 1;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      user-select: none;
+    }
+    
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .btn-primary {
+      background: var(--color-primary-600);
+      color: white;
+    }
+    
+    .btn-primary:hover:not(:disabled) {
+      background: var(--color-primary-500);
+    }
+    
+    .btn-secondary {
+      background: var(--color-surface);
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border);
+    }
+    
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--color-bg-elevated);
+    }
+    
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-primary);
+      border: 1px solid transparent;
+    }
+    
+    .btn-ghost:hover:not(:disabled) {
+      background: var(--color-surface);
+      border-color: var(--color-border);
+    }
+    
+    .btn-large {
+      padding: var(--space-md) var(--space-xl);
+      font-size: var(--font-size-lg);
+    }
+    
+    .btn-full-width {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+  </div>
+  
+  <script type="module">
+    import { uiManager } from './src/ui/UIManager.js';
+    
+    // Initialize UI system
+    async function init() {
+      console.log('Initializing UI Demo...');
+      
+      await uiManager.init();
+      
+      // Show main menu
+      uiManager.showMainMenu();
+      
+      // Demo: Update HUD with sample data
+      setupHUDDemo();
+      
+      // Demo: Listen for game start
+      window.addEventListener('ui:start_game', () => {
+        console.log('Game starting...');
+        startGameDemo();
+      });
+      
+      console.log('UI Demo initialized');
+    }
+    
+    function setupHUDDemo() {
+      // Simulate HUD updates
+      let ammo = 30;
+      let health = 100;
+      let time = 300; // 5 minutes
+      
+      window.addEventListener('ui:start_game', () => {
+        // Update ammo periodically
+        setInterval(() => {
+          if (ammo > 0) {
+            ammo--;
+            uiManager.updateAmmo(ammo, 90 - (30 - ammo));
+          } else {
+            ammo = 30;
+          }
+        }, 2000);
+        
+        // Simulate damage
+        setInterval(() => {
+          if (health > 0) {
+            health -= 10;
+            uiManager.updateHealth(health);
+            
+            if (health <= 0) {
+              health = 100;
+            }
+          }
+        }, 5000);
+        
+        // Update timer
+        setInterval(() => {
+          if (time > 0) {
+            time--;
+            uiManager.updateTimer(time);
+          }
+        }, 1000);
+        
+        // Simulate kills
+        setInterval(() => {
+          const killers = ['Player1', 'Player2', 'Player3', 'You'];
+          const victims = ['Enemy1', 'Enemy2', 'Enemy3', 'Enemy4'];
+          const killer = killers[Math.floor(Math.random() * killers.length)];
+          const victim = victims[Math.floor(Math.random() * victims.length)];
+          const isHeadshot = Math.random() > 0.7;
+          
+          uiManager.addKillFeedEntry(killer, victim, 'AR', isHeadshot);
+        }, 8000);
+        
+        // Simulate crosshair spread
+        let spread = 0;
+        let increasing = true;
+        setInterval(() => {
+          if (increasing) {
+            spread += 0.5;
+            if (spread >= 10) increasing = false;
+          } else {
+            spread -= 0.5;
+            if (spread <= 0) increasing = true;
+          }
+          uiManager.updateCrosshairSpread(spread);
+        }, 100);
+      });
+    }
+    
+    function startGameDemo() {
+      // Simulate game starting
+      setTimeout(() => {
+        uiManager.showToast('Match starting in 3...', 'info');
+        
+        setTimeout(() => {
+          uiManager.showToast('Match started!', 'success');
+          
+          // Show sample notifications
+          setTimeout(() => {
+            uiManager.showToast('Achievement Unlocked!', 'success');
+          }, 3000);
+          
+          setTimeout(() => {
+            uiManager.showToast('Low ammo warning', 'warning');
+          }, 10000);
+        }, 3000);
+      }, 1000);
+    }
+    
+    // Handle keyboard shortcuts
+    window.addEventListener('keydown', (e) => {
+      // Press ESC to toggle menu
+      if (e.key === 'Escape') {
+        if (uiManager.hudVisible) {
+          uiManager.hideHUD();
+          uiManager.showMainMenu();
+        }
+      }
+      
+      // Press H to toggle HUD visibility for demo
+      if (e.key === 'h' || e.key === 'H') {
+        if (uiManager.hudVisible) {
+          uiManager.hideHUD();
+        } else {
+          uiManager.showHUD();
+        }
+      }
+    });
+    
+    // Start initialization
+    init().catch(console.error);
+  </script>
+</body>
+</html>

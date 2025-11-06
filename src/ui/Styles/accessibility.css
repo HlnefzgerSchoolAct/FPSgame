@@ -1,0 +1,441 @@
+/**
+ * Accessibility CSS - WCAG 2.1 AA compliance
+ * Focus management, high contrast, screen reader support
+ */
+
+/* ===== Focus Management ===== */
+/* Visible focus indicators for keyboard navigation */
+:focus-visible {
+  outline: 3px solid var(--color-primary-500);
+  outline-offset: 3px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Enhanced focus for interactive game elements */
+.interactive:focus-visible {
+  outline: 3px solid var(--color-primary-400);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(24, 144, 255, 0.2);
+}
+
+/* Focus within containers */
+.menu-nav:focus-within,
+.settings-group:focus-within,
+.shop-items-grid:focus-within {
+  /* Highlight parent when child has focus */
+}
+
+/* Skip to content link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-primary-600);
+  color: white;
+  padding: var(--space-sm) var(--space-md);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  top: var(--space-sm);
+}
+
+/* ===== Screen Reader Support ===== */
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Screen reader only, but focusable */
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Live region for screen reader announcements */
+.sr-announcer {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ===== High Contrast Mode ===== */
+body.high-contrast {
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #ffffff;
+  --color-text-tertiary: #cccccc;
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #111111;
+  --color-bg-tertiary: #222222;
+  --color-border-primary: rgba(255, 255, 255, 0.5);
+  --color-border-secondary: rgba(255, 255, 255, 0.3);
+}
+
+body.high-contrast .shop-item-card,
+body.high-contrast .loadout-card,
+body.high-contrast .battlepass-tier {
+  border-width: 3px;
+}
+
+body.high-contrast button {
+  border: 2px solid currentColor;
+}
+
+body.high-contrast :focus-visible {
+  outline-width: 4px;
+  outline-offset: 4px;
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Disable specific animations */
+  .hitmarker,
+  .kill-feed-item,
+  .damage-indicator {
+    animation: none !important;
+  }
+  
+  /* Disable transform transitions */
+  .shop-item-card:hover,
+  .loadout-card:hover {
+    transform: none !important;
+  }
+}
+
+body.reduced-motion {
+  /* User-selected reduced motion */
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .hitmarker,
+  .kill-feed-item,
+  .damage-indicator,
+  .pulse-health,
+  .pulse-ammo,
+  .pulse-timer {
+    animation: none !important;
+  }
+}
+
+/* ===== Keyboard Navigation Indicators ===== */
+body.using-keyboard :focus {
+  /* Enhanced focus for keyboard users */
+  outline: 3px solid var(--color-primary-500);
+  outline-offset: 3px;
+}
+
+body.using-mouse :focus {
+  /* Minimal focus for mouse users */
+  outline: 1px solid var(--color-border-primary);
+  outline-offset: 1px;
+}
+
+/* ===== Text Scaling ===== */
+body.text-scale-large {
+  font-size: 18px;
+}
+
+body.text-scale-xlarge {
+  font-size: 20px;
+}
+
+body.text-scale-xxlarge {
+  font-size: 24px;
+}
+
+/* Ensure UI doesn't break with large text */
+@media (min-width: 1px) {
+  body.text-scale-xlarge .hud-ammo .ammo-current,
+  body.text-scale-xxlarge .hud-ammo .ammo-current {
+    font-size: 2.5rem;
+  }
+  
+  body.text-scale-xlarge .menu-logo,
+  body.text-scale-xxlarge .menu-logo {
+    font-size: 2.5rem;
+  }
+}
+
+/* ===== Colorblind Modes ===== */
+/* Protanopia (red-blind) */
+body.colorblind-protanopia {
+  --color-hud-health: #3b82f6;
+  --color-hud-health-low: #8b5cf6;
+  --color-danger-500: #8b5cf6;
+  --color-success-500: #fbbf24;
+  --color-hud-hitmarker-headshot: #fbbf24;
+}
+
+body.colorblind-protanopia .vitals-fill {
+  background: linear-gradient(90deg, #fbbf24, #3b82f6);
+}
+
+body.colorblind-protanopia .shop-item-rarity.legendary {
+  background: #8b5cf6;
+}
+
+/* Deuteranopia (green-blind) */
+body.colorblind-deuteranopia {
+  --color-hud-health: #3b82f6;
+  --color-success-500: #fbbf24;
+  --color-primary-500: #f59e0b;
+}
+
+body.colorblind-deuteranopia .vitals-fill {
+  background: linear-gradient(90deg, #fbbf24, #3b82f6);
+}
+
+/* Tritanopia (blue-blind) */
+body.colorblind-tritanopia {
+  --color-primary-500: #ef4444;
+  --color-hud-armor: #48bb78;
+  --color-rarity-rare: #ef4444;
+  --color-rarity-epic: #f59e0b;
+}
+
+/* Add patterns to colorblind modes for better distinction */
+body[class*="colorblind"] .shop-item-rarity.common::before {
+  content: '●';
+  margin-right: 4px;
+}
+
+body[class*="colorblind"] .shop-item-rarity.rare::before {
+  content: '●●';
+  margin-right: 4px;
+}
+
+body[class*="colorblind"] .shop-item-rarity.epic::before {
+  content: '●●●';
+  margin-right: 4px;
+}
+
+body[class*="colorblind"] .shop-item-rarity.legendary::before {
+  content: '★';
+  margin-right: 4px;
+}
+
+/* ===== Touch Target Size ===== */
+/* Ensure minimum 44x44px touch targets */
+@media (pointer: coarse) {
+  button,
+  a,
+  input,
+  select,
+  .interactive {
+    min-height: 44px;
+    padding: var(--space-sm) var(--space-md);
+  }
+  
+  .kill-feed-item {
+    min-height: 44px;
+  }
+}
+
+/* ===== Form Accessibility ===== */
+input:invalid {
+  border-color: var(--color-danger-500);
+}
+
+input:valid {
+  border-color: var(--color-success-500);
+}
+
+input:disabled,
+button:disabled,
+select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Required field indicator */
+.required::after {
+  content: ' *';
+  color: var(--color-danger-500);
+}
+
+/* Error messages */
+.error-message {
+  color: var(--color-danger-500);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-xs);
+}
+
+.error-message::before {
+  content: '⚠ ';
+}
+
+/* ===== ARIA Support ===== */
+/* Hidden but announced by screen readers */
+[aria-hidden="true"] {
+  display: none;
+}
+
+/* Loading states */
+[aria-busy="true"] {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+[aria-busy="true"]::after {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-left: var(--space-sm);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Expanded/collapsed states */
+[aria-expanded="false"] .expand-icon {
+  transform: rotate(0deg);
+}
+
+[aria-expanded="true"] .expand-icon {
+  transform: rotate(180deg);
+}
+
+/* Selected states */
+[aria-selected="true"] {
+  background: var(--color-primary-600);
+  color: white;
+}
+
+/* Disabled states */
+[aria-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* ===== Windows High Contrast Mode ===== */
+@media (prefers-contrast: high) {
+  :root {
+    --color-text-primary: CanvasText;
+    --color-background: Canvas;
+    --color-border: CanvasText;
+  }
+  
+  button,
+  .shop-item-card,
+  .loadout-card {
+    border: 2px solid CanvasText;
+  }
+  
+  :focus-visible {
+    outline: 3px solid Highlight;
+  }
+}
+
+/* ===== Dyslexia-Friendly Font Option ===== */
+body.dyslexia-friendly {
+  font-family: 'Comic Sans MS', 'OpenDyslexic', 'Arial', sans-serif;
+  letter-spacing: 0.05em;
+  word-spacing: 0.16em;
+  line-height: 1.8;
+}
+
+body.dyslexia-friendly p {
+  text-align: left;
+  max-width: 70ch;
+}
+
+/* ===== Print Accessibility ===== */
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: black;
+    background: white;
+  }
+  
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ===== Focus Trap for Modals ===== */
+.modal[aria-modal="true"] {
+  /* Trap focus within modal */
+  isolation: isolate;
+}
+
+.modal-backdrop {
+  /* Prevent interaction with background */
+  pointer-events: all;
+}
+
+/* ===== Tooltip Accessibility ===== */
+.tooltip[role="tooltip"] {
+  /* Ensure tooltips are accessible */
+  position: absolute;
+  z-index: var(--z-tooltip);
+}
+
+.tooltip[aria-hidden="true"] {
+  display: none;
+}
+
+/* ===== Better Contrast for Links ===== */
+a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+a:focus-visible {
+  text-decoration-thickness: 2px;
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
