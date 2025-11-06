@@ -14,7 +14,16 @@
     "optimize:textures": "node scripts/optimize-assets.js textures",
     "optimize:meshes": "node scripts/optimize-assets.js meshes",
     "optimize:atlases": "node scripts/optimize-assets.js atlases",
-    "optimize:all": "node scripts/optimize-assets.js all"
+    "optimize:all": "node scripts/optimize-assets.js all",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:unit:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:debug": "playwright test --debug",
+    "test:a11y": "playwright test tests/a11y",
+    "test:perf": "playwright test tests/perf"
   },
   "dependencies": {
     "jsonwebtoken": "^9.0.2",
@@ -23,10 +32,18 @@
     "ws": "^8.18.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.8.3",
+    "@playwright/test": "^1.40.1",
+    "@vitest/coverage-v8": "^1.1.0",
+    "@vitest/ui": "^1.1.0",
+    "happy-dom": "^20.0.10",
+    "jsdom": "^27.1.0",
+    "playwright": "^1.40.1",
     "rollup-plugin-visualizer": "^6.0.5",
     "stats.js": "^0.17.0",
     "terser": "^5.44.1",
     "vite": "^5.0.0",
-    "vite-plugin-compression": "^0.5.1"
+    "vite-plugin-compression": "^0.5.1",
+    "vitest": "^1.1.0"
   }
 }

@@ -5,3 +5,8 @@ dist/
 .env
 .vscode/
 .idea/
+coverage/
+playwright-report/
+test-results/
+.vitest/
+*.tgz
