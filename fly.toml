@@ -1,0 +1,98 @@
+# ========================================
+# Fly.io Configuration for FPSgame Backend
+# ========================================
+# Deploy with: fly deploy
+# Set secrets with: fly secrets set KEY=value
+
+app = "fpsgame-api"
+primary_region = "sjc" # San Jose, CA - change to your preferred region
+
+# Build configuration
+[build]
+  dockerfile = "Dockerfile"
+
+# Environment variables (non-sensitive)
+[env]
+  NODE_ENV = "production"
+  PORT = "8080"
+  WSS_PATH = "/ws"
+  TICK_HZ = "30"
+  SNAPSHOT_HZ = "20"
+  RATE_LIMIT_RPS = "100"
+  LOG_LEVEL = "info"
+  ENABLE_METRICS = "true"
+  ENABLE_ANTICHEAT = "true"
+  DEBUG_MODE = "false"
+
+# HTTP service configuration
+[[services]]
+  internal_port = 8080
+  protocol = "tcp"
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+  # Health checks
+  [[services.http_checks]]
+    interval = "10s"
+    timeout = "5s"
+    grace_period = "30s"
+    method = "GET"
+    path = "/healthz"
+    protocol = "http"
+
+  # Port configuration
+  [[services.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ["http", "tls"]
+
+  # Concurrency settings
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 1000
+    soft_limit = 800
+
+# VM resources
+[vm]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512
+
+# Autoscaling (optional)
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512
+
+# Metrics (Prometheus)
+[metrics]
+  port = 9091
+  path = "/metrics"
+
+# Deploy configuration
+[deploy]
+  strategy = "rolling"
+  max_unavailable = 0.3
+
+# Experimental features
+[experimental]
+  auto_rollback = true
+
+# ========================================
+# Required Secrets (set with fly secrets set)
+# ========================================
+# fly secrets set DATABASE_URL="postgresql://..."
+# fly secrets set REDIS_URL="redis://..."
+# fly secrets set JWT_SECRET="..."
+# fly secrets set SHOP_SIGNING_KEY="..."
+# fly secrets set PUBLIC_ORIGIN="https://play-xyz.vercel.app"
+# fly secrets set ALLOWED_ORIGINS="https://play-xyz.vercel.app"
+
+# Optional secrets:
+# fly secrets set SENTRY_DSN="..."
+# fly secrets set LOGTAIL_TOKEN="..."

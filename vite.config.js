@@ -1,15 +1,55 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import viteCompression from 'vite-plugin-compression';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production';
   
+  // Load env file based on `mode`
+  const env = loadEnv(mode, process.cwd(), '');
+  const apiOrigin = env.VITE_PUBLIC_API_ORIGIN || 'http://localhost:3001';
+  
   return {
+    // Define constants available in client code
+    define: {
+      __BUILD_ENV__: JSON.stringify(env.VITE_BUILD_ENV || mode),
+    },
     server: {
       port: 8080,
-      host: '0.0.0.0'
+      host: '0.0.0.0',
+      // Proxy API and WebSocket requests to backend in development
+      proxy: {
+        '/api': {
+          target: apiOrigin,
+          changeOrigin: true,
+          secure: false,
+          ws: false,
+        },
+        '/ws': {
+          target: apiOrigin.replace('http', 'ws'),
+          changeOrigin: true,
+          secure: false,
+          ws: true,
+        },
+        '/healthz': {
+          target: apiOrigin,
+          changeOrigin: true,
+          secure: false,
+        },
+        '/readyz': {
+          target: apiOrigin,
+          changeOrigin: true,
+          secure: false,
+        },
+        '/metrics': {
+          target: apiOrigin,
+          changeOrigin: true,
+          secure: false,
+        },
+      },
     },
+    // Base public path for assets
+    base: './',
     build: {
       target: 'es2020',
       minify: isProduction ? 'terser' : false,

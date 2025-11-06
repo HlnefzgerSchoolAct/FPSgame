@@ -1,0 +1,80 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+      
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VITE_PUBLIC_API_ORIGIN: ${{ secrets.VITE_PUBLIC_API_ORIGIN }}
+          VITE_PUBLIC_WSS_URL: ${{ secrets.VITE_PUBLIC_WSS_URL }}
+          VITE_BUILD_ENV: production
+      
+      - name: Deploy Project Artifacts to Vercel
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "deployment_url=$url" >> $GITHUB_OUTPUT
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      
+      - name: Smoke Test Deployment
+        run: |
+          echo "Testing deployment at: ${{ steps.deploy.outputs.deployment_url }}"
+          
+          # Wait for deployment to be ready
+          sleep 10
+          
+          # Test if site is accessible
+          response=$(curl -s -o /dev/null -w "%{http_code}" ${{ steps.deploy.outputs.deployment_url }})
+          
+          if [ "$response" != "200" ]; then
+            echo "Deployment health check failed with status: $response"
+            exit 1
+          fi
+          
+          echo "✅ Deployment is healthy"
+      
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🚀 Frontend deployed to: ${{ steps.deploy.outputs.deployment_url }}`
+            })

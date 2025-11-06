@@ -3,7 +3,6 @@
  * WebSocket server with room management, tick loop, and heartbeats
  */
 
-import { WebSocketServer } from 'ws';
 import { authSystem, generateTestToken } from './auth/Auth.js';
 import { lobbySystem } from './rooms/Lobby.js';
 import { playerDataStore } from './persistence/PlayerData.js';
@@ -17,6 +16,7 @@ import {
   createEconomyUpdateMessage,
   Validation 
 } from './protocol/Schema.js';
+import { createHttpServer, startServer, gracefulShutdown } from './httpServer.js';
 
 const PORT = process.env.PORT || 3001;
 const HEARTBEAT_INTERVAL = Validation.HEARTBEAT_INTERVAL_MS;
@@ -26,6 +26,7 @@ export class GameServer {
   constructor(port = PORT) {
     this.port = port;
     this.wss = null;
+    this.httpServer = null;
     this.clients = new Map(); // ws -> client data
     this.rateLimiters = new Map(); // playerId -> rate limiter
   }
@@ -33,21 +34,14 @@ export class GameServer {
   /**
    * Start the server
    */
-  start() {
-    this.wss = new WebSocketServer({ 
-      port: this.port,
-      perMessageDeflate: false // Disable compression for lower latency
-    });
-    
+  async start() {
     console.log(`🚀 Game server starting on port ${this.port}`);
     
-    this.wss.on('connection', (ws, req) => {
-      this.handleConnection(ws, req);
-    });
+    // Create HTTP server with WebSocket support
+    this.httpServer = createHttpServer(this, { port: this.port });
     
-    this.wss.on('error', (error) => {
-      console.error('WebSocket server error:', error);
-    });
+    // Start listening
+    await startServer(this.httpServer, this.port);
     
     // Start periodic tasks
     this.startHeartbeat();
@@ -55,7 +49,6 @@ export class GameServer {
     lobbySystem.startCleanup();
     
     console.log('✅ Game server ready');
-    console.log(`   Players can connect to: ws://localhost:${this.port}`);
     console.log(`   Test token: ${generateTestToken()}`);
   }
   
@@ -363,13 +356,11 @@ export class GameServer {
   /**
    * Stop the server
    */
-  stop() {
-    console.log('Stopping server...');
-    
-    if (this.wss) {
-      this.wss.close(() => {
-        console.log('Server stopped');
-      });
+  async stop() {
+    if (this.httpServer) {
+      await gracefulShutdown(this.httpServer, this);
+    } else {
+      console.log('Server stopped');
     }
   }
 }
@@ -377,7 +368,12 @@ export class GameServer {
 // Start server if running directly
 if (import.meta.url === `file://${process.argv[1]}`) {
   const server = new GameServer();
-  server.start();
+  
+  // Start server
+  server.start().catch((error) => {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  });
   
   // Log statistics periodically
   setInterval(() => {
@@ -386,11 +382,14 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   }, 30000);
   
   // Graceful shutdown
-  process.on('SIGINT', () => {
-    console.log('\nShutting down...');
-    server.stop();
+  const shutdown = async (signal) => {
+    console.log(`\nReceived ${signal}, shutting down...`);
+    await server.stop();
     process.exit(0);
-  });
+  };
+  
+  process.on('SIGINT', () => shutdown('SIGINT'));
+  process.on('SIGTERM', () => shutdown('SIGTERM'));
 }
 
 export default GameServer;
